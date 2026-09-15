@@ -1838,7 +1838,7 @@ body.font-xl h2 { font-size: 28px; }
     <span class="tab-icon">📗</span>
     <span>传输有线</span>
   </button>
-  <button class="tab-item" onclick="toggleSearch()">
+  <button class="tab-item" onclick="goSearch()">
     <span class="tab-icon">🔍</span>
     <span>搜索</span>
   </button>
@@ -2438,6 +2438,17 @@ body.font-xl h2 { font-size: 28px; }
   window.searchFromHistory = searchFromHistory;
   window.clearSearchHistory = clearSearchHistory;
   window.hideSearchResults = hideSearchResults;
+  window.goSearch = function() {
+    switchTab('home');
+    setTimeout(function() {
+      var input = document.getElementById('searchInput');
+      if (input) {
+        input.focus();
+        window.scrollTo({top: 0, behavior: 'smooth'});
+        input.click();
+      }
+    }, 150);
+  };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
