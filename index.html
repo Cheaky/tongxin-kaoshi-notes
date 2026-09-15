@@ -174,6 +174,16 @@ a { color: inherit; text-decoration: none; }
   border-radius: 2px;
 }
 
+
+/* ===== V5: Font Size Fix ===== */
+body { transition: font-size 0.2s; }
+body.font-small { font-size: 13px; }
+body.font-small .card-title { font-size: 14px; }
+body.font-small h2 { font-size: 18px; }
+body.font-large { font-size: 17px; }
+body.font-large .card-title { font-size: 17px; }
+body.font-large h2 { font-size: 24px; }
+
 /* ===== Progress Bar ===== */
 .progress-bar {
   height: 3px;
@@ -712,112 +722,21 @@ body.font-large .section-title { font-size: 16px; }
 body.font-large .callout { font-size: 15px; }
 body.font-large p,
 body.font-large li { font-size: 15px; }
-
-/* ===== V5 Additions ===== */
-.kp-item {
-  padding: 10px 14px;
-  margin: 8px 0;
-  background: var(--gray-50);
-  border-radius: 8px;
-  border-left: 3px solid var(--primary);
-  font-size: inherit;
-  line-height: 1.75;
-}
-.kp-item b, .kp-item strong { color: var(--gray-800); }
-.formula-box {
-  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-  border: 1px solid #bae6fd;
-  border-radius: 10px;
-  padding: 12px 16px;
-  margin: 10px 0;
-  text-align: center;
-  font-family: "SF Mono", Consolas, monospace;
-  font-weight: 600;
-  color: #0c4a6e;
-  font-size: 14px;
-}
-.action-btn {
-  padding: 8px 14px;
-  border: 1px solid var(--gray-200);
-  border-radius: 8px;
-  background: white;
-  color: var(--gray-700);
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.action-btn:active {
-  transform: scale(0.96);
-  background: var(--primary-bg);
-  color: var(--primary);
-  border-color: var(--primary-light);
-}
-.font-controls {
-  display: inline-flex;
-  gap: 4px;
-  background: rgba(255,255,255,0.15);
-  border-radius: 8px;
-  padding: 2px;
-}
-.font-btn {
-  width: 34px;
-  height: 28px;
-  border: none;
-  background: transparent;
-  color: white;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  border-radius: 6px;
-  opacity: 0.7;
-}
-.font-btn.active {
-  background: rgba(255,255,255,0.3);
-  opacity: 1;
-}
-body.font-small { font-size: 13px; }
-body.font-small .card-title { font-size: 14px; }
-body.font-large { font-size: 17px; }
-body.font-large .card-title { font-size: 18px; }
-.tag-hot { background: var(--danger-light); color: var(--danger); }
-.tag-key { background: var(--primary-light); color: var(--primary-dark); }
-.tag-mid { background: var(--accent-light); color: #92400e; }
-.tag-low { background: var(--gray-100); color: var(--gray-500); }
-
 </style>
 </head>
 <body>
+
 <div class="app">
-  
-  <div class="top-header">
-    <div class="progress-bar"><div class="progress-fill"></div></div>
 
-  <div class="search-bar">
-    <span class="search-icon">🔍</span>
-    <input type="text" id="searchInput" placeholder="搜索知识点、公式、概念..." 
-           oninput="performSearch(this.value)" onfocus="performSearch(this.value)">
-    <div class="search-results" id="searchResults"></div>
-  </div>
-
-  </div>
-
-  <div class="page-container">
-
-<!-- HOME PAGE -->
+<!-- ========== HOME PAGE ========== -->
 <div id="page-home" class="content active">
   <div class="hero-card">
     <h2>通信工程师中级考试</h2>
-    <div class="hero-sub">冲刺复习笔记 V5 · 完整版</div>
+    <div class="hero-sub">冲刺复习笔记 V5 · 精简高效版</div>
     <div class="hero-meta">
       <span>📹 7个精讲视频</span>
       <span>⏱️ 11.8小时</span>
       <span>🎯 双科全覆盖</span>
-    </div>
-    <div class="font-controls" style="margin-top:14px;">
-      <button class="font-btn" data-size="small" onclick="setFontSize('small')">A-</button>
-      <button class="font-btn" data-size="normal" onclick="setFontSize('normal')">A</button>
-      <button class="font-btn" data-size="large" onclick="setFontSize('large')">A+</button>
     </div>
   </div>
 
@@ -825,7 +744,7 @@ body.font-large .card-title { font-size: 18px; }
     <div class="subject-card" onclick="switchTab('subject1')">
       <div class="s-icon">📘</div>
       <div class="s-title">综合能力</div>
-      <div class="s-desc">客观题 · 11章+外语</div>
+      <div class="s-desc">客观题 · 10章+外语</div>
       <div class="s-score">100分 →</div>
     </div>
     <div class="subject-card" onclick="switchTab('subject2')">
@@ -854,623 +773,312 @@ body.font-large .card-title { font-size: 18px; }
         <div class="stat-label">实务大题</div>
       </div>
       <div class="stat-card">
-        <div class="stat-num warn">22<span style="font-size:12px">章</span></div>
-        <div class="stat-label">全部章节</div>
+        <div class="stat-num warn">11<span style="font-size:12px">章</span></div>
+        <div class="stat-label">实务章节</div>
       </div>
     </div>
-    <p style="font-size:13px;color:var(--gray-500);margin-top:12px;">两科均需达到60分及以上，机考形式，满分各100分。</p>
   </div>
 
   <div class="card">
     <div class="card-title">
-      <span class="emoji">📈</span>分值分布
+      <span class="emoji">💡</span>答题技巧（老师亲授）
     </div>
-    <div class="callout callout-exam">
-      <b>📘 综合能力</b><br>
-      第一梯队（通信系统/现代通信网/移动通信）：约 40-45 分<br>
-      第二梯队（互联网/电信业务/安全/项目管理）：约 30-35 分<br>
-      第三梯队（职业道德/法规/计算机/外语）：约 10-15 分
-    </div>
-    <div class="callout callout-exam" style="margin-top:10px;">
-      <b>📗 传输有线实务</b><br>
-      Q1(15分)：第1/10/11章 光纤+测试+维护<br>
-      Q2(20分)：第2/3章 SDH+MSTP<br>
-      Q3(20分)：第4/5章 DWDM+OTN<br>
-      Q4(10分)：第6章 ASON<br>
-      Q5(15分)：第7/8章 PTN+IP RAN<br>
-      Q6(20分)：第9章 有线接入网（PON重点）
-    </div>
+    <ul class="tip-list">
+      <li><strong>认真审题</strong>：题目"说明"部分含已知条件，别漏看</li>
+      <li><strong>中英文均可</strong>：名词写中文或缩写都行，不扣分</li>
+      <li><strong>客观题别空</strong>：单选判断蒙也要选一个</li>
+      <li><strong>填空题顺序</strong>：尽量与教材一致，调换也不丢分</li>
+      <li><strong>问答题多写</strong>：答对大意就给分，<strong>千万别空着</strong></li>
+      <li><strong>计算题必拿</strong>：光纤损耗年年考，练熟就是送分</li>
+    </ul>
   </div>
 
   <div class="card">
     <div class="card-title">
-      <span class="emoji">📐</span>典型计算题
+      <span class="emoji">📚</span>复习策略
     </div>
-    <div class="callout callout-calc">
-      <b>光纤损耗计算（年年考）</b>
-      <div class="formula-box" style="margin-top:10px;">
-        总损耗 = 光纤损耗 + 接头损耗 + 活动连接损耗
-      </div>
-      <p style="font-size:12px;margin-top:8px;opacity:0.8;">
-        公式：α总 = α光纤 × L + α接头 × N接头 + α活动 × N活动<br>
-        单位：dB | 注意：dB/km 是损耗系数，乘以距离才是损耗值
-      </p>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">
-      <span class="emoji">💡</span>答题技巧
-    </div>
+    <ol>
+      <li style="margin-bottom:8px"><strong>系统学习</strong>：先看60条清课打基础，再听串讲抓重点</li>
+      <li style="margin-bottom:8px"><strong>研究真题</strong>：参考借鉴、启发延伸，举一反三</li>
+      <li style="margin-bottom:8px"><strong>抓大放小</strong>：时间紧优先重点章节，非重点可跳过</li>
+      <li style="margin-bottom:8px"><strong>计算题必练</strong>：光纤损耗计算务必熟练掌握</li>
+      <li><strong>冲刺记忆</strong>：最后三周强化记忆，可暂时不求甚解</li>
+    </ol>
     <div class="callout callout-tip">
-      1. <b>单选题</b>：排除法优先，太绝对的选项（"一定""必须"）往往错<br>
-      2. <b>多选题</b>：宁缺毋滥，少选得部分分，选错0分<br>
-      3. <b>计算题</b>：公式写对就有分，单位不能漏<br>
-      4. <b>问答题</b>：分点作答标序号，关键词放前面<br>
-      5. <b>时间分配</b>：客观题快做，留足时间给计算和问答
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">
-      <span class="emoji">🚀</span>重点章节直达
-    </div>
-    <div class="chapter-grid">
-      <div class="chapter-btn high" onclick="switchTab('subject1');setTimeout(function(){scrollToEl('ch4');},100);">
-        <div class="ch-num">4</div>
-        <div class="ch-name">通信系统</div>
-      </div>
-      <div class="chapter-btn high" onclick="switchTab('subject1');setTimeout(function(){scrollToEl('ch5');},100);">
-        <div class="ch-num">5</div>
-        <div class="ch-name">现代通信网</div>
-      </div>
-      <div class="chapter-btn high" onclick="switchTab('subject2');setTimeout(function(){scrollToEl('tch2');},100);">
-        <div class="ch-num">2</div>
-        <div class="ch-name">SDH传输网</div>
-      </div>
-      <div class="chapter-btn high" onclick="switchTab('subject2');setTimeout(function(){scrollToEl('tch9');},100);">
-        <div class="ch-num">9</div>
-        <div class="ch-name">有线接入网</div>
-      </div>
+      复习顺序：清课 → 考前直播串讲 → 真题/模拟题 → 回归重点强化记忆
     </div>
   </div>
 </div>
 
-<!-- SUBJECT 1 -->
+<!-- ========== SUBJECT 1: 综合能力 ========== -->
 <div id="page-subject1" class="content">
 
   <div class="card">
     <div class="card-title">
-      <span class="emoji">📘</span>通信专业综合能力
+      <span class="emoji">📘</span>综合能力
       <span class="score high">100分</span>
     </div>
-    <p style="font-size:13px;color:var(--gray-500)">客观题（单选/多选/判断）· 共11章</p>
+    <p style="font-size:13px;color:var(--gray-500)">客观题（选择/判断）· 分值梯队明显</p>
     <div class="chapter-grid">
-      <div class="chapter-btn " onclick="scrollToEl('ch1')">
-        <div class="ch-num">1</div>
-        <div class="ch-name">通信职业道德</div>
+      <div class="chapter-btn" onclick="scrollToEl('s1-ch1')">
+        <div class="ch-num">1-3</div>
+        <div class="ch-name">基础章节<br>职业道德/法规/计算机</div>
       </div>
-      <div class="chapter-btn " onclick="scrollToEl('ch2')">
-        <div class="ch-num">2</div>
-        <div class="ch-name">法律法规</div>
+      <div class="chapter-btn high" onclick="scrollToEl('s1-ch4')">
+        <div class="ch-num">4-6</div>
+        <div class="ch-name">核心重点<br>通信系统/网/移动</div>
       </div>
-      <div class="chapter-btn " onclick="scrollToEl('ch3')">
-        <div class="ch-num">3</div>
-        <div class="ch-name">计算机应用基础</div>
+      <div class="chapter-btn mid" onclick="scrollToEl('s1-ch7')">
+        <div class="ch-num">7-10</div>
+        <div class="ch-name">拓展知识<br>互联网/业务/安全/管理</div>
       </div>
-      <div class="chapter-btn high" onclick="scrollToEl('ch4')">
-        <div class="ch-num">4</div>
-        <div class="ch-name">通信系统</div>
-      </div>
-      <div class="chapter-btn high" onclick="scrollToEl('ch5')">
-        <div class="ch-num">5</div>
-        <div class="ch-name">现代通信网</div>
-      </div>
-      <div class="chapter-btn high" onclick="scrollToEl('ch6')">
-        <div class="ch-num">6</div>
-        <div class="ch-name">移动通信</div>
-      </div>
-      <div class="chapter-btn " onclick="scrollToEl('ch7')">
-        <div class="ch-num">7</div>
-        <div class="ch-name">互联网与物联网</div>
-      </div>
-      <div class="chapter-btn " onclick="scrollToEl('ch8')">
-        <div class="ch-num">8</div>
-        <div class="ch-name">现代电信业务</div>
-      </div>
-      <div class="chapter-btn " onclick="scrollToEl('ch9')">
-        <div class="ch-num">9</div>
-        <div class="ch-name">通信网络安全</div>
-      </div>
-      <div class="chapter-btn " onclick="scrollToEl('ch10')">
-        <div class="ch-num">10</div>
-        <div class="ch-name">通信工程项目管理</div>
-      </div>
-      <div class="chapter-btn " onclick="scrollToEl('ch11')">
-        <div class="ch-num">11</div>
-        <div class="ch-name">通信专业外语</div>
+      <div class="chapter-btn" onclick="scrollToEl('s1-foreign')">
+        <div class="ch-num">外</div>
+        <div class="ch-name">专业外语<br>常见缩写速记</div>
       </div>
     </div>
   </div>
 
-  <div class="card">
+  <div class="card" id="s1-ch1">
     <div class="card-title">
-      <span class="emoji">⚡</span>快捷操作
+      <span class="emoji">📖</span>第1-3章 基础
+      <span class="score low">10-15分</span>
     </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;">
-      <button class="action-btn" onclick="expandAllInPage('page-subject1')">📂 全部展开</button>
-      <button class="action-btn" onclick="collapseAllInPage('page-subject1')">📁 全部收起</button>
-      <button class="action-btn" onclick="scrollToTop()">⬆️ 回到顶部</button>
-    </div>
-  </div>
 
-  <div class="card" id="ch1">
-    <div class="card-title">
-      <span class="emoji">📖</span>第1章 通信职业道德
-      
-    </div>
-    
     <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>1.1 职业道德概述</strong>
+      <strong>第1章 通信职业道德</strong>
       <span class="chevron">▼</span>
     </div>
     <div class="collapse-body">
       <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>职业</b>：人们在社会中从事的专门业务活动，具有特定社会责任，是重要生活来源。</div>
-      <div class="callout callout-exam"><span class="tag tag-hot">高频</span>重点</span><b>职业道德的含义</b>：人们在从事合法的社会职业、履行职责过程中，在思想和行为上应遵循的道德规范和准则。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>职业道德的特点</b>：①形式上的多样性和适用性 ②较强的稳定性和连续性 ③较强的专业性和具体性</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>职业道德的基本范畴</b>：职业义务、职业权力、职业责任、职业纪律、职业良心、职业荣誉、职业幸福</div>
+        <div class="callout callout-key">
+          职业道德三大特点：形式多样性适用性、较强稳定性连续性、很强专业性具体性
+        </div>
+        <p><strong>科技人员职业道德8条</strong>：</p>
+        <ol>
+          <li>不畏艰险、献身科学</li>
+          <li><strong>勇于探索、敢于创新</strong> — 最突出特点</li>
+          <li>实事求是、追求真理</li>
+          <li><strong>热爱专业、忠于职责</strong> — 基本道德要求</li>
+          <li>同心同德、团结协作</li>
+          <li>谦虚谨慎、尊重他人</li>
+          <li>勤奋求知、严谨治学</li>
+          <li><strong>造福人民、振兴祖国</strong> — 核心/出发点/归宿</li>
+        </ol>
+        <p><strong>通信科技"六化"</strong>：数字化、综合化、智能化、宽带化、个人化、标准化</p>
+        <p><strong>通信科技职业道德6条</strong>：全程全网观念、发扬协作精神、组织纪律性、遵守法律规章、服从整体利益、服务保障观念</p>
       </div>
     </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>1.2 科技人员职业道德</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>科技职业道德的特征</b>：①勇于探索、敢于创新 ②实事求是 ③团队协作</div>
-      <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>科技人员职业道德的基本要求</b>：①热爱祖国、忠于人民 ②追求真理、勇于探索 ③严谨治学、精益求精 ④团结协作、甘为人梯</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>1.3 通信科技人员职业道德</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-exam"><span class="tag tag-hot">高频</span>重点</span><b>两重性</b>：通信科技人员既要遵守一般科技职业道德，又要遵守通信行业职业道德。</div>
-      <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>通信科学技术的地位</b>：通信科技是整个科技的重要组成部分，是通信生产力中越来越突出和具有重要意义的因素，在世界科技和生产力发展中有着重要地位。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>通信技术的发展方向</b>：<span style="color:#ef4444;font-weight:600;">数字化、综合化、智能化、宽带化、个人化、标准化</span>（六化）</div>
-      <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>通信科技工作的职业特点</b>：①系统性 ②社会责任性 ③实践性 ④国际性</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>通信职业道德的含义</b>：通信科技人员在从事通信科技工作中应遵循的道德规范和行为准则。</div>
-      <div class="kp master"><span class="tag tag-key">掌握</span>掌握</span><b>通信科学技术职业道德的基本要求</b>：①热爱专业、忠于职责 ②钻研业务、精通技术 ③严谨细致、一丝不苟 ④遵守纪律、严守秘密 ⑤面向用户、热情服务 ⑥团结协作、共创业绩
-      </div>
-    </div>
-  </div>
 
-  <div class="card" id="ch2">
-    <div class="card-title">
-      <span class="emoji">📖</span>第2章 法律法规
-      
-    </div>
-    
     <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>2.1 中华人民共和国电信条例</strong>
+      <strong>第2章 法律法规</strong>
       <span class="chevron">▼</span>
     </div>
     <div class="collapse-body">
       <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>立法目的</b>：规范电信市场秩序，保障电信网络与信息安全，维护电信用户和电信业务经营者的合法权益，促进电信事业的发展。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>适用范围</b>：在中华人民共和国境内从事电信活动和从事与电信有关的活动。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>电信条例确定的原则</b>：①政企分开 ②破除垄断 ③鼓励竞争 ④促进发展 ⑤公平、公正、公开</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>基础电信业务</b>：提供公共网络基础设施、公共数据传送和基本话音通信服务的业务。经营条件：国有股权≥51%。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>增值电信业务</b>：利用公共网络基础设施提供的电信与信息服务。如在线数据处理、存储转发、呼叫中心等。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>经营者义务</b>：①逾期未装机的按费用1%支付违约金 ②申告障碍：城镇48小时、农村72小时内修复 ③为交费查询提供方便</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>用户义务</b>：①逾期不交费每日加收3‰违约金 ②超30日不交费可暂停服务 ③暂停60日仍不补交可终止服务 ④补足后48小时内恢复服务</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>用户申诉</b>：自收到申诉之日起30日内答复。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>电信安全规定</b>：①任何组织或个人不得利用电信网络制作/传播违法信息 ②不得危害电信网络安全 ③不得盗接他人电信线路 ④不得伪造电信计量等</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>电信资费</b>：实行以成本为基础的定价原则，工信部公布资费标准。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>电信资源</b>：无线电频率、卫星轨道、电信网码号等，国家所有，实行有偿使用。</div>
+        <div class="callout callout-exam">
+          <p><strong>常考数字（背下来）</strong>：</p>
+          <ul>
+            <li>城镇障碍修复：<strong>48小时</strong></li>
+            <li>农村障碍修复：<strong>72小时</strong></li>
+            <li>逾期交费违约金：每日<strong>3‰</strong></li>
+            <li>超<strong>30日</strong>不交费 → 暂停服务</li>
+            <li>暂停<strong>60日</strong>仍不交 → 终止服务</li>
+            <li>补足后<strong>48小时</strong>内恢复</li>
+            <li>用户申诉答复：<strong>30日内</strong></li>
+          </ul>
+        </div>
+        <ul>
+          <li><strong>基本原则</strong>：政企分开、破除垄断、鼓励竞争、促进发展、公平公正公开</li>
+          <li><strong>基础电信业务</strong>：国有股权≥51%</li>
+          <li><strong>电信资源</strong>：无线电频率、卫星轨道位置、电信网码号 — 国家所有，有偿使用</li>
+          <li><strong>网络安全法</strong>：CII保护、个人信息保护、网络运营者安全义务</li>
+        </ul>
       </div>
     </div>
+
     <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>2.2 公用电信网间互联管理规定</strong>
+      <strong>第3章 计算机基础</strong>
       <span class="chevron">▼</span>
     </div>
     <div class="collapse-body">
       <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>互联原则</b>：技术可行、经济合理、公平公正、相互配合。</div>
-      <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>网间结算</b>：非主导的电信业务经营者之间的网间互联，互联双方协商解决；主导的电信业务经营者与非主导之间的互联，由主导方提出方案。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>互联争议内容</b>：①互联技术方案 ②网络功能及设施提供 ③互联时限 ④电信业务提供 ⑤网间通信质量 ⑥互联费用 ⑦其他</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>争议处理</b>：任何一方可向电信主管部门申请协调，对协调不服的可申请行政复议。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>2.3 其他相关法规</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>《网络安全法》</b>关键条款：网络运营者安全保护义务、个人信息保护、关键信息基础设施保护等。</div>
-      <div class="kp"><span class="tag tag-low">了解</span>了解</span><b>《数据安全法》</b>：数据分类分级保护、数据安全风险评估等。
+        <ul>
+          <li><strong>冯·诺依曼结构</strong>：存储程序概念</li>
+          <li><strong>五大部件</strong>：运算器、控制器、存储器、输入设备、输出设备</li>
+          <li><strong>DBS = DB + DBMS + 应用 + 用户 + DBA</strong></li>
+          <li><strong>多媒体关键技术</strong>：数据压缩、VLSI、多媒体网络通信</li>
+          <li><strong>ASCII码</strong>：7位，128字符</li>
+        </ul>
       </div>
     </div>
   </div>
 
-  <div class="card" id="ch3">
+  <div class="card" id="s1-ch4">
     <div class="card-title">
-      <span class="emoji">📖</span>第3章 计算机应用基础
-      
+      <span class="emoji">🔥</span>第4-6章 核心重点
+      <span class="score high">40-45分</span>
     </div>
-    
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>3.1 计算机概述</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>计算机发展历程</b>：</div>
-      <div style="overflow-x:auto;"><table>
-        <tr><th>时间</th><th>人物</th><th>贡献</th></tr>
-        <tr><td>1854年</td><td>布尔</td><td>符号逻辑思想，计算科学软件的<span style="color:#ef4444;font-weight:600;">理论基础</span></td></tr>
-        <tr><td>1936年</td><td>图灵</td><td>"图灵机"模型，证明通用数字计算机可行性</td></tr>
-        <tr><td>1945年</td><td>冯·诺依曼</td><td>存储程序概念，<span style="color:#ef4444;font-weight:600;">"冯·诺依曼结构"</span></td></tr>
-      </table></div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>计算机特点</b>：运算速度快、计算精度高、存储容量大、具有逻辑判断能力、自动化程度高。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>计算机分类</b>：按性能分巨型机、大型机、小型机、微型机、工作站。</div>
+
+    <div class="sub-title">第4章 通信系统</div>
+    <ul>
+      <li><strong>基带信号</strong>：低通形式，频谱从零频附近开始</li>
+      <li><strong>已调信号</strong>：带通形式，适合信道传输</li>
+    </ul>
+
+    <div class="callout callout-exam">
+      <strong>性能指标对比（必考）</strong>
+      <div class="table-wrap">
+        <table>
+          <tr><th></th><th>模拟系统</th><th>数字系统</th></tr>
+          <tr><td>有效性</td><td>频带利用率</td><td>传码率/传信率</td></tr>
+          <tr><td>可靠性</td><td>输出信噪比</td><td>误码率Pe/误比特率Pb</td></tr>
+        </table>
       </div>
     </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>3.2 计算机系统组成</strong>
-      <span class="chevron">▼</span>
+
+    <div class="formula-box">
+      C = B · log₂(1 + S/N)
+      <div class="formula-desc">香农公式 — 信道容量（无差错传输最大信息速率）</div>
     </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>硬件系统</b>：运算器、控制器、存储器、输入设备、输出设备（五大部件）。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>软件系统</b>：系统软件（操作系统、编译程序等）和应用软件。</div>
-      <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>总线</b>：数据总线、地址总线、控制总线。</div>
+
+    <ul>
+      <li><strong>PCM三步骤</strong>：抽样 → 量化 → 编码</li>
+      <li><strong>抽样定理</strong>：抽样频率 ≥ 2×最高信号频率</li>
+      <li><strong>数字调制</strong>：ASK / FSK / PSK / QAM</li>
+      <li><strong>信道编码目的</strong>：提高可靠性，增加冗余</li>
+    </ul>
+
+    <div class="sub-title">第5章 现代通信网</div>
+    <div class="callout callout-exam">
+      <strong>交换技术对比</strong>
+      <div class="table-wrap">
+        <table>
+          <tr><th>方式</th><th>特点</th><th>适用</th></tr>
+          <tr><td>电路交换</td><td>面向连接，独占信道</td><td>实时话音</td></tr>
+          <tr><td>分组交换</td><td>存储转发，统计复用</td><td>数据业务</td></tr>
+          <tr><td>ATM</td><td>信元交换(53字节)</td><td>综合业务</td></tr>
+        </table>
       </div>
     </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>3.3 数据表示</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>数制</b>：N进制逢N进1，基数=N（数字符号个数）。十进制、二进制、八进制、十六进制。采用<span style="color:#ef4444;font-weight:600;">位权表示法</span>。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>编码</b>：ASCII码（7位，128字符）、汉字编码（GB2312/GBK/GB18030）。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>数据单位</b>：位(bit)、字节(B, 1B=8bit)、KB/MB/GB/TB（1024进位）。</div>
+    <ul>
+      <li><strong>三要素</strong>：终端设备、传输系统、交换系统</li>
+      <li><strong>TMN五大功能(FCAPS)</strong>：故障、配置、账务、性能、安全管理</li>
+      <li><strong>IMS五大特征</strong>：接入无关性、基于SIP、针对移动优化、丰富组合业务、网络融合平台</li>
+      <li><strong>SDN</strong>：控制与数据分离，OpenFlow南向接口</li>
+      <li><strong>NFV三部分</strong>：VNF + NFVI + MANO</li>
+    </ul>
+
+    <div class="sub-title">第6章 移动通信</div>
+    <div class="callout callout-exam">
+      <strong>多址技术与代际</strong>
+      <div class="table-wrap">
+        <table>
+          <tr><th>技术</th><th>原理</th><th>代际</th></tr>
+          <tr><td>FDMA</td><td>频分多址</td><td>1G 模拟</td></tr>
+          <tr><td>TDMA</td><td>时分多址</td><td>2G GSM</td></tr>
+          <tr><td>CDMA</td><td>码分多址</td><td>2G/3G</td></tr>
+          <tr><td>OFDMA</td><td>正交频分多址</td><td>4G / 5G</td></tr>
+        </table>
       </div>
     </div>
+    <ul>
+      <li><strong>蜂窝系统</strong>：小区制 + 频率复用 → 提高频谱利用率</li>
+      <li><strong>4G LTE</strong>：OFDM + MIMO，下行100Mbps / 上行50Mbps</li>
+      <li><strong>5G三大场景</strong>：eMBB、URLLC、mMTC</li>
+      <li><strong>5G关键技术</strong>：大规模MIMO、毫米波、网络切片、边缘计算</li>
+    </ul>
+  </div>
+
+  <div class="card" id="s1-ch7">
+    <div class="card-title">
+      <span class="emoji">🌐</span>第7-10章 拓展知识
+      <span class="score mid">30-35分</span>
+    </div>
+
     <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>3.4 数据库系统</strong>
+      <strong>第7章 互联网与物联网</strong>
       <span class="chevron">▼</span>
     </div>
     <div class="collapse-body">
       <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>基本概念</b>：</div>
-      <div style="overflow-x:auto;"><table>
-        <tr><th>概念</th><th>含义</th></tr>
-        <tr><td>信息</td><td>客观事物在人大脑中的抽象反映</td></tr>
-        <tr><td>数据</td><td>描述事物的符号记录，数据库存储的基本对象</td></tr>
-        <tr><td>数据处理</td><td>从已知数据推导/组织新数据的过程</td></tr>
-        <tr><td>数据管理</td><td>数据的收集、组织、存储、维护、检索、传输</td></tr>
-        <tr><td>数据库(DB)</td><td>长期存储、有组织、可共享的数据集合</td></tr>
-        <tr><td>数据库管理系统(DBMS)</td><td>用户与OS之间的数据管理软件</td></tr>
-        <tr><td><span style="color:#ef4444;font-weight:600;">数据库系统(DBS)</span></td><td>引入数据库后的计算机系统(DB+DBMS+应用+用户+DBA)</td></tr>
-      </table></div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>数据模型</b>：层次模型、网状模型、关系模型。</div>
-      <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>关系数据库</b>：二维表结构，SQL语言（DDL/DML/DCL/DQL）。</div>
+        <ul>
+          <li><strong>TCP/IP四层</strong>：应用层 / 传输层 / 网络层 / 链路层</li>
+          <li><strong>TCP</strong>：可靠、面向连接；<strong>UDP</strong>：不可靠、无连接</li>
+          <li><strong>IPv6</strong>：128位地址</li>
+          <li><strong>物联网三层</strong>：感知层 → 网络层 → 应用层</li>
+          <li><strong>NB-IoT</strong>：窄带物联网，低功耗广域网</li>
+        </ul>
       </div>
     </div>
+
     <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>3.5 多媒体技术</strong>
+      <strong>第8章 现代电信业务</strong>
       <span class="chevron">▼</span>
     </div>
     <div class="collapse-body">
       <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>多媒体基本概念</b>：文本、图形、图像、音频、视频、动画等多种媒体的集成。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>多媒体计算机系统组成</b>：多媒体硬件（声卡、视频卡、光驱等）+ 多媒体软件。</div>
-      <div class="kp"><span class="tag tag-low">了解</span>了解</span><b>关键技术</b>：数据压缩（JPEG/MPEG）、大规模集成电路、多媒体网络通信。
+        <ul>
+          <li><strong>智能网业务</strong>：预付费、VPN、号码携带</li>
+          <li><strong>增值业务</strong>：彩铃、短信、位置服务</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="collapse-header" onclick="toggleCollapse(this)">
+      <strong>第9章 通信网络安全</strong>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="collapse-body">
+      <div class="collapse-body-inner">
+        <ul>
+          <li><strong>CIA三要素</strong>：机密性、完整性、可用性</li>
+          <li><strong>对称加密</strong>：AES、DES</li>
+          <li><strong>非对称加密</strong>：RSA、ECC（数字签名）</li>
+          <li><strong>哈希</strong>：MD5、SHA — 完整性校验</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="collapse-header" onclick="toggleCollapse(this)">
+      <strong>第10章 通信工程项目管理</strong>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="collapse-body">
+      <div class="collapse-body-inner">
+        <ul>
+          <li><strong>九大知识领域</strong>：范围、时间、成本、质量、人力、沟通、风险、采购、干系人</li>
+          <li><strong>挣值分析</strong>：CV=EV-AC，SV=EV-PV</li>
+          <li><strong>风险管理</strong>：识别→评估→应对</li>
+          <li><strong>PDCA循环</strong>：计划→执行→检查→处理</li>
+        </ul>
       </div>
     </div>
   </div>
 
-  <div class="card" id="ch4">
+  <div class="card" id="s1-foreign">
     <div class="card-title">
-      <span class="emoji">🔥</span>第4章 通信系统
-      
+      <span class="emoji">🔤</span>专业外语
+      <span class="score low">5-10分</span>
     </div>
-    
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>4.1 通信系统概述</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>通信的基本概念</b>：信息从信源经信道传输到信宿的过程。</div>
-      <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>基带信号 vs 已调信号</b>：基带信号=信源输出信号，频谱从零频附近开始，低通形式(如语音300~3400Hz)；已调信号=经调制后的信号，带通形式，适合信道传输。</div>
-      <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>通信系统分类(5种)</b>：①按传输介质(有线/无线) ②按信号特征(模拟/数字) ③按工作波段 ④按传送方式(基带/带通传输) ⑤按复用方式(FDM频分/TDM时分/CDM码分)</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>模拟信号 vs 数字信号</b>：</div>
-      <div style="overflow-x:auto;"><table>
-        <tr><th>类型</th><th>特点</th><th>示例</th></tr>
-        <tr><td>模拟信号</td><td>信号参量取值连续</td><td>麦克风输出电压</td></tr>
-        <tr><td>数字信号</td><td>信号参量取值有限个</td><td>电报、计算机I/O信号</td></tr>
-      </table></div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>通信系统的组成（一般模型）</b>：</div>
-      <div class="formula-box">信源 → 发送设备 → 信道 → 接收设备 → 信宿</div>
-      <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span>各部分作用：信源(消息→电信号)、发送设备(基带→适合信道传输的信号)、信道(物理传输介质)、接收设备(放大/解调/译码恢复原始信号)、信宿(电信号→消息)、噪声源(干扰总和)。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>性能指标</b>：</div>
-      <div style="overflow-x:auto;"><table>
-        <tr><th>指标</th><th>含义</th><th>模拟系统</th><th>数字系统</th></tr>
-        <tr><td><span style="color:#ef4444;font-weight:600;">有效性</span></td><td>信息传输"速度"</td><td>频带利用率</td><td>传码率(波特)/传信率(比特率)</td></tr>
-        <tr><td><span style="color:#ef4444;font-weight:600;">可靠性</span></td><td>传输"质量"</td><td>输出信噪比(SNR)</td><td>误码率Pe / 误比特率Pb</td></tr>
-      </table></div>
-      <div class="formula-box">Pe = 错误码元数 / 传输总码元数</div>
-      <div class="formula-box">Pb = 错误比特数 / 传输总比特数</div>
-      <div class="callout callout-tip"><span class="badge orange">考点</span>有效性与可靠性相互矛盾又相对统一，可以互换（通过编码/调制方式）。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>4.2 信道及其特性</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>信道定义</b>：信号传输的通道/物理介质。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>信道分类</b>：有线信道(电缆/光缆)、无线信道(自由空间)；恒参信道/变参信道。</div>
-      <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>信道容量</b>：香农公式</div>
-      <div class="formula-box">C = B · log₂(1 + S/N)  (bit/s)</div>
-      <div class="kp-item">其中 B=带宽(Hz)，S/N=信噪比。这是无差错传输的最大信息速率。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>4.3 信源编码</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>信源编码目的</b>：提高通信有效性，压缩冗余。</div>
-      <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>PCM编码</b>：抽样(→离散)、量化(→有限值)、编码(→二进制)。抽样频率 ≥ 2倍信号最高频率(奈奎斯特准则)。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>增量调制(ΔM)</b>：用一位二进制码表示相邻样值的差值。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>4.4 信道编码</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>信道编码目的</b>：提高通信可靠性，增加冗余以纠错/检错。</div>
-      <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>常见编码</b>：奇偶校验码、汉明码、CRC循环冗余校验、卷积码、Turbo码、LDPC码。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>4.5 调制</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>调制目的</b>：将基带信号搬移到适合信道传输的频段，提高频谱利用率。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>模拟调制</b>：AM(调幅)、FM(调频)、PM(调相)。</div>
-      <div class="kp master"><span class="tag tag-key">掌握</span>掌握</span><b>数字调制</b>：ASK(幅移键控)、FSK(频移键控)、PSK(相移键控)、QAM(正交幅度调制)。
-      </div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>缩写</th><th>全称</th><th>中文</th></tr>
+        <tr><td>SDH</td><td>Synchronous Digital Hierarchy</td><td>同步数字体系</td></tr>
+        <tr><td>WDM</td><td>Wavelength Division Multiplexing</td><td>波分复用</td></tr>
+        <tr><td>OTN</td><td>Optical Transport Network</td><td>光传送网</td></tr>
+        <tr><td>PTN</td><td>Packet Transport Network</td><td>分组传送网</td></tr>
+        <tr><td>PON</td><td>Passive Optical Network</td><td>无源光网络</td></tr>
+        <tr><td>QoS</td><td>Quality of Service</td><td>服务质量</td></tr>
+        <tr><td>FTTH</td><td>Fiber to the Home</td><td>光纤到户</td></tr>
+        <tr><td>ASON</td><td>Automatically Switched Optical Network</td><td>自动交换光网络</td></tr>
+      </table>
     </div>
   </div>
 
-  <div class="card" id="ch5">
-    <div class="card-title">
-      <span class="emoji">🔥</span>第5章 现代通信网
-      
-    </div>
-    
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>5.1 通信网概述</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>通信网构成要素</b>：终端设备、传输系统、交换系统。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>通信网分类</b>：按业务分电话网/数据网/广播电视网；按范围分局域网/城域网/广域网。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>拓扑结构</b>：总线型、星型、环型、树型、网状型。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>通信网发展</b>：模拟→数字→综合→智能→下一代网络(NGN/SDN/NFV)。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>5.2 交换技术</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>交换技术发展</b>：电路交换→报文交换→分组交换→信元交换(ATM)→IP交换→MPLS。</div>
-      <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>电路交换</b>：面向连接，独占信道，适合实时话音，资源利用率低。</div>
-      <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>分组交换</b>：无连接/虚电路，统计复用，适合数据业务，效率高。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>三种交换对比</b>：</div>
-      <div style="overflow-x:auto;"><table>
-        <tr><th>类型</th><th>特点</th><th>适用</th></tr>
-        <tr><td>电路交换</td><td>面向连接，独占信道，预分配带宽</td><td>实时话音</td></tr>
-        <tr><td>报文交换</td><td>存储转发，整个报文传送</td><td>电报</td></tr>
-        <tr><td>分组交换</td><td>存储转发，分组传送，有最大长度限制</td><td>数据业务</td></tr>
-      </table></div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>IP交换</b>：IP交换机=ATM交换器+IP交换控制器。基于数据流驱动：连续大量数据流用ATM交换式传输，短时小量数据流用传统IP传输。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>IMS(IP多媒体子系统)</b>五大特征：①接入无关性 ②基于SIP协议 ③针对移动环境优化 ④提供丰富组合业务 ⑤网络融合平台。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>5.3 传输与接入</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>传输介质</b>：光纤(单模/多模)、同轴电缆、双绞线、无线。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>传输技术</b>：PDH→SDH→DWDM→OTN→PTN。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>5.4 接入网</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>接入网定义</b>：从业务节点接口(SNI)到用户网络接口(UNI)之间的传输媒介。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>接入网分类</b>：有线接入(FTTH/xDSL/HFC)、无线接入(WiFi/4G/5G)。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>5.5 支撑网</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>信令网</b>：No.7信令网，传送电话网的接续控制信息。三级结构：SP(信令点)/STP(信令转接点)/SCP(信令控制点)。</div>
-      <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>同步网</b>：提供全网统一时钟频率。BITS(通信楼综合定时供给系统)。</div>
-      <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>电信管理网(TMN)</b>：5大功能域：FCAPS(故障管理/配置管理/账务管理/性能管理/安全管理)。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>5.6 SDN软件定义网络</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>SDN架构</b>：应用层→控制层(北向接口)→基础设施层(南向接口)。核心：控制平面与数据平面分离。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>OpenFlow</b>：SDN南向接口协议，定义流表匹配规则。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>5.7 NFV网络功能虚拟化</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>NFV概念</b>：将网络功能从专用硬件中解耦，通过软件在通用服务器上实现。</div>
-      <div class="kp"><span class="tag tag-low">了解</span>了解</span><b>NFV架构</b>：VNF(虚拟网络功能)、NFVI(基础设施层)、MANO(管理与编排)。
-      </div>
-    </div>
-  </div>
-
-  <div class="card" id="ch6">
-    <div class="card-title">
-      <span class="emoji">🔥</span>第6章 移动通信
-      
-    </div>
-    
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>6.1 移动通信基础</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>蜂窝系统</b>：将服务区分为多个小区，频率复用，提高频谱利用率。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>多址技术</b>：</div>
-      <div style="overflow-x:auto;"><table>
-        <tr><th>技术</th><th>原理</th><th>代际</th></tr>
-        <tr><td>FDMA</td><td>频分多址</td><td>1G</td></tr>
-        <tr><td>TDMA</td><td>时分多址</td><td>2G(GSM)</td></tr>
-        <tr><td>CDMA</td><td>码分多址</td><td>2G(IS-95)/3G</td></tr>
-        <tr><td>OFDMA</td><td>正交频分多址</td><td>4G LTE/5G</td></tr>
-      </table></div>
-      <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>移动通信系统结构</b>：MS(移动台)→BSS(基站子系统: BTS+BSC)→NSS(网络子系统: MSC/VLR/HLR/AUC/EIR)。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>6.2 移动通信发展</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>1G</b>：模拟通信，AMPS/TACS，仅语音。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>2G</b>：数字通信，GSM(欧洲)/CDMA(美国)，语音+低速数据(短信)。</div>
-      <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>3G</b>：WCDMA/CDMA2000/TD-SCDMA，数据速率2Mbps。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>4G LTE</b>关键技术：</div>
-      <ul style="padding-left:20px;">
-        <li>OFDM(正交频分复用)</li>
-        <li>MIMO(多输入多输出)</li>
-        <li>SAE(系统架构演进) - EPC核心网</li>
-        <li>TDD/FDD双工方式</li>
-        <li>峰值速率：下行100Mbps，上行50Mbps</li>
-      </ul>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>5G NR</b>：</div>
-      <ul style="padding-left:20px;">
-        <li>三大场景：eMBB(增强移动宽带)、URLLC(超可靠低时延)、mMTC(海量机器通信)</li>
-        <li>关键技术：大规模MIMO、毫米波、网络切片、边缘计算</li>
-        <li>峰值速率：10Gbps以上</li>
-      </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" id="ch7">
-    <div class="card-title">
-      <span class="emoji">📖</span>第7章 互联网与物联网
-      
-    </div>
-    
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>7.1 互联网基础</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>TCP/IP协议栈</b>：</div>
-      <div style="overflow-x:auto;"><table>
-        <tr><th>层次</th><th>协议</th></tr>
-        <tr><td>应用层</td><td>HTTP/HTTPS/DNS/SMTP/FTP</td></tr>
-        <tr><td>传输层</td><td>TCP(可靠)/UDP(不可靠)</td></tr>
-        <tr><td>网络层</td><td>IP/ICMP/ARP/OSPF/BGP</td></tr>
-        <tr><td>数据链路层</td><td>以太网/VLAN</td></tr>
-      </table></div>
-      <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>IP地址</b>：IPv4(32位)/IPv6(128位)。A/B/C/D/E五类，子网掩码，CIDR。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>IPv6</b>：128位地址，表示为8组4位十六进制数，用"::"简化连续零。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>7.2 物联网技术</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>物联网架构</b>：感知层(RFID/传感器)→网络层(5G/NB-IoT/LoRa)→应用层(智能家居/工业互联网)。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>RFID</b>：无线射频识别，由标签、读写器、天线组成。</div>
-      <div class="kp"><span class="tag tag-low">了解</span>了解</span><b>NB-IoT</b>：窄带物联网，低功耗广域网技术，覆盖广、连接多、成本低、功耗少。
-      </div>
-    </div>
-  </div>
-
-  <div class="card" id="ch8">
-    <div class="card-title">
-      <span class="emoji">📖</span>第8章 现代电信业务
-      
-    </div>
-    
-  </div>
-
-  <div class="card" id="ch9">
-    <div class="card-title">
-      <span class="emoji">📖</span>第9章 通信网络安全
-      
-    </div>
-    
-  </div>
-
-  <div class="card" id="ch10">
-    <div class="card-title">
-      <span class="emoji">📖</span>第10章 通信工程项目管理
-      
-    </div>
-    
-  </div>
-
-  <div class="card" id="ch11">
-    <div class="card-title">
-      <span class="emoji">📖</span>通信专业外语
-      
-    </div>
-    
-  </div>
 </div>
 
-<!-- SUBJECT 2 -->
+<!-- ========== SUBJECT 2: 传输有线 ========== -->
 <div id="page-subject2" class="content">
 
   <div class="card">
@@ -1478,1063 +1086,493 @@ body.font-large .card-title { font-size: 18px; }
       <span class="emoji">📗</span>传输与接入（有线）
       <span class="score high">100分</span>
     </div>
-    <p style="font-size:13px;color:var(--gray-500)">主观题（计算/问答）· 共11章 · 6道大题</p>
+    <p style="font-size:13px;color:var(--gray-500)">主观题 · 6道大题 · 均为必答题</p>
+
     <div class="chapter-grid">
-      <div class="chapter-btn " onclick="scrollToEl('tch1')">
-        <div class="ch-num">1</div>
-        <div class="ch-name">光纤通信概述</div>
+      <div class="chapter-btn mid" onclick="scrollToEl('s2-q1')">
+        <div class="ch-num">试题一</div>
+        <div class="ch-name">光纤/测试/维护<br>15分</div>
       </div>
-      <div class="chapter-btn " onclick="scrollToEl('tch2')">
-        <div class="ch-num">2</div>
-        <div class="ch-name">SDH传输网</div>
+      <div class="chapter-btn high" onclick="scrollToEl('s2-q2')">
+        <div class="ch-num">试题二</div>
+        <div class="ch-name">SDH / MSTP<br>20分</div>
       </div>
-      <div class="chapter-btn " onclick="scrollToEl('tch3')">
-        <div class="ch-num">3</div>
-        <div class="ch-name">MSTP传输网</div>
+      <div class="chapter-btn high" onclick="scrollToEl('s2-q3')">
+        <div class="ch-num">试题三</div>
+        <div class="ch-name">DWDM / OTN<br>20分</div>
       </div>
-      <div class="chapter-btn " onclick="scrollToEl('tch4')">
-        <div class="ch-num">4</div>
-        <div class="ch-name">DWDM传输网</div>
+      <div class="chapter-btn" onclick="scrollToEl('s2-q4')">
+        <div class="ch-num">试题四</div>
+        <div class="ch-name">ASON<br>10分</div>
       </div>
-      <div class="chapter-btn " onclick="scrollToEl('tch5')">
-        <div class="ch-num">5</div>
-        <div class="ch-name">光传送网OTN</div>
+      <div class="chapter-btn mid" onclick="scrollToEl('s2-q5')">
+        <div class="ch-num">试题五</div>
+        <div class="ch-name">PTN / IPRAN<br>15分</div>
       </div>
-      <div class="chapter-btn " onclick="scrollToEl('tch6')">
-        <div class="ch-num">6</div>
-        <div class="ch-name">自动交换光网络ASON</div>
-      </div>
-      <div class="chapter-btn " onclick="scrollToEl('tch7')">
-        <div class="ch-num">7</div>
-        <div class="ch-name">分组传送网PTN</div>
-      </div>
-      <div class="chapter-btn " onclick="scrollToEl('tch8')">
-        <div class="ch-num">8</div>
-        <div class="ch-name">IPRAN</div>
-      </div>
-      <div class="chapter-btn " onclick="scrollToEl('tch9')">
-        <div class="ch-num">9</div>
-        <div class="ch-name">有线接入网</div>
-      </div>
-      <div class="chapter-btn " onclick="scrollToEl('tch10')">
-        <div class="ch-num">10</div>
-        <div class="ch-name">光网络的测试</div>
-      </div>
-      <div class="chapter-btn " onclick="scrollToEl('tch11')">
-        <div class="ch-num">11</div>
-        <div class="ch-name">光网络的维护</div>
+      <div class="chapter-btn high" onclick="scrollToEl('s2-q6')">
+        <div class="ch-num">试题六</div>
+        <div class="ch-name">有线接入网<br>20分</div>
       </div>
     </div>
   </div>
 
-  <div class="card">
+  <!-- 试题一 -->
+  <div class="card" id="s2-q1">
     <div class="card-title">
-      <span class="emoji">⚡</span>快捷操作
+      <span class="emoji">📡</span>试题一 · 光纤/测试/维护
+      <span class="score mid">15分</span>
     </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;">
-      <button class="action-btn" onclick="expandAllInPage('page-subject2')">📂 全部展开</button>
-      <button class="action-btn" onclick="collapseAllInPage('page-subject2')">📁 全部收起</button>
-      <button class="action-btn" onclick="scrollToTop()">⬆️ 回到顶部</button>
-    </div>
-  </div>
+    <p style="font-size:13px;color:var(--gray-500)">第1章约8-9分 + 第10/11章各3-4分</p>
 
-  <div class="card" id="tch1">
-    <div class="card-title">
-      <span class="emoji">📖</span>第1章 光纤通信概述
-      
+    <div class="callout callout-calc">
+      <strong>光纤损耗计算（年年考，4分必拿）</strong>
+      <p style="margin-top:8px">公式：α = (10/L) · log₁₀(Pi/Po) [dB/km]</p>
+      <p>dBm换算：P(dBm) = 10 · log₁₀(P(mW) / 1mW)</p>
+      <div style="margin-top:8px;padding:8px;background:rgba(255,255,255,0.5);border-radius:6px;font-size:12px">
+        <strong>解题步骤：</strong><br>
+        ① 总损耗 = α × L<br>
+        ② 发送功率转dBm<br>
+        ③ 接收功率 = 发送(dBm) - 总损耗(dB)
+      </div>
     </div>
-    
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>1.1 光纤通信基本概念</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>光纤通信优点</b>：①传输频带宽、容量大 ②损耗低、中继距离长 ③抗电磁干扰 ④重量轻、体积小 ⑤资源丰富 ⑥保密性好。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>光纤通信定义</b>：利用光波作为载波，以光纤为传输媒介进行信息传输的通信方式。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>三个低损耗窗口</b>：</div>
-      <div style="overflow-x:auto;"><table>
+
+    <div class="sub-title">三个低损耗窗口</div>
+    <div class="table-wrap">
+      <table>
         <tr><th>窗口</th><th>波长</th><th>损耗</th><th>应用</th></tr>
-        <tr><td>第一窗口</td><td>850nm</td><td>~2dB/km</td><td>多模短距</td></tr>
-        <tr><td>第二窗口</td><td>1310nm</td><td>~0.35dB/km</td><td>单模中距</td></tr>
-        <tr><td>第三窗口</td><td>1550nm</td><td>~0.2dB/km</td><td>单模长距/DWDM</td></tr>
-      </table></div>
-      </div>
+        <tr><td>第一</td><td>850nm</td><td>~2 dB/km</td><td>多模短距</td></tr>
+        <tr><td>第二</td><td>1310nm</td><td>~0.35 dB/km</td><td>单模中距</td></tr>
+        <tr><td>第三</td><td>1550nm</td><td>~0.2 dB/km</td><td>单模长距/DWDM</td></tr>
+      </table>
     </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>1.2 光纤</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>光纤结构</b>：纤芯(Core) + 包层(Cladding) + 涂覆层。利用<span style="color:#ef4444;font-weight:600;">全反射</span>原理导光。纤芯折射率 > 包层折射率。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>光纤分类</b>：</div>
-      <div style="overflow-x:auto;"><table>
-        <tr><th>分类标准</th><th>类型</th><th>特点</th></tr>
-        <tr><td>折射率分布</td><td>阶跃型/渐变型</td><td>折射率突变/渐变</td></tr>
-        <tr><td>传输模式</td><td>多模光纤(MMF)/单模光纤(SMF)</td><td>多模：中距离中容量<br>单模：长距离大容量</td></tr>
-      </table></div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>光纤传输特性</b>：</div>
-      <ul style="padding-left:20px;">
-        <li><span style="color:#ef4444;font-weight:600;">损耗</span>：吸收损耗(紫外/红外/杂质OH⁻)、散射损耗(瑞利散射)</li>
-        <li><span style="color:#ef4444;font-weight:600;">色散</span>：模式色散(多模)、材料色散、波导色散。单模光纤主要是色度色散。1550nm处色散为正(约17ps/nm·km)。</li>
-      </ul>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>常用单模光纤类型</b>：</div>
-      <div style="overflow-x:auto;"><table>
-        <tr><th>型号</th><th>名称</th><th>特点</th></tr>
-        <tr><td>G.652</td><td>标准单模光纤</td><td>1310nm零色散，最常用</td></tr>
-        <tr><td>G.653</td><td>色散位移光纤(DSF)</td><td>1550nm零色散</td></tr>
-        <tr><td>G.655</td><td>非零色散位移光纤(NZDSF)</td><td>1550nm小色散，适合DWDM</td></tr>
-        <tr><td>G.657</td><td>弯曲不敏感光纤</td><td>抗弯性能好，用于FTTH</td></tr>
-      </table></div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>非线性效应</b>：SPM(自相位调制)、XPM(交叉相位调制)、FWM(四波混频)、SRS/SBS(拉曼/布里渊散射)。</div>
-      <div class="callout callout-tip"><span class="badge orange">2020年真题(计算题4分)</span>已知单模光纤工作波长1550nm，传输损耗0.2dB/km，传输长度50km，光发射机输出光功率100mW，求接收光功率。
-      <br><b>解</b>：总损耗=0.2×50=10dB；发送光功率=10·log₁₀(100/1)=20dBm；接收光功率=20-10=10dBm=10mW</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>1.3 通信管线</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>通信管道</b>：地下管道、人孔/手孔、电缆沟等基础设施。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>光缆结构</b>：缆芯、加强件、护套、填充物。按结构分：层绞式、中心管式、骨架式、带状式。按敷设方式分：架空、管道、直埋、海底。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>1.4 光通信器件</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>光源</b>：</div>
-      <div style="overflow-x:auto;"><table>
-        <tr><th>类型</th><th>原理</th><th>特点</th><th>应用</th></tr>
-        <tr><td>LD(激光器)</td><td>受激辐射</td><td>功率大、谱线窄、单色性好</td><td>长距离/高速</td></tr>
-        <tr><td>LED(发光二极管)</td><td>自发辐射</td><td>功率小、谱线宽、价格低</td><td>短距离/低速</td></tr>
-      </table></div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>光检测器</b>：</div>
-      <div style="overflow-x:auto;"><table>
-        <tr><th>类型</th><th>原理</th><th>特点</th></tr>
-        <tr><td>PIN光电二极管</td><td>光生电流</td><td>结构简单、噪声小</td></tr>
-        <tr><td>APD雪崩光电二极管</td><td>光生电流+雪崩倍增</td><td>灵敏度高、有倍增效应</td></tr>
-      </table></div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>无源光器件</b>：光连接器、光耦合器、光分路器、光隔离器、光衰减器、波分复用器。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>1.5 数字光纤通信系统</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>光信号调制</b>：直接调制(改变注入电流)、间接调制(外调制器：马赫-曾德尔/MZ)。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>系统构成</b>：</div>
-      <div class="formula-box">电端机 → 光发送端机 → 光纤 → 光中继器 → 光纤 → 光接收端机 → 电端机</div>
-      <div class="kp-item">光发送端机：包括光源+驱动电路+编码调制。光接收端机：光检测器+放大+均衡+判决再生。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>1.6 光网络基本概念</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>光网络定义</b>：以光纤为传输介质，以光节点为交换/处理节点的通信网络。</div>
-      <div class="kp"><span class="tag tag-low">了解</span>了解</span><b>分层结构</b>：光通路层(OCh)→光复用段层(OMS)→光传输段层(OTS)。
-      </div>
-    </div>
-  </div>
 
-  <div class="card" id="tch2">
-    <div class="card-title">
-      <span class="emoji">📖</span>第2章 SDH传输网
-      
-    </div>
-    
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>2.1 SDH基本概念</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>SDH概念</b>：由一些网络单元(复用器/数字交叉连接设备/再生器)组成的、在光纤上进行同步信息传输/复用/分插/交叉连接的网络。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>SDH优点</b>：①同步复用 ②标准化接口 ③强大的OAM ④自愈能力强 ⑤前向/后向兼容。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>SDH缺点</b>：频带利用率低(开销大)、指针调整复杂、软件缺陷影响大。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>速率体系</b>：</div>
-      <div style="overflow-x:auto;"><table>
-        <tr><th>等级</th><th>速率</th><th>容量(E1数)</th></tr>
-        <tr><td>STM-1</td><td>155.520 Mbit/s</td><td>63×E1</td></tr>
-        <tr><td>STM-4</td><td>622.080 Mbit/s</td><td>252×E1</td></tr>
-        <tr><td>STM-16</td><td>2488.320 Mbit/s</td><td>1008×E1</td></tr>
-        <tr><td>STM-64</td><td>9953.280 Mbit/s</td><td>4032×E1</td></tr>
-      </table></div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>四种基本网络单元</b>：TM(终端复用器)、ADM(分插复用器)、DXC(数字交叉连接设备)、REG(再生中继器)。</div>
-      <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>ADM三大功能</b>：①支路-群路(上/下支路)能力 ②群路-群路(直通)连接能力 ③数字交叉连接(DXC)功能。</div>
+    <div class="callout callout-exam">
+      <strong>常用单模光纤对比（高频考点）</strong>
+      <div class="table-wrap" style="margin-top:8px">
+        <table>
+          <tr><th>类型</th><th>1550nm特性</th><th>DWDM</th></tr>
+          <tr><td>G.652</td><td>最低损耗+正色散</td><td>✓（需色散补偿）</td></tr>
+          <tr><td>G.653</td><td>零色散+最低损耗</td><td>✗（FWM严重）</td></tr>
+          <tr><td><strong>G.655</strong></td><td>小色散+最低损耗</td><td>✓✓（最适合）</td></tr>
+          <tr><td>G.657</td><td>弯曲不敏感</td><td>FTTH专用</td></tr>
+        </table>
       </div>
     </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>2.2 SDH帧结构</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>STM-N帧结构</b>：</div>
-      <div class="formula-box">9行 × 270×N列 = 帧长度9×270×N×8 bit<br>帧周期125μs (8000帧/秒)</div>
-      <div class="kp-item">三个主要区域：</div>
-      <ul style="padding-left:20px;">
-        <li><span class="hl-blue">段开销(SOH)</span>：第1-3行为RSOH(再生段开销)，第5-9行为MSOH(复用段开销)，用于OAM。</li>
-        <li><span class="hl-blue">AU指针(PTR)</span>：第4行第1-9×N列，用于定位VC-n在STM-N帧中的位置。</li>
-        <li><span class="hl-blue">净负荷(Payload)</span>：第1-9行第10-270×N列，存放有效信息+POH(通道开销)。</li>
-      </ul>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>段开销字节</b>：A1/A2(帧定位)、B1/B2(误码监测)、D1-D12(数据通信)、E1/E2(公务)、K1/K2(APS)等。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>2.3 SDH复用映射结构</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>复用映射步骤</b>：</div>
-      <div class="formula-box">C(容器) → VC(虚容器,+POH) → TU(支路单元,+指针) → TUG → AU(管理单元,+指针) → AUG → STM-N</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>我国SDH复用映射结构</b>：</div>
-      <ul style="padding-left:20px;">
-        <li>E1(2.048M) → C-12 → VC-12 → TU-12 → TUG-2(×3) → TUG-3(×7) → VC-4 → AU-4 → AUG → STM-N</li>
-        <li>E3(34.368M) → C-3 → VC-3 → TU-3 → TUG-3(×3) → VC-4 → AU-4 → AUG → STM-N</li>
-        <li>E4(139.264M) → C-4 → VC-4 → AU-4 → AUG → STM-N</li>
-      </ul>
-      <div class="callout callout-tip"><span class="badge orange">速算</span>1个STM-1 = 1个AU-4 = 1个VC-4 = 3个TUG-3 = 21个TUG-2 = 63个TU-12 = 63个E1。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>2.4 SDH传输网结构</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>我国SDH分层</b>：一级干线(省际)、二级干线(省内)、中继网(城域)、接入网。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>拓扑结构</b>：线形、星形、树形、环形、网孔形。<span style="color:#ef4444;font-weight:600;">环形网</span>最常用(自愈能力强)。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>2.5 网络保护</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>自愈概念</b>：无需人为干预，网络在极短时间内从故障中恢复业务的能力。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>主要保护方式</b>：</div>
-      <div style="overflow-x:auto;"><table>
-        <tr><th>保护方式</th><th>原理</th><th>特点</th></tr>
-        <tr><td>线路保护倒换</td><td>主备用线路切换</td><td>1+1/1:N</td></tr>
-        <tr><td>二纤单向通道保护</td><td>并发选收，工作+保护光纤</td><td>1+1, 收端倒换</td></tr>
-        <tr><td>二纤双向通道保护</td><td>双向并发选收</td><td>1+1/1:1</td></tr>
-        <tr><td>二纤双向复用段保护</td><td>时隙保护</td><td>APS协议(K1/K2字节)</td></tr>
-        <tr><td>四纤双向复用段保护</td><td>工作+保护各2纤</td><td>容量大</td></tr>
-        <tr><td>子网连接保护(SNCP)</td><td>跨子网保护，"并发选收"</td><td>收端倒换，不需APS协议</td></tr>
-      </table></div>
-      <div class="callout callout-tip"><span class="badge orange">考点</span><b>自愈环分类</b>：按方向分(单向/双向)、按层次分(通道/复用段)、按光纤数分(二纤/四纤)。常见组合：二纤单向通道保护、二纤双向复用段保护等。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>2.6 网同步</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>同步方式</b>：主从同步(我国采用)、互同步。主钟为PRC(基准钟)。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>SDH网同步</b>：BITS时钟→各级设备。STM-N线路码传递时钟。SSM(同步状态消息)功能。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>2.7 网络管理</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>TMN基本概念</b>：电信管理网，对电信网进行管理的综合系统。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>SDH管理功能</b>：故障管理、配置管理、性能管理、安全管理、账务管理。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>2.8 SDH应用</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp"><span class="tag tag-low">了解</span>了解</span><b>在IP网络中的应用</b>：IP over SDH(POS)，通过PPP/HDLC封装。
-      </div>
-    </div>
-  </div>
 
-  <div class="card" id="tch3">
-    <div class="card-title">
-      <span class="emoji">📖</span>第3章 MSTP传输网
-      
-    </div>
-    
     <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>3.1 MSTP基本概念</strong>
+      <strong>光纤特性细节</strong>
       <span class="chevron">▼</span>
     </div>
     <div class="collapse-body">
       <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>MSTP特点</b>：基于SDH平台，同时实现TDM/ATM/以太网等多种业务的接入、处理和传输。特点：①多业务接口 ②集成度高 ③带宽可配 ④支持ATM/Eth处理。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>功能模型</b>：接入层→处理层→传送层(SDH)。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>3.2 级联技术</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>级联概念与分类</b>：</div>
-      <div style="overflow-x:auto;"><table>
-        <tr><th>类型</th><th>原理</th><th>特点</th></tr>
-        <tr><td>相邻级联(VC-Xc)</td><td>占用连续的X个VC-12/VC-3/VC-4</td><td>需连续带宽</td></tr>
-        <tr><td>虚级联(VC-Xv)</td><td>占用不连续的X个VC，LCAS协议</td><td>灵活分配带宽</td></tr>
-      </table></div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>3.3 以太网业务封装</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>GFP(通用成帧规程)</b>：</div>
-      <ul style="padding-left:20px;">
-        <li>优点：高效封装、支持多种数据协议、有纠错功能</li>
-        <li>两种映射模式：Frame-mapped(帧映射)、Transparent(透明映射)</li>
-      </ul>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>LCAS(链路容量调整方案)</b>：</div>
-      <ul style="padding-left:20px;">
-        <li>动态调整虚级联组成员数量，实现带宽无损调整</li>
-        <li>自动删除故障成员，恢复时自动加入</li>
-        <li>特点：带宽可动态调整、提高可靠性</li>
-      </ul>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>封装协议</b>：PPP/HDLC、LAPS、GFP。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>3.4 以太网业务在MSTP中的实现</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>以太网透传</b>：将以太网帧封装后透明传输，不处理MAC层。简单但无流量控制。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>以太网二层交换</b>：支持MAC地址学习、VLAN、组播等。基于IEEE 802.1D。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>3.5 RPR技术在MSTP中的应用</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>内嵌RPR</b>：弹性分组环(RPR, IEEE 802.17)，支持公平带宽分配、拓扑自动发现、50ms保护倒换。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>3.6 MPLS在MSTP中的应用</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>内嵌MPLS</b>：多协议标签交换，在MSTP中实现VPN和QoS保障。</div>
-      <div class="kp"><span class="tag tag-low">了解</span>了解</span><b>FEC(转发等价类)</b>：具有相同转发处理的分组集合。MPLS网络由LER(边缘路由器)和LSR(核心路由器)组成。
-      </div>
-    </div>
-  </div>
-
-  <div class="card" id="tch4">
-    <div class="card-title">
-      <span class="emoji">📖</span>第4章 DWDM传输网
-      
-    </div>
-    
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>4.1 DWDM基本概念</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>WDM概念</b>：波分复用，在一根光纤上同时传输多个波长光信号。分WWDM(粗波分CWDM, 通道间隔20nm)和DWDM(密集波分, 间隔≤0.8nm)。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>DWDM技术特点</b>：①超大容量 ②透明传输 ③波长路由 ④保护恢复 ⑤可扩展性强。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>工作方式</b>：双纤单向(收发不同光纤)、单纤双向(收发同光纤不同波长)。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>4.2 DWDM工作波长</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>工作波长</b>：C波段(1530-1565nm)，L波段(1565-1625nm)。ITU-T G.692规定通道间隔：100GHz(0.8nm)或50GHz(0.4nm)。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>使用光纤</b>：G.652(标准)、G.655(NZDSF，适合DWDM)。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>4.3 DWDM系统组成</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>典型DWDM系统组成</b>：</div>
-      <div class="formula-box">OTU(波长转换器) → OMU(合波器) → OA(光放大器) → 光纤 → ODU(分波器) → OTU</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>光波长转换器(OTU)</b>：将SDH信号转换为符合ITU-T G.692规定的标准波长，实现光-电-光(O-E-O)转换。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>波分复用器件</b>：合波器(OMU)和分波器(ODU)。常用类型：介质薄膜滤波器、AWG(阵列波导光栅)、光纤光栅。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>光监控信道(OSC)</b>：使用1510nm波长传输OAM信息，不经过光放大器。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>4.4 光放大器</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>光放大器作用</b>：直接对光信号进行放大，无需O-E-O转换。种类：SOA(半导体光放大器)、EDFA(掺铒光纤放大器)、拉曼放大器。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>EDFA(掺铒光纤放大器)</b>：</div>
-      <ul style="padding-left:20px;">
-        <li>工作波段：C波段(1530-1565nm)</li>
-        <li>泵浦光源：980nm或1480nm</li>
-        <li>增益：20-40dB</li>
-        <li>优点：增益高、带宽宽、噪声低、对速率透明</li>
-        <li>缺点：增益不平坦、不能放大L波段(需用拉曼)</li>
-      </ul>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>4.5 DWDM关键设备</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>OADM(光分插复用器)</b>：在光域上下特定波长，不影响其他波长直通。固定式/可重构式(ROADM)。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>OXC(光交叉连接)</b>：在光域实现波长级交叉连接，实现波长路由和恢复。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>4.6 组网方案及应用</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>组网方式</b>：点对点、链形、环形、网孔形。常用环形(保护能力强)。</div>
-      <div class="kp"><span class="tag tag-low">了解</span>了解</span><b>网络保护</b>：光层保护(1+1/1:1光复用段保护)、光通道保护。
-      </div>
-    </div>
-  </div>
-
-  <div class="card" id="tch5">
-    <div class="card-title">
-      <span class="emoji">📖</span>第5章 光传送网OTN
-      
-    </div>
-    
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>5.1 OTN基本概念</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>OTN概念</b>：以波分复用技术为基础、在光层组织网络的传送网，由ITU-T G.872定义。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>OTN优势</b>：①数字包封技术 ②FEC前向纠错 ③多层次监控 ④灵活调度 ⑤多业务适配。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>5.2 OTN分层模型</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>分层模型</b>：</div>
-      <div style="overflow-x:auto;"><table>
-        <tr><th>层次</th><th>功能</th><th>信息结构</th></tr>
-        <tr><td>光通路层(OCh)</td><td>光通道端到端传输</td><td>OCh帧</td></tr>
-        <tr><td>光复用段层(OMS)</td><td>波分复用管理</td><td>OMS帧</td></tr>
-        <tr><td>光传输段层(OTS)</td><td>光纤传输管理</td><td>OTS帧</td></tr>
-      </table></div>
-      <div class="kp-item">电层：OPU(光通路净负荷单元)→ODU(光通路数据单元)→OTU(光通路传送单元)→OCh。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>5.3 OTN帧结构</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>OTUk帧结构</b>：4行×4080列，含开销区(前16列)+FEC区(后256列)+净负荷区(中间3824列)。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>OTM比特率</b>：OTU1=2.666Gbit/s, OTU2=10.709Gbit/s, OTU3=43.018Gbit/s, OTU4=111.81Gbit/s。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>5.4 复用映射结构</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>映射路径</b>：客户信号(STM-N/10GE等)→OPUk→ODUk→OTUk→OCh→OMS→OTS。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>5.5 OTN关键设备</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>电交叉设备</b>：基于ODUk交叉，实现子波长级调度。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>光交叉设备(ROADM)</b>：基于波长交叉，实现波长级调度。支持远程配置波长上下路。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>光电混合交叉</b>：同时支持电层(ODUk)和光层(波长)交叉。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>5.6 OTN保护</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>保护分类</b>：</div>
-      <ul style="padding-left:20px;">
-        <li>线性保护：1+1/1:1 ODUk保护</li>
-        <li>子网连接保护(SNCP)</li>
-        <li>环网保护：基于ODUk或OCh的环保护</li>
-      </ul>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>5.7 组网及技术发展</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>组网结构</b>：环形、 mesh结构。</div>
-      <div class="kp"><span class="tag tag-low">了解</span>了解</span><b>100Gbit/s OTN</b>：采用相干检测、PDM-QPSK调制、FEC编码等技术。
-      </div>
-    </div>
-  </div>
-
-  <div class="card" id="tch6">
-    <div class="card-title">
-      <span class="emoji">📖</span>第6章 自动交换光网络ASON
-      
-    </div>
-    
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>6.1 ASON基本概念</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>ASON概念</b>：在SDH/MSTP/OTN传送网上叠加控制平面，实现自动发现、自动路由、自动信令的智能光网络。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>ASON特点</b>：①智能控制 ②动态连接 ③多样化保护恢复 ④流量工程。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>6.2 ASON体系结构</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>三个平面</b>：</div>
-      <div style="overflow-x:auto;"><table>
-        <tr><th>平面</th><th>功能</th></tr>
-        <tr><td>控制平面</td><td>自动发现/路由/信令，实现连接建立/拆除/恢复</td></tr>
-        <tr><td>传送平面</td><td>实际业务传输(SDH/OTN设备)</td></tr>
-        <tr><td>管理平面</td><td>对控制/传送平面进行管理</td></tr>
-      </table></div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>接口</b>：UNI(用户-网络接口)、E-NNI(外部网络-网络接口)、I-NNI(内部网络-网络接口)、CCI(连接控制接口)。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>连接类型</b>：</div>
-      <ul style="padding-left:20px;">
-        <li><b>永久连接(PC)</b>：发起和维护由管理平面完成，无控制平面参与</li>
-        <li><b>交换连接(SC)</b>：发起和维护由控制平面完成，UNI信令触发</li>
-        <li><b>软永久连接(SPC)</b>：管理平面+控制平面共同完成，用户侧管理配置，网络内部控制平面配置</li>
-      </ul>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>ASON控制平面四大功能</b>：①资源发现 ②路由控制 ③连接管理 ④连接恢复。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>6.3 ASON业务</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>支持的业务</b>：SDH业务(STM-N)、以太网业务、存储业务(FC)、OTN业务。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>6.4 组网</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp"><span class="tag tag-low">了解</span>了解</span><b>分层结构</b>：ASON分为骨干层、汇聚层、接入层。与现有传输网叠加部署。
-      </div>
-    </div>
-  </div>
-
-  <div class="card" id="tch7">
-    <div class="card-title">
-      <span class="emoji">📖</span>第7章 分组传送网PTN
-      
-    </div>
-    
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>7.1 PTN基本概念</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>PTN概念</b>：面向分组业务的传送网，在IP和光传输层之间提供分组传输。基于MPLS-TP或PBB-TE技术。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>PTN特点</b>：①面向连接 ②统计复用 ③端到端OAM ④50ms保护 ⑤精确时钟同步 ⑥QoS保障。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>7.2 PTN体系结构</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>分层结构(T-MPLS)</b>：</div>
-      <div style="overflow-x:auto;"><table>
-        <tr><th>层</th><th>功能</th></tr>
-        <tr><td>PW层(伪线层)</td><td>封装客户业务(E1/FE等)</td></tr>
-        <tr><td>LSP层(标签交换路径层)</td><td>端到端隧道</td></tr>
-        <tr><td>Section层(段层)</td><td>物理层适配</td></tr>
-      </table></div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>7.3 PTN关键技术</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>保护技术</b>：</div>
-      <ul style="padding-left:20px;">
-        <li>LSP 1+1/1:1保护(线性保护)</li>
-        <li>环网保护(Wrapping/Spanning)</li>
-        <li>50ms倒换时间(符合电信级要求)</li>
-      </ul>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>OAM</b>：三层OAM结构(段层/LSP层/PW层)。CC(连通性检测)/LB(环回)/LT(链路追踪)/AIS等。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>QoS</b>：流量分类→流量监管(CAR)→队列调度→拥塞管理。DiffServ模型。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>同步技术</b>：</div>
-      <ul style="padding-left:20px;">
-        <li>频率同步：CES/Clock over Packet/SyncE(同步以太网)</li>
-        <li>时间同步：IEEE 1588v2(PTP) / 1588v2协议</li>
-      </ul>
-      <div class="kp"><span class="tag tag-low">了解</span>了解</span><b>PWE3(伪线仿真)</b>：将TDM/ATM/FR等业务封装到分组网络中透传。三种连接：点到点、点到多点、多点到多点。
-      </div>
-    </div>
-  </div>
-
-  <div class="card" id="tch8">
-    <div class="card-title">
-      <span class="emoji">📖</span>第8章 IPRAN
-      
-    </div>
-    
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>8.1 IPRAN概述</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>IPRAN分层结构</b>：</div>
-      <div style="overflow-x:auto;"><table>
-        <tr><th>层级</th><th>设备</th><th>功能</th></tr>
-        <tr><td>核心层</td><td>核心路由器</td><td>高速转发/MPLS VPN</td></tr>
-        <tr><td>汇聚层</td><td>汇聚路由器</td><td>业务汇聚/MPLS VPN</td></tr>
-        <tr><td>接入层</td><td>接入路由器</td><td>基站接入</td></tr>
-      </table></div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>IPRAN特点</b>：基于IP/MPLS，动态路由、灵活组网、支持多业务承载。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>8.2 路由部署</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>IGP部署</b>：OSPF/IS-IS。分域设计，核心/汇聚用IS-IS或OSPF，接入层独立域。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>BGP在IPRAN中的应用</b>：</div>
-      <ul style="padding-left:20px;">
-        <li>MP-BGP传递VPN路由</li>
-        <li>RR(Route Reflector)简化IBGP全连接</li>
-        <li>MPLS L3VPN承载多业务</li>
-      </ul>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>OSPF要点</b>：链路状态路由协议，区域划分(Area 0骨干区域)，SPF算法。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>IS-IS要点</b>：中间系统到中间系统协议，Level-1/Level-2/Level-1-2路由器。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>8.3 业务承载</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>LTE业务承载</b>：</div>
-      <ul style="padding-left:20px;">
-        <li>S1接口：eNodeB→EPC (MME/S-GW)</li>
-        <li>X2接口：eNodeB之间互联</li>
-        <li>L3VPN或L2VPN承载</li>
-      </ul>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>2G/3G基站承载</b>：Abis/Iub接口通过CES或L2VPN承载。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>集团客户承载</b>：通过L3VPN/MPLS VPN实现专线互连。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>8.4 保护与同步</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>保护技术</b>：</div>
-      <ul style="padding-left:20px;">
-        <li><b>BFD(双向转发检测)</b>：故障检测技术，毫秒级检测</li>
-        <li><b>FRR(快速重路由)</b>：快速切换技术，50ms内切换</li>
-        <li><b>VRRP(虚拟路由器冗余协议)</b>：网络冗余技术，网关冗余</li>
-        <li>LSP 1:1保护、Ti-LFA(拓扑无关的LFA)</li>
-      </ul>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>同步技术</b>：</div>
-      <div style="overflow-x:auto;"><table>
-        <tr><th>制式</th><th>同步需求</th><th>实现方式</th></tr>
-        <tr><td>WCDMA/LTE-FDD</td><td>仅频率同步</td><td>SyncE 或 1588v2纯PTP</td></tr>
-        <tr><td>LTE-TDD</td><td>频率+时间同步</td><td>SyncE+PTP 或 1588v2纯PTP</td></tr>
-      </table></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" id="tch9">
-    <div class="card-title">
-      <span class="emoji">📖</span>第9章 有线接入网
-      
-    </div>
-    
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>9.1 接入网概述</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>接入网定义</b>：从业务节点接口(SNI)到用户网络接口(UNI)之间的传送实体。由ANSI/ITU-T定义。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>接口</b>：SNI(业务节点接口: V5.2等)、UNI(用户网络接口: Z/以太网等)、Q3(管理接口)。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>特点</b>：①共享成本 ②覆盖范围大 ③用户接入多样化 ④技术多样化。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>功能结构</b>：5个功能模块：用户口功能(UPF)、业务口功能(SPF)、核心功能(CF)、传送功能(TF)、系统管理功能(SMF)。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>分类</b>：有线(光纤/铜缆/同轴)、无线(固定/移动)。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>9.2 HFC接入网</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>HFC概念</b>：光纤同轴混合网，光纤到小区/楼宇，同轴到用户。融合CATV和数据业务。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>网络结构</b>：前端(CMTS)→光节点→分配器→用户(Cable Modem)。下行带宽共享，上行采用TDMA/CDMA。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>双向传输实现</b>：</div>
-      <ul style="padding-left:20px;">
-        <li>频分双工：下行54-860MHz，上行5-42MHz(中国: 5-65MHz)</li>
-        <li>DOCSIS标准：下行256QAM，上行QPSK/16QAM</li>
-      </ul>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>优缺点</b>：优点-带宽较大、已有CATV基础设施；缺点-上行噪声汇聚、树形拓扑安全差。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>9.3 无源光网络(PON)</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>光纤接入网基本概念</b>：以光纤为传输介质，OLT(光线路终端)+ODN(光分配网络)+ONU/ONT(光网络单元/终端)。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>EPON技术特点</b>：</div>
-      <ul style="padding-left:20px;">
-        <li>基于以太网帧，IEEE 802.3ah标准</li>
-        <li>上下行对称1.25Gbit/s</li>
-        <li>采用8b/10b线路编码，有效速率1Gbit/s</li>
-        <li>单纤双向：下行1490nm(广播)，上行1310nm(TDMA)</li>
-        <li>分光比1:32/1:64</li>
-      </ul>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>EPON工作原理</b>：</div>
-      <ul style="padding-left:20px;">
-        <li>采用WDM(波分复用)技术实现单纤双向传输</li>
-        <li><b>下行</b>：TDM+广播方式，OLT发广播帧，ONU根据LLID选择性接收</li>
-        <li><b>上行</b>：TDMA方式，ONU按分配时隙发送，采用测距技术避免冲突</li>
-        <li>DBA(动态带宽分配)：OLT动态调整ONU上行带宽</li>
-      </ul>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>EPON网络结构</b>：树形或星形。OLT布放在局端中心机房，覆盖范围大，便于维护。分光器(ODN核心部件)支持一级/二级分光。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>GPON技术特点</b>：</div>
-      <ul style="padding-left:20px;">
-        <li>ITU-T G.984标准</li>
-        <li>下行2.5Gbit/s，上行1.25Gbit/s(非对称)</li>
-        <li>GEM(GPON封装方法)封装，支持TDM/Eth/视频等多业务</li>
-        <li>分光比1:64/1:128</li>
-        <li>单纤双向：下行1490nm，上行1310nm</li>
-        <li>下行AES加密，安全性更强</li>
-      </ul>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>PON双向传输技术</b>：光空分复用(OSDM)、光波分复用(OWDM)、时间压缩复用(TCM)、光副载波复用(OSCM)。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>PON多址接入技术</b>：时分多址(TDMA，最常用)、波分多址(WDMA)、码分多址(CDMA)、副载波多址(SCMA)。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>PON关键技术-测距</b>：由于上行采用TDMA，为避免各路信号碰撞，需通过测距计算OLT到ONU的往返时延。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>其他PON关键技术</b>：突发发射/接收、DBA(动态带宽分配)、安全加密(EPON无/GPON有AES)、保护倒换。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>10G EPON/GPON</b>：下一代PON，10Gbit/s速率，更大分光比。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>9.4 FTTx+LAN接入网</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>概念及结构</b>：光纤到楼/到楼层(FIB/FITL)，最后一段用以太网(五类线)到用户。LAN Switch作为接入设备。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>优缺点</b>：优点-带宽高、成本低、技术成熟；缺点-五类线距离限制(100m)、供电问题。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>FTTx应用场景</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-mid">熟悉</span>熟悉</span><b>FTTx分类</b>：</div>
-      <div style="overflow-x:auto;"><table>
-        <tr><th>类型</th><th>光纤到达位置</th></tr>
-        <tr><td>FTTH</td><td>光纤到户</td></tr>
-        <tr><td>FTTB</td><td>光纤到楼</td></tr>
-        <tr><td>FTTC</td><td>光纤到路边</td></tr>
-        <tr><td>FTTO</td><td>光纤到办公室</td></tr>
-        <tr><td>FTTZ</td><td>光纤到小区</td></tr>
-      </table></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" id="tch10">
-    <div class="card-title">
-      <span class="emoji">📖</span>第10章 光网络的测试
-      
-    </div>
-    
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>10.1 光网络测试仪表</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>OTDR(光时域反射仪)</b>：</div>
-      <ul style="padding-left:20px;">
-        <li>原理：利用瑞利散射和菲涅尔反射测量光纤损耗</li>
-        <li>可测参数：光纤长度、损耗、接头损耗、断点定位</li>
-        <li>性能参数：动态范围(测量范围)、盲区(事件/衰减盲区)、采样分辨率、距离精度</li>
-      </ul>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>以太测试仪</b>：测试以太网链路的连通性、性能(吞吐量/丢包/时延)。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>10.2 光接口参数及测试</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>光接口分类</b>：按距离分：I(局内≤2km)、S(短距~15km)、L(长距~40km)、V(甚长距~80km)、U(超长距~120km)。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>光接口参数</b>：发送光功率、接收灵敏度、消光比、中心波长、谱宽。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>测试方法</b>：光功率计测功率、光谱仪测波长谱宽、眼图测信号质量。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>10.3 MSTP Ethernet测试</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>透传功能测试</b>：连通性、吞吐量、时延、丢包率。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>二层交换功能测试</b>：MAC学习、VLAN、组播功能。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>10.4 DWDM/OTN测试</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>单板性能测试</b>：OTU输出光功率、中心波长、OSNR(光信噪比)。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>主光通道测试</b>：端到端光功率、增益平坦度、各波长信噪比。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>光监控信道测试</b>：OSC波长(1510nm)的光功率和误码。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>10.5 PTN设备测试</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>光口指标</b>：发送光功率、接收灵敏度、过载功率。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>以太性能测试</b>：吞吐量、时延、丢包率、抖动。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>10.6 IPRAN测试</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp"><span class="tag tag-low">了解</span>了解</span><b>单机性能</b>：吞吐量、路由收敛时间、OAM功能验证。
-      </div>
-    </div>
-  </div>
-
-  <div class="card" id="tch11">
-    <div class="card-title">
-      <span class="emoji">📖</span>第11章 光网络的维护
-      
-    </div>
-    
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>11.1 日常维护</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>维护分类</b>：预防性维护(日常巡检)、纠正性维护(故障修复)。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>维护注意事项</b>：光接口清洁、静电防护、尾纤弯曲半径≥30mm、 unused光口加盖防尘帽。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>环回测试方法</b>：</div>
-      <ul style="padding-left:20px;">
-        <li>本端环回：在本端设备光接口发→收环回</li>
-        <li>远端环回：在对端将光信号环回</li>
-        <li>用于隔离故障段落、验证通道连通性</li>
-      </ul>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>11.2 故障处理</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>SDH故障处理</b>：LOS(信号丢失)、LOF(帧丢失)、AIS(告警指示)、误码超限等。逐步从光路→设备→单板排查。</div>
-      <div class="kp-item"><span class="tag tag-low">了解</span>了解</span><b>DWDM/OTN故障</b>：光功率异常、波长漂移、OSNR下降、FEC纠错计数升高等。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>故障定位原则</b>：先外部后内部、先单站后全网、先线路后设备、先高阻后低阻(先高级告警后低级)。</div>
-      <div class="callout callout-key"><span class="tag tag-key">掌握</span>掌握</span><b>故障定位方法</b>：</div>
-      <ul style="padding-left:20px;">
-        <li>告警分析法：通过网管告警判断故障类型</li>
-        <li>环回法：通过环回定位故障段落</li>
-        <li>替换法：更换疑似故障单板/光纤</li>
-        <li>性能分析法：分析性能数据趋势</li>
-        <li>仪表测试法：用OTDR/光功率计实地测量</li>
-      </ul>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>综合能力复习策略</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-tip"><span class="badge orange">优先级</span>
-        <table style="margin-top:6px;">
-          <tr><th>梯队</th><th>章节</th><th>分值</th><th>策略</th></tr>
-          <tr><td>第一</td><td>现代通信网/通信系统/移动通信</td><td>40-45分</td><td>深入学习，熟记核心概念</td></tr>
-          <tr><td>第二</td><td>互联网/电信业务/安全/项目管理/外语</td><td>30-35分</td><td>系统复习，掌握重点</td></tr>
-          <tr><td>第三</td><td>职业道德/法律法规/计算机基础</td><td>10-15分</td><td>过一遍+刷题</td></tr>
-        </table></div>
-      </div>
-      <div class="kp-item"><b>真题重复率较高</b>，建议多做历年真题。综合能力为客观题，不会的可用排除法。</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>传输实务答题技巧</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="callout callout-tip"><span class="badge orange">重点</span>
-        <ul style="padding-left:20px;">
-          <li>分值最高(20分): 试题二(SDH/MSTP)、试题三(DWDM/OTN)、试题六(接入网)——必须重点掌握</li>
-          <li>试题四(ASON)分值最低(10分)——可适当减少时间</li>
-          <li>问答题要条理清晰，分点作答</li>
-          <li>计算题注意单位换算(如dBm↔mW, Mbit/s↔Gbit/s)</li>
-          <li>填空/选择题注意关键词(如"掌握"层级的知识点)</li>
+        <ul>
+          <li><strong>损耗分类</strong>：吸收损耗（本征+杂质OH⁻）/ 散射损耗（瑞利散射）</li>
+          <li><strong>色散分类</strong>：模式色散（多模）/ 色度色散（材料+波导，单模主要）</li>
+          <li><strong>色散影响</strong>：光脉冲展宽 → 码间串扰</li>
+          <li><strong>光源</strong>：LD（激光器，受激辐射，长距高速）/ LED（发光二极管，自发辐射，短距低速）</li>
+          <li><strong>光检测器</strong>：PIN / APD（雪崩倍增，灵敏度高）</li>
+          <li><strong>调制方式</strong>：直接调制（内调制/强度调制，一般系统）/ 间接调制（外调制/MZ，高速大容量）</li>
         </ul>
       </div>
-      </div>
     </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>关键公式速记</strong>
-      <span class="chevron">▼</span>
+
+    <div class="sub-title">OTDR（光时域反射仪）</div>
+    <div class="callout callout-key">
+      <p><strong>原理</strong>：利用<strong>瑞利散射</strong>和<strong>菲涅尔反射</strong>产生的背向散射光</p>
+      <p><strong>用途</strong>：测接头损耗、光纤距离、光纤损耗、故障点定位</p>
+      <p><strong>性能参数</strong>：</p>
+      <ul>
+        <li>动态范围 — 影响因素：脉宽、平均时间</li>
+        <li>盲区 — 影响因素：脉宽、反射大小</li>
+      </ul>
     </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div class="formula-box">香农公式: C = B · log₂(1 + S/N)</div>
-      <div class="formula-box">STM-N帧: 9×270×N×8 bit, 周期125μs</div>
-      <div class="formula-box">误码率: Pe = 错误码元数 / 总码元数</div>
-      <div class="formula-box">误比特率: Pb = 错误比特数 / 总比特数</div>
-      <div class="formula-box">dBm↔mW: P(dBm) = 10·log₁₀(P/1mW)</div>
-      <div class="formula-box">EDFA增益: G = Pout/Pin (dB)</div>
-      <div class="formula-box">OTDR距离: d = c·t/(2·n) (n≈1.5光纤折射率)</div>
-      </div>
-    </div>
-    <div class="collapse-header" onclick="toggleCollapse(this)">
-      <strong>常考参数速记</strong>
-      <span class="chevron">▼</span>
-    </div>
-    <div class="collapse-body">
-      <div class="collapse-body-inner">
-        <div style="overflow-x:auto;"><table>
-        <tr><th>项目</th><th>参数</th></tr>
-        <tr><td>STM-1速率</td><td>155.520 Mbit/s</td></tr>
-        <tr><td>STM-4速率</td><td>622.080 Mbit/s</td></tr>
-        <tr><td>STM-16速率</td><td>2488.320 Mbit/s (2.5G)</td></tr>
-        <tr><td>STM-64速率</td><td>9953.280 Mbit/s (10G)</td></tr>
-        <tr><td>SDH帧周期</td><td>125μs (8000帧/秒)</td></tr>
-        <tr><td>STM-1容纳E1</td><td>63个</td></tr>
-        <tr><td>低损耗窗口</td><td>850/1310/1550 nm</td></tr>
-        <tr><td>EDFA工作波段</td><td>C波段 1530-1565 nm</td></tr>
-        <tr><td>EDFA泵浦光</td><td>980 nm 或 1480 nm</td></tr>
-        <tr><td>DWDM通道间隔</td><td>100 GHz(0.8nm) / 50 GHz(0.4nm)</td></tr>
-        <tr><td>OSC波长</td><td>1510 nm</td></tr>
-        <tr><td>EPON速率</td><td>上下行对称 1.25 Gbit/s</td></tr>
-        <tr><td>GPON速率</td><td>下行2.5G/上行1.25G</td></tr>
-        <tr><td>PON下行波长</td><td>1490 nm</td></tr>
-        <tr><td>PON上行波长</td><td>1310 nm</td></tr>
-        <tr><td>EPON分光比</td><td>1:32 或 1:64</td></tr>
-        <tr><td>GPON分光比</td><td>1:64 或 1:128</td></tr>
-        <tr><td>保护倒换时间</td><td>≤50 ms (电信级)</td></tr>
-        <tr><td>用户申诉答复</td><td>30日内</td></tr>
-        <tr><td>城镇障碍修复</td><td>48小时</td></tr>
-        <tr><td>农村障碍修复</td><td>72小时</td></tr>
-        <tr><td>欠费暂停服务</td><td>超30日</td></tr>
-        <tr><td>暂停后终止</td><td>再过60日</td></tr>
-      </table></div>
-      </div>
+
+    <div class="sub-title">故障定位（掌握）</div>
+    <ul>
+      <li><strong>关键</strong>：将故障点准确定位到单站</li>
+      <li><strong>原则</strong>：先外部后传输、先网络后网元、先高速后低速、先高级后低级</li>
+      <li><strong>步骤</strong>：一分析、二环回、三换板</li>
+    </ul>
+
+    <div class="callout callout-skip">
+      通信光缆、光纤非线性（除四波混频）、MSTP/DWDM/PTN测试细节、SDH/DWDM故障处理思路 — 非重点，时间紧可跳过
     </div>
   </div>
+
+  <!-- 试题二 -->
+  <div class="card" id="s2-q2">
+    <div class="card-title">
+      <span class="emoji">🔗</span>试题二 · SDH / MSTP
+      <span class="score high">20分</span>
+    </div>
+    <p style="font-size:13px;color:var(--gray-500)">第2章约10-12分 + 第3章约8-10分 · 分值最高</p>
+
+    <div class="callout callout-exam">
+      <strong>SDH核心三优点</strong>：同步复用、标准光接口、强大网络管理能力
+    </div>
+
+    <div class="formula-box">
+      STM-1 = 155.520 Mbit/s<br>
+      STM-N = STM-1 × 4^(N-1)
+      <div class="formula-desc">N = 1, 4, 16, 64, 256 — 四倍递增，帧周期恒为125μs</div>
+    </div>
+
+    <div class="sub-title">四种基本网络单元</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>网元</th><th>全称</th><th>应用位置</th></tr>
+        <tr><td>TM</td><td>终端复用器</td><td>网络末梢端节点</td></tr>
+        <tr><td><strong>ADM</strong></td><td>分插复用器</td><td>线形中间 / 环形节点</td></tr>
+        <tr><td><strong>DXC</strong></td><td>数字交叉连接</td><td>网状 / 星型中心</td></tr>
+        <tr><td>REG</td><td>再生中继器</td><td>长距中继</td></tr>
+      </table>
+    </div>
+    <div class="callout callout-tip">
+      ADM三大功能：①上下支路能力 ②群路直通能力 ③数字交叉连接功能
+    </div>
+
+    <div class="sub-title">SDH帧结构三大区域</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>区域</th><th>位置</th><th>作用</th></tr>
+        <tr><td><strong>段开销SOH</strong></td><td>前9×N列 1-3行(RSOH)+5-9行(MSOH)</td><td>OAM维护</td></tr>
+        <tr><td><strong>AU指针</strong></td><td>前9×N列 第4行</td><td>指示净负荷起点</td></tr>
+        <tr><td><strong>净负荷</strong></td><td>后261×N列（9行）</td><td>信息载荷+POH</td></tr>
+      </table>
+    </div>
+
+    <div class="callout callout-exam">
+      <strong>复用三步骤</strong>：映射 → 定位 → 复用
+      <ul style="margin-top:6px">
+        <li><strong>映射</strong>：支路信号 → 容器C → 虚容器VC</li>
+        <li><strong>定位</strong>：TU PTR / AU PTR 指示VC起点</li>
+        <li><strong>复用</strong>：字节间插，TU→高阶VC / AU→STM-N</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      1 STM-1 = 63 × E1 (2M) = 1 × E4 (140M)
+      <div class="formula-desc">STM-N = 63N 个E1 = N 个E4</div>
+    </div>
+
+    <div class="sub-title">网络保护（重点）</div>
+    <ul>
+      <li><strong>自愈环分类维度</strong>：方向（单/双）、层次（通道/复用段）、光纤数（二/四纤）</li>
+      <li><strong>二纤单向通道保护</strong>：并发选收，1+1，收端倒换</li>
+      <li><strong>二纤双向复用段保护</strong>：时隙保护，APS协议（K1/K2）</li>
+      <li><strong>SNCP</strong>：子网连接保护，并发选收，收端倒换，<strong>不需APS协议</strong></li>
+      <li><strong>电信级保护倒换时间</strong>：≤ 50ms</li>
+    </ul>
+
+    <div class="callout callout-skip">
+      段开销各字节功能、SDH网络管理（2.7节）— 历年从未考过，建议跳过
+    </div>
+
+    <div class="section-title">MSTP传输网</div>
+    <ul>
+      <li>基于SDH平台，同时支持TDM/ATM/以太网多业务</li>
+      <li><strong>级联</strong>：相邻级联（连续）/ 虚级联（不连续，需LCAS）</li>
+    </ul>
+
+    <div class="callout callout-key">
+      <strong>以太网封装</strong>：GFP（通用成帧规程，主流）+ LCAS（链路容量调整，带宽无损）
+    </div>
+
+    <ul>
+      <li><strong>RPR</strong>：弹性分组环，IEEE 802.17，公平带宽，50ms保护</li>
+      <li><strong>MPLS基础</strong>：FEC（转发等价类）、LER（边缘）+ LSR（核心）</li>
+    </ul>
+  </div>
+
+  <!-- 试题三 -->
+  <div class="card" id="s2-q3">
+    <div class="card-title">
+      <span class="emoji">🌈</span>试题三 · DWDM / OTN
+      <span class="score high">20分</span>
+    </div>
+
+    <div class="section-title">DWDM传输网</div>
+
+    <div class="callout callout-exam">
+      <strong>DWDM关键参数（背下来）</strong>：
+      <ul>
+        <li>工作波段：<strong>C波段 1530-1565nm</strong></li>
+        <li>通道间隔：<strong>100GHz(0.8nm)</strong> / 50GHz(0.4nm)</li>
+        <li>适用光纤：<strong>G.655（非零色散位移）</strong>最佳</li>
+        <li>OSC波长：<strong>1510nm</strong>（不经过光放）</li>
+      </ul>
+    </div>
+
+    <p><strong>系统组成</strong>：OTU → OMU → OA → 光纤 → ODU → OTU</p>
+    <ul>
+      <li><strong>OTU</strong>：光波长转换器，O-E-O转换</li>
+      <li><strong>OMU/ODU</strong>：合波/分波器（介质薄膜/AWG/光纤光栅）</li>
+      <li><strong>OSC</strong>：光监控信道，1510nm</li>
+    </ul>
+
+    <div class="callout callout-exam">
+      <strong>EDFA（掺铒光纤放大器）</strong>：
+      <ul style="margin-top:6px">
+        <li>工作波段：<strong>C波段 1530-1565nm</strong></li>
+        <li>泵浦光：<strong>980nm</strong> 或 1480nm</li>
+        <li>增益：20-40dB</li>
+        <li>优点：增益高、带宽宽、噪声低、速率透明</li>
+      </ul>
+    </div>
+
+    <ul>
+      <li><strong>OADM</strong>：光分插复用器 — 固定式 / ROADM（可重构）</li>
+      <li><strong>OXC</strong>：光交叉连接，波长路由和恢复</li>
+      <li><strong>组网</strong>：环形网最常用（保护能力强）</li>
+    </ul>
+
+    <div class="section-title">光传送网OTN</div>
+
+    <div class="callout callout-key">
+      <strong>OTN三层模型</strong>：
+      <ol>
+        <li>光通路层(OCh) — 端到端通道</li>
+        <li>光复用段层(OMS) — 波分复用管理</li>
+        <li>光传输段层(OTS) — 光纤传输</li>
+      </ol>
+      <p style="margin-top:6px">电层：OPU → ODU → OTU</p>
+    </div>
+
+    <ul>
+      <li><strong>OTU速率</strong>：OTU1=2.666G / OTU2=10.709G / OTU3=43.018G / OTU4=111.81G</li>
+      <li><strong>设备类型</strong>：电交叉（ODUk子波长级）/ 光交叉ROADM（波长级）/ 光电混合</li>
+      <li><strong>保护</strong>：ODUk 1+1/1:1线性保护、SNCP、环网保护</li>
+    </ul>
+  </div>
+
+  <!-- 试题四 -->
+  <div class="card" id="s2-q4">
+    <div class="card-title">
+      <span class="emoji">🤖</span>试题四 · ASON
+      <span class="score low">10分</span>
+    </div>
+
+    <div class="callout callout-key">
+      最突出特征：引入独立的<strong>智能控制平面</strong>
+    </div>
+
+    <div class="sub-title">三个平面</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>平面</th><th>功能</th></tr>
+        <tr><td><strong>控制平面</strong></td><td>自动发现/路由/信令，连接管理</td></tr>
+        <tr><td>传送平面</td><td>实际业务传输</td></tr>
+        <tr><td>管理平面</td><td>对控制/传送平面管理</td></tr>
+      </table>
+    </div>
+
+    <div class="sub-title">三个接口</div>
+    <ul>
+      <li><strong>CCI</strong>：连接控制接口（控制↔传送）</li>
+      <li><strong>NMI-A</strong>：网管A接口（管理↔控制）</li>
+      <li><strong>NMI-T</strong>：网管T接口（管理↔传送）</li>
+    </ul>
+
+    <div class="callout callout-exam">
+      <strong>三种连接类型</strong>：
+      <ol>
+        <li><strong>永久连接(PC)</strong> — 管理平面发起</li>
+        <li><strong>交换连接(SC)</strong> — 控制平面发起，UNI信令</li>
+        <li><strong>软永久连接(SPC)</strong> — 管理+控制共同完成</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 试题五 -->
+  <div class="card" id="s2-q5">
+    <div class="card-title">
+      <span class="emoji">📦</span>试题五 · PTN / IPRAN
+      <span class="score mid">15分</span>
+    </div>
+
+    <div class="section-title">PTN分组传送网</div>
+    <ul>
+      <li>基于MPLS-TP或PBB-TE，面向分组的传送网</li>
+    </ul>
+
+    <div class="callout callout-key">
+      <strong>PTN三层结构（T-MPLS）</strong>：
+      <ol>
+        <li><strong>PW层（伪线层）</strong>：封装客户业务</li>
+        <li><strong>LSP层（标签交换路径层）</strong>：端到端隧道</li>
+        <li><strong>Section层（段层）</strong>：物理层适配</li>
+      </ol>
+    </div>
+
+    <ul>
+      <li><strong>保护</strong>：LSP 1+1/1:1线性保护、环网保护、50ms倒换</li>
+      <li><strong>OAM</strong>：三层OAM，CC/LB/LT/AIS</li>
+      <li><strong>同步</strong>：频率同步(SyncE) / 时间同步(<strong>IEEE 1588v2 PTP</strong>)</li>
+      <li><strong>PWE3</strong>：伪线仿真，TDM/ATM等封装透传</li>
+    </ul>
+
+    <div class="section-title">IPRAN</div>
+
+    <div class="callout callout-exam">
+      <strong>保护技术三大件</strong>：
+      <div class="table-wrap" style="margin-top:8px">
+        <table>
+          <tr><th>技术</th><th>作用</th></tr>
+          <tr><td><strong>BFD</strong></td><td>双向转发检测 — 毫秒级故障检测</td></tr>
+          <tr><td><strong>FRR</strong></td><td>快速重路由 — 50ms内切换</td></tr>
+          <tr><td><strong>VRRP</strong></td><td>虚拟路由器冗余 — 网关冗余</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout callout-exam">
+      <strong>同步需求对比</strong>：
+      <div class="table-wrap" style="margin-top:8px">
+        <table>
+          <tr><th>制式</th><th>同步需求</th><th>推荐方案</th></tr>
+          <tr><td>WCDMA/LTE-FDD</td><td>仅频率同步</td><td>SyncE</td></tr>
+          <tr><td><strong>LTE-TDD</strong></td><td>频率+时间同步</td><td><strong>SyncE + PTP</strong></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <ul>
+      <li><strong>业务承载</strong>：LTE S1(L3VPN) / LTE X2 / 2G3G TDM(PWE3)</li>
+      <li><strong>接入层组网</strong>：环形（优先，省资源）、树形双归、链型</li>
+      <li><strong>核心层组网</strong>：<strong>Mesh（推荐，稳定性高）</strong>、口字型、树形双归</li>
+    </ul>
+  </div>
+
+  <!-- 试题六 -->
+  <div class="card" id="s2-q6">
+    <div class="card-title">
+      <span class="emoji">🏠</span>试题六 · 有线接入网
+      <span class="score high">20分</span>
+    </div>
+
+    <div class="callout callout-exam">
+      <strong>接入网三大接口（必须掌握）</strong>：
+      <ol>
+        <li><strong>UNI</strong> — 用户网络接口（用户↔接入网）</li>
+        <li><strong>SNI</strong> — 业务节点接口（接入网↔业务节点）</li>
+        <li><strong>Q3</strong> — 维护管理接口（接入网↔TMN）</li>
+      </ol>
+    </div>
+
+    <div class="sub-title">HFC接入网</div>
+    <ul>
+      <li>CATV网改造，<strong>三网融合重要技术</strong></li>
+      <li>支持CATV + 语音 + 数据 + 交互业务</li>
+    </ul>
+    <div class="callout callout-key">
+      <strong>HFC组成</strong>：信号源 → 前端 → HDT → 光纤主干网 → 同轴分配网 → 用户引入线
+    </div>
+    <ul>
+      <li>光纤通道双向：SDM或WDM → <strong>通常WDM</strong></li>
+      <li>电缆通道双向：空间或频率分隔 → <strong>一般频率分隔（频分复用）</strong></li>
+    </ul>
+
+    <div class="section-title">无源光网络PON（核心重点）</div>
+
+    <div class="callout callout-exam">
+      <strong>四大功能模块</strong>：OLT + ODN + ONU + 系统管理功能
+      <p style="margin-top:6px;font-size:12px">💡 AON中是ODT（光配线终端），不是ODN</p>
+    </div>
+
+    <div class="sub-title">FTTx应用类型</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>类型</th><th>ONU位置</th></tr>
+        <tr><td>FTTC</td><td>路边分线盒</td></tr>
+        <tr><td>FTTB</td><td>楼内</td></tr>
+        <tr><td>FTTH/FTTO</td><td>用户家里 / 办公室</td></tr>
+      </table>
+    </div>
+
+    <div class="callout callout-exam">
+      <strong>PON双向传输4种</strong>：OSDM / <strong>OWDM（一般采用）</strong> / TCM / OSCM
+    </div>
+
+    <div class="callout callout-exam">
+      <strong>PON多址接入4种</strong>：<strong>TDMA（一般采用）</strong> / WDMA / CDMA / SCMA
+    </div>
+
+    <div class="callout callout-key">
+      <strong>测距技术</strong>：上行TDMA方式下，为避免各路信号碰撞需要测距 — PON最关键技术之一
+    </div>
+
+    <div class="section-title">EPON vs GPON 对比</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>参数</th><th>EPON</th><th>GPON</th></tr>
+        <tr><td>标准</td><td>IEEE 802.3ah</td><td>ITU-T G.984</td></tr>
+        <tr><td>速率</td><td>对称1.25G</td><td>最高2.5G（非对称）</td></tr>
+        <tr><td>最大分光比</td><td><strong>1:64</strong></td><td><strong>1:128</strong></td></tr>
+        <tr><td>封装</td><td>以太网帧</td><td>GEM封装</td></tr>
+        <tr><td>安全性</td><td>无</td><td>AES加密</td></tr>
+        <tr><td>工作原理</td><td colspan="2" style="text-align:center">相同（WDM + 下行广播 + 上行TDMA）</td></tr>
+      </table>
+    </div>
+
+    <div class="callout callout-exam">
+      <strong>PON工作原理（必考）</strong>：
+      <ol>
+        <li><strong>WDM</strong>实现单纤双向（下行1490nm / 上行1310nm）</li>
+        <li>下行：<strong>TDM + 广播</strong>，ONU根据LLID选择性接收</li>
+        <li>上行：<strong>TDMA</strong>，按时隙发送，测距避免冲突</li>
+      </ol>
+    </div>
+
+    <div class="callout callout-tip">
+      <strong>GPON七大技术特点（曾考问答题）</strong>：
+      <ol>
+        <li>全业务接入能力强</li>
+        <li><strong>高带宽 + 远覆盖</strong>（比EPON强）</li>
+        <li><strong>带宽分配灵活，QoS有保障</strong></li>
+        <li>保护机制 + OAM功能</li>
+        <li>安全性高</li>
+        <li>易扩展、便于升级</li>
+        <li>技术较复杂，成本较高</li>
+      </ol>
+    </div>
+
+    <div class="section-title">FTTx+LAN接入网</div>
+    <ul>
+      <li>光纤+交换式以太网，又称以太网接入</li>
+      <li>一级接入（小规模，三层交换机）/ 两级接入（中大规模）</li>
+      <li>两级间：>100m用光纤，<100m用双绞线</li>
+    </ul>
+    <div class="callout callout-key">
+      <strong>五大优点</strong>：高速传输、网络可靠、用户投资少、安装方便、应用广泛
+    </div>
+  </div>
+
 </div>
 
-  </div>
+</div>
 
-
-<!-- BOTTOM NAV -->
-<div class="bottom-nav">
+<!-- ===== Bottom Tab Bar ===== -->
+<div class="tab-bar">
   <button class="tab-item active" onclick="switchTab('home')">
     <span class="tab-icon">🏠</span>
-    <span class="tab-label">首页</span>
+    <span>首页</span>
   </button>
   <button class="tab-item" onclick="switchTab('subject1')">
     <span class="tab-icon">📘</span>
-    <span class="tab-label">综合能力</span>
+    <span>综合能力</span>
   </button>
   <button class="tab-item" onclick="switchTab('subject2')">
     <span class="tab-icon">📗</span>
-    <span class="tab-label">传输有线</span>
+    <span>传输有线</span>
+  </button>
+  <button class="tab-item" onclick="toggleSearch()">
+    <span class="tab-icon">🔍</span>
+    <span>搜索</span>
   </button>
 </div>
 
+<!-- Back to top button -->
 <button class="back-top" id="backTop" onclick="scrollToTop()">↑</button>
-
-</div>
 
 <script>
 
@@ -2574,58 +1612,34 @@ function toggleCollapse(el) {
   }
 }
 
-// ===== Expand/Collapse All =====
-function expandAllInPage(pageId) {
-  var page = document.getElementById(pageId);
-  if (!page) return;
-  var headers = page.querySelectorAll('.collapse-header');
-  for (var i = 0; i < headers.length; i++) {
-    headers[i].classList.add('open');
-    var body = headers[i].nextElementSibling;
-    if (body) body.classList.add('open');
-  }
-}
-function collapseAllInPage(pageId) {
-  var page = document.getElementById(pageId);
-  if (!page) return;
-  var headers = page.querySelectorAll('.collapse-header');
-  for (var i = 0; i < headers.length; i++) {
-    headers[i].classList.remove('open');
-    var body = headers[i].nextElementSibling;
-    if (body) body.classList.remove('open');
-  }
-}
-
 // ===== Scroll helpers =====
 function scrollToEl(id) {
   var el = document.getElementById(id);
   if (el) {
-    var top = el.getBoundingClientRect().top + window.pageYOffset - 10;
+    var offset = 10;
+    var top = el.getBoundingClientRect().top + window.pageYOffset - offset;
     window.scrollTo({top: top, behavior: 'smooth'});
-    // Auto-expand the card
-    var body = el.querySelector('.collapse-body');
-    var header = el.querySelector('.collapse-header');
-    if (body && !body.classList.contains('open') && header) {
-      header.classList.add('open');
-      body.classList.add('open');
-    }
   }
 }
+
 function scrollToTop() {
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
-// ===== Back to top & Progress =====
+// ===== Back to top =====
 window.addEventListener('scroll', function() {
   var btn = document.getElementById('backTop');
-  if (window.scrollY > 300) {
-    btn.classList.add('show');
-  } else {
-    btn.classList.remove('show');
+  if (btn) {
+    if (window.scrollY > 300) {
+      btn.classList.add('show');
+    } else {
+      btn.classList.remove('show');
+    }
   }
   updateProgress();
 });
 
+// ===== Progress =====
 function updateProgress() {
   var scrollTop = window.scrollY;
   var docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -2634,16 +1648,18 @@ function updateProgress() {
   if (fill) fill.style.width = progress + '%';
 }
 
-// ===== Font Size =====
+// ===== Font Size (V5 FIXED) =====
 function setFontSize(size) {
   document.body.classList.remove('font-small', 'font-large');
   if (size === 'small') document.body.classList.add('font-small');
   if (size === 'large') document.body.classList.add('font-large');
   try { localStorage.setItem('fontSize', size); } catch(e) {}
   
+  // Update button states
   var btns = document.querySelectorAll('.font-btn');
   for (var i = 0; i < btns.length; i++) {
-    if (btns[i].getAttribute('data-size') === size) {
+    var btnSize = btns[i].getAttribute('data-size');
+    if (btnSize === size) {
       btns[i].classList.add('active');
     } else {
       btns[i].classList.remove('active');
@@ -2651,7 +1667,18 @@ function setFontSize(size) {
   }
 }
 
-// ===== Search =====
+// ===== Search (V5 FIXED) =====
+function toggleSearch() {
+  switchTab('home');
+  setTimeout(function() {
+    var input = document.getElementById('searchInput');
+    if (input) {
+      input.focus();
+      window.scrollTo({top: 0});
+    }
+  }, 100);
+}
+
 function hideSearchResults() {
   var results = document.getElementById('searchResults');
   if (results) results.classList.remove('show');
@@ -2659,6 +1686,8 @@ function hideSearchResults() {
 
 function performSearch(query) {
   var results = document.getElementById('searchResults');
+  if (!results) return;
+  
   if (!query.trim()) {
     results.classList.remove('show');
     return;
@@ -2676,8 +1705,8 @@ function performSearch(query) {
       var titleText = titleEl ? titleEl.textContent.trim().replace(/\s+/g, ' ') : '相关内容';
       
       var idx = text.indexOf(q);
-      var start = Math.max(0, idx - 25);
-      var end = Math.min(text.length, idx + query.length + 25);
+      var start = Math.max(0, idx - 20);
+      var end = Math.min(text.length, idx + query.length + 20);
       var preview = text.substring(start, end);
       if (start > 0) preview = '...' + preview;
       if (end < text.length) preview = preview + '...';
@@ -2687,24 +1716,28 @@ function performSearch(query) {
   }
   
   if (items.length === 0) {
-    results.innerHTML = '<div style="padding:20px;text-align:center;color:var(--gray-500);">未找到相关内容</div>';
+    results.innerHTML = '<div class="search-result-item" style="color:var(--gray-500);text-align:center;">未找到相关内容</div>';
   } else {
-    var html = '<div style="padding:8px 16px;font-size:12px;color:var(--gray-400);">找到 ' + items.length + ' 条结果</div>';
-    for (var i = 0; i < Math.min(items.length, 20); i++) {
+    var html = '';
+    for (var i = 0; i < Math.min(items.length, 15); i++) {
       var item = items[i];
+      var highlighted = item.preview.replace(
+        new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'),
+        function(m) { return '<mark>' + m + '</mark>'; }
+      );
       html += '<div class="search-result-item" data-idx="' + i + '">' +
         '<div class="result-title">' + item.title + '</div>' +
-        '<div class="result-preview">' + item.preview + '</div>' +
+        '<div class="result-preview">' + highlighted + '</div>' +
         '</div>';
     }
     results.innerHTML = html;
     
-    // Store and bind
+    // Bind click events
     var resultEls = results.querySelectorAll('.search-result-item');
     for (var j = 0; j < resultEls.length; j++) {
-      (function(idx) {
-        resultEls[idx].addEventListener('click', function() {
-          jumpToSearchResult(items[idx]);
+      (function(index) {
+        resultEls[index].addEventListener('click', function() {
+          jumpToResult(items[index]);
         });
       })(j);
     }
@@ -2713,7 +1746,7 @@ function performSearch(query) {
   results.classList.add('show');
 }
 
-function jumpToSearchResult(item) {
+function jumpToResult(item) {
   var card = item.card;
   if (!card) return;
   
@@ -2725,7 +1758,7 @@ function jumpToSearchResult(item) {
     if (tab) switchTab(tab);
     
     setTimeout(function() {
-      // Expand all collapsible in card
+      // Expand any collapsed sections in card
       var bodies = card.querySelectorAll('.collapse-body');
       var headers = card.querySelectorAll('.collapse-header');
       for (var i = 0; i < bodies.length; i++) {
@@ -2753,8 +1786,9 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// Initialize
+// ===== Init =====
 document.addEventListener('DOMContentLoaded', function() {
+  // Restore font size
   var saved = 'normal';
   try { saved = localStorage.getItem('fontSize') || 'normal'; } catch(e) {}
   setFontSize(saved);
@@ -2762,5 +1796,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </script>
 </body>
-
 </html>
