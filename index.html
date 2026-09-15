@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#1e3a5f">
-<title>通信中级考试 · 冲刺笔记 V6</title>
+<title>通信中级考试 · 冲刺笔记 V7</title>
 <style>
 /* ===== Reset & Base ===== */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -995,6 +995,368 @@ body.font-xl h2 { font-size: 28px; }
   padding-top: calc(12px + env(safe-area-inset-top));
 }
 
+
+/* ===== V7: Search Highlight ===== */
+.search-highlight {
+  background: #fde047 !important;
+  color: #713f12 !important;
+  padding: 1px 2px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+.search-highlight.current {
+  background: #fb923c !important;
+  color: white !important;
+  animation: highlightPulse 0.5s ease-out;
+}
+@keyframes highlightPulse {
+  0% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* ===== V7: Search Bar (sticky, on all pages) ===== */
+.search-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  padding: 10px 16px calc(10px + env(safe-area-inset-top));
+}
+.search-bar-inner {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.search-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.search-input-wrap:focus-within {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  transform: translateY(-1px);
+}
+.search-icon-left {
+  padding: 0 12px 0 16px;
+  font-size: 16px;
+  color: var(--gray-400);
+}
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 10px 0;
+  font-size: 14px;
+  color: var(--gray-800);
+  background: transparent;
+  width: 100%;
+}
+.search-input::placeholder {
+  color: var(--gray-400);
+}
+.search-clear-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--gray-300);
+  color: white;
+  font-size: 13px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  margin: 0 8px;
+  flex-shrink: 0;
+}
+.search-clear-btn.show { display: flex; }
+.search-clear-btn:active {
+  transform: scale(0.9);
+  background: var(--gray-400);
+}
+
+/* Search nav (prev/next/count) */
+.search-nav {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px 0 4px;
+}
+.search-nav.show { display: flex; }
+.search-nav-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--gray-200);
+  background: var(--gray-50);
+  color: var(--gray-600);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search-nav-btn:active {
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  border-color: var(--primary-light);
+}
+.search-count {
+  font-size: 11px;
+  color: var(--gray-500);
+  white-space: nowrap;
+  min-width: 45px;
+  text-align: center;
+}
+
+/* Search results dropdown */
+.search-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  max-height: 60vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: none;
+  z-index: 200;
+}
+.search-dropdown.show { display: block; }
+.search-result-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--gray-50);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.search-result-item:last-child { border-bottom: none; }
+.search-result-item:active { background: var(--primary-bg); }
+.result-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.result-badge {
+  font-size: 10px;
+  color: var(--primary);
+  background: var(--primary-bg);
+  padding: 1px 6px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+.result-preview {
+  font-size: 12px;
+  color: var(--gray-500);
+  line-height: 1.5;
+}
+.result-preview mark {
+  background: #fef3c7;
+  color: #92400e;
+  padding: 0 2px;
+  border-radius: 2px;
+  font-weight: 600;
+}
+
+.search-history-section, .search-hot-section {
+  padding: 12px 16px;
+}
+.search-section-title {
+  font-size: 12px;
+  color: var(--gray-500);
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+}
+.search-section-title .clear-btn {
+  color: var(--primary);
+  font-size: 11px;
+  cursor: pointer;
+  font-weight: 500;
+}
+.history-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.history-tag {
+  padding: 6px 14px;
+  background: var(--gray-100);
+  border-radius: 20px;
+  font-size: 12px;
+  color: var(--gray-600);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.history-tag:active {
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  transform: scale(0.95);
+}
+.hot-list { display: flex; flex-direction: column; gap: 2px; }
+.hot-item-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 4px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--gray-700);
+}
+.hot-item-row:active { background: var(--gray-50); }
+.hot-rank {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--gray-200);
+  color: var(--gray-600);
+  flex-shrink: 0;
+}
+.hot-item-row:nth-child(1) .hot-rank { background: #ef4444; color: white; }
+.hot-item-row:nth-child(2) .hot-rank { background: #f97316; color: white; }
+.hot-item-row:nth-child(3) .hot-rank { background: #f59e0b; color: white; }
+
+/* ===== V7: Font Slider ===== */
+.font-panel {
+  background: rgba(255,255,255,0.15);
+  border-radius: 14px;
+  padding: 12px 16px;
+  margin-top: 14px;
+  backdrop-filter: blur(10px);
+}
+.font-panel-title {
+  font-size: 12px;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.font-size-value {
+  font-weight: 700;
+  color: white;
+  font-size: 13px;
+}
+.font-slider-wrap {
+  position: relative;
+  padding: 6px 0;
+}
+.font-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.3);
+  outline: none;
+  cursor: pointer;
+}
+.font-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: transform 0.15s;
+}
+.font-slider::-webkit-slider-thumb:active {
+  transform: scale(1.2);
+}
+.font-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.font-presets {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+.font-preset-btn {
+  padding: 4px 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: transparent;
+  color: rgba(255,255,255,0.8);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.font-preset-btn.active {
+  background: white;
+  color: var(--primary-dark);
+  border-color: white;
+  font-weight: 600;
+}
+.font-preset-btn:active {
+  transform: scale(0.95);
+}
+
+/* ===== V7: Toast ===== */
+.toast-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  pointer-events: none;
+}
+.toast {
+  background: rgba(0,0,0,0.8);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(20px) scale(0.9);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+.toast.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ===== V7: Page content adjustment (search bar takes top space) ===== */
+.app {
+  padding-top: 0;
+}
+.content {
+  padding-top: 12px;
+}
+.top-header {
+  padding-top: 0;
+}
+.progress-bar {
+  top: 0;
+}
+
 </style>
 </head>
 <body>
@@ -1005,7 +1367,7 @@ body.font-xl h2 { font-size: 28px; }
 <div id="page-home" class="content active">
   <div class="hero-card">
     <h2>通信工程师中级考试</h2>
-    <div class="hero-sub">冲刺复习笔记 V6 · 极致体验版</div>
+    <div class="hero-sub">冲刺复习笔记 V7 · 搜索/字体大升级</div>
     <div class="hero-meta">
       <span>📹 7个精讲视频</span>
       <span>⏱️ 11.8小时</span>
@@ -1838,7 +2200,7 @@ body.font-xl h2 { font-size: 28px; }
     <span class="tab-icon">📗</span>
     <span>传输有线</span>
   </button>
-  <button class="tab-item" onclick="goSearch()">
+  <button class="tab-item" onclick="switchTab('search')">
     <span class="tab-icon">🔍</span>
     <span>搜索</span>
   </button>
@@ -1849,7 +2211,6 @@ body.font-xl h2 { font-size: 28px; }
 
 <script>
 
-// ===== V6: Enhanced App =====
 (function() {
   'use strict';
 
@@ -1858,13 +2219,25 @@ body.font-xl h2 { font-size: 28px; }
   // ============================================================
   var state = {
     currentTab: 'home',
-    fontSize: 'normal',
+    fontSize: 15, // px, default body size
+    searchQuery: '',
+    searchMatches: [],
+    currentMatchIndex: -1,
     searchHistory: [],
     collapsedSections: {}
   };
 
+  var FONT_MIN = 11;
+  var FONT_MAX = 23;
+  var FONT_DEFAULT = 15;
+  var HOT_SEARCHES = [
+    'SDH', 'OTN', 'DWDM', 'PON', '光纤损耗',
+    'PTN', '移动通信', '现代通信网', 'EPON', 'GPON',
+    'ASON', 'IP RAN', 'MSTP', 'WDM', '接入网'
+  ];
+
   // ============================================================
-  // Storage helpers
+  // Storage
   // ============================================================
   function storeGet(key, def) {
     try {
@@ -1877,6 +2250,48 @@ body.font-xl h2 { font-size: 28px; }
   }
 
   // ============================================================
+  // Toast
+  // ============================================================
+  var toastTimer = null;
+  function showToast(msg, duration) {
+    duration = duration || 1500;
+    var container = document.getElementById('toastContainer');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'toastContainer';
+      container.className = 'toast-container';
+      document.body.appendChild(container);
+    }
+    
+    var toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = msg;
+    container.appendChild(toast);
+    
+    // Trigger animation
+    requestAnimationFrame(function() {
+      toast.classList.add('show');
+    });
+    
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() {
+      toast.classList.remove('show');
+      setTimeout(function() {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 300);
+    }, duration);
+  }
+
+  // ============================================================
+  // Haptic
+  // ============================================================
+  function haptic() {
+    if (navigator.vibrate) {
+      try { navigator.vibrate(8); } catch(e) {}
+    }
+  }
+
+  // ============================================================
   // Tab Navigation
   // ============================================================
   function switchTab(tab) {
@@ -1884,7 +2299,7 @@ body.font-xl h2 { font-size: 28px; }
     storeSet('currentTab', tab);
 
     var pages = { 'home': 'page-home', 'subject1': 'page-subject1', 'subject2': 'page-subject2' };
-    var tabNames = ['home', 'subject1', 'subject2'];
+    var tabNames = ['home', 'subject1', 'subject2', 'search'];
 
     var contents = document.querySelectorAll('.content');
     for (var i = 0; i < contents.length; i++) {
@@ -1895,22 +2310,42 @@ body.font-xl h2 { font-size: 28px; }
       tabs[i].classList.remove('active');
     }
 
-    var pageId = pages[tab] || 'page-home';
-    var page = document.getElementById(pageId);
-    if (page) page.classList.add('active');
+    if (tab === 'search') {
+      // Search tab -> go home + focus search
+      document.getElementById('page-home').classList.add('active');
+      tabs[0].classList.add('active'); // home active
+      setTimeout(function() {
+        var input = document.getElementById('searchInput');
+        if (input) {
+          input.focus();
+          window.scrollTo({top: 0, behavior: 'smooth'});
+          showSearchDropdown();
+        }
+      }, 100);
+      var tabLabels = ['首页', '综合能力', '传输有线', '搜索'];
+      showToast('🔍 搜索');
+    } else {
+      var pageId = pages[tab] || 'page-home';
+      var page = document.getElementById(pageId);
+      if (page) page.classList.add('active');
 
-    var idx = tabNames.indexOf(tab);
-    if (idx >= 0 && tabs[idx]) {
-      tabs[idx].classList.add('active');
+      var idx = tabNames.indexOf(tab);
+      if (idx >= 0 && tabs[idx]) {
+        tabs[idx].classList.add('active');
+      }
+      
+      var labels = { 'home': '🏠 首页', 'subject1': '📘 综合能力', 'subject2': '📗 传输有线' };
+      showToast(labels[tab] || tab);
     }
 
     window.scrollTo({top: 0, behavior: 'smooth'});
-    hideSearchResults();
+    hideSearchDropdown();
+    clearHighlights();
     haptic();
   }
 
   // ============================================================
-  // Collapse / Expand
+  // Collapse
   // ============================================================
   function toggleCollapse(el) {
     el.classList.toggle('open');
@@ -1918,7 +2353,6 @@ body.font-xl h2 { font-size: 28px; }
     if (body && body.classList.contains('collapse-body')) {
       body.classList.toggle('open');
       
-      // Save state
       var id = el.getAttribute('data-collapse-id');
       if (!id) {
         id = 'col_' + Math.random().toString(36).substr(2, 9);
@@ -1953,6 +2387,7 @@ body.font-xl h2 { font-size: 28px; }
       var body = headers[i].nextElementSibling;
       if (body) body.classList.add('open');
     }
+    showToast('📂 全部展开');
     haptic();
   }
 
@@ -1965,18 +2400,20 @@ body.font-xl h2 { font-size: 28px; }
       var body = headers[i].nextElementSibling;
       if (body) body.classList.remove('open');
     }
+    showToast('📁 全部收起');
     haptic();
   }
 
   // ============================================================
-  // Scroll Helpers
+  // Scroll
   // ============================================================
   function scrollToEl(id) {
     var el = document.getElementById(id);
     if (el) {
-      var top = el.getBoundingClientRect().top + window.pageYOffset - 20;
+      var searchBarH = document.querySelector('.search-bar') ? 
+        document.querySelector('.search-bar').offsetHeight : 60;
+      var top = el.getBoundingClientRect().top + window.pageYOffset - searchBarH - 10;
       window.scrollTo({top: top, behavior: 'smooth'});
-      // Auto-expand first level
       var card = el.closest('.card');
       if (card) {
         var body = card.querySelector('.collapse-body');
@@ -1995,9 +2432,7 @@ body.font-xl h2 { font-size: 28px; }
     haptic();
   }
 
-  // ============================================================
-  // Progress & Back to Top
-  // ============================================================
+  // Progress + back to top
   var ticking = false;
   function onScroll() {
     if (!ticking) {
@@ -2005,98 +2440,110 @@ body.font-xl h2 { font-size: 28px; }
       ticking = true;
     }
   }
-
   function updateScrollUI() {
     ticking = false;
     var y = window.scrollY;
-    
-    // Progress
     var docH = document.documentElement.scrollHeight - window.innerHeight;
     var pct = docH > 0 ? (y / docH) * 100 : 0;
     var fill = document.querySelector('.progress-fill');
     if (fill) fill.style.width = pct + '%';
-    
-    // Back to top
     var btn = document.getElementById('backTop');
     if (btn) {
       if (y > 300) btn.classList.add('show');
       else btn.classList.remove('show');
     }
   }
-
   window.addEventListener('scroll', onScroll, { passive: true });
 
   // ============================================================
-  // Font Size (V6 Enhanced)
+  // Font Size (V7 - SLIDER + wide range)
   // ============================================================
-  var fontLevels = ['xs', 'small', 'normal', 'large', 'xl'];
-  var fontLabels = { 'xs': '特小', 'small': '小', 'normal': '中', 'large': '大', 'xl': '特大' };
-
-  function setFontSize(size) {
-    // Remove all font classes
-    document.body.classList.remove('font-xs', 'font-small', 'font-large', 'font-xl');
+  function setFontSize(px) {
+    px = Math.max(FONT_MIN, Math.min(FONT_MAX, px));
+    state.fontSize = px;
+    storeSet('fontSize', px);
     
-    if (size === 'xs') document.body.classList.add('font-xs');
-    else if (size === 'small') document.body.classList.add('font-small');
-    else if (size === 'large') document.body.classList.add('font-large');
-    else if (size === 'xl') document.body.classList.add('font-xl');
+    // Set base font size on html
+    document.documentElement.style.fontSize = px + 'px';
     
-    state.fontSize = size;
-    storeSet('fontSize', size);
-    
-    // Update buttons
-    var btns = document.querySelectorAll('.font-btn');
-    for (var i = 0; i < btns.length; i++) {
-      var btnSize = btns[i].getAttribute('data-size');
-      btns[i].classList.toggle('active', btnSize === size);
+    // Update slider
+    var slider = document.getElementById('fontSlider');
+    if (slider && document.activeElement !== slider) {
+      slider.value = px;
     }
     
+    // Update display
+    var display = document.getElementById('fontSizeDisplay');
+    if (display) display.textContent = px + 'px';
+    
+    // Update preset buttons
+    var presets = document.querySelectorAll('.font-preset-btn');
+    for (var i = 0; i < presets.length; i++) {
+      var p = parseInt(presets[i].getAttribute('data-size'));
+      presets[i].classList.toggle('active', p === px);
+    }
+  }
+
+  function resetFontSize() {
+    setFontSize(FONT_DEFAULT);
+    showToast('🔤 默认字号 ' + FONT_DEFAULT + 'px');
     haptic();
   }
 
   function adjustFont(delta) {
-    var idx = fontLevels.indexOf(state.fontSize);
-    var newIdx = Math.max(0, Math.min(fontLevels.length - 1, idx + delta));
-    if (newIdx !== idx) {
-      setFontSize(fontLevels[newIdx]);
-    }
+    setFontSize(state.fontSize + delta);
   }
 
   // ============================================================
-  // Search (V6 Enhanced)
+  // Search (V7 - Full highlight + navigation)
   // ============================================================
-  var HOT_SEARCHES = [
-    'SDH', 'OTN', 'DWDM', 'PON', '光纤损耗', 
-    'PTN', '移动通信', '现代通信网', 'EPON', 'GPON'
-  ];
-  var MAX_HISTORY = 10;
-
   function initSearch() {
     state.searchHistory = storeGet('searchHistory', []);
+    
     var input = document.getElementById('searchInput');
-    var clearBtn = document.getElementById('searchClear');
+    if (!input) return;
     
-    if (input) {
-      input.addEventListener('focus', onSearchFocus);
-      input.addEventListener('input', onSearchInput);
-      input.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-          var q = input.value.trim();
-          if (q) {
-            addToHistory(q);
-            performSearch(q);
-          }
+    input.addEventListener('focus', onSearchFocus);
+    input.addEventListener('input', onSearchInput);
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        var q = input.value.trim();
+        if (q) {
+          addToHistory(q);
+          doFullSearch(q);
+          hideSearchDropdown();
         }
-      });
-    }
+      }
+    });
     
+    // Clear button
+    var clearBtn = document.getElementById('searchClear');
     if (clearBtn) {
       clearBtn.addEventListener('click', function(e) {
         e.stopPropagation();
         input.value = '';
         clearBtn.classList.remove('show');
-        hideSearchResults();
+        clearHighlights();
+        hideSearchDropdown();
         input.focus();
+        showSearchHome();
+      });
+    }
+    
+    // Nav buttons
+    var prevBtn = document.getElementById('searchPrev');
+    var nextBtn = document.getElementById('searchNext');
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        prevMatch();
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        nextMatch();
       });
     }
   }
@@ -2106,73 +2553,93 @@ body.font-xl h2 { font-size: 28px; }
     if (!input.value.trim()) {
       showSearchHome();
     }
+    showSearchDropdown();
   }
 
   function onSearchInput() {
     var input = document.getElementById('searchInput');
     var clearBtn = document.getElementById('searchClear');
+    var nav = document.getElementById('searchNav');
     var q = input.value.trim();
     
-    if (clearBtn) {
-      clearBtn.classList.toggle('show', q.length > 0);
-    }
+    if (clearBtn) clearBtn.classList.toggle('show', q.length > 0);
     
     if (q) {
-      performSearch(q);
+      // Live search in dropdown
+      performDropdownSearch(q);
+      // Also highlight on page
+      if (q.length >= 2) {
+        doFullSearch(q);
+      } else {
+        clearHighlights();
+        if (nav) nav.classList.remove('show');
+      }
     } else {
       showSearchHome();
+      clearHighlights();
+      if (nav) nav.classList.remove('show');
     }
   }
 
+  function showSearchDropdown() {
+    var dd = document.getElementById('searchDropdown');
+    if (dd) dd.classList.add('show');
+  }
+
+  function hideSearchDropdown() {
+    var dd = document.getElementById('searchDropdown');
+    if (dd) dd.classList.remove('show');
+  }
+
   function showSearchHome() {
-    var results = document.getElementById('searchResults');
-    if (!results) return;
+    var dd = document.getElementById('searchDropdown');
+    if (!dd) return;
     
     var html = '';
     
     // History
     if (state.searchHistory.length > 0) {
-      html += '<div class="search-history">';
-      html += '<div class="search-history-title">';
+      html += '<div class="search-history-section">';
+      html += '<div class="search-section-title">';
       html += '<span>🕐 搜索历史</span>';
-      html += '<span class="clear-history" onclick="clearSearchHistory()">清空</span>';
+      html += '<span class="clear-btn" onclick="clearSearchHistory()">清空</span>';
       html += '</div>';
-      html += '<div class="search-history-tags">';
-      for (var i = 0; i < Math.min(state.searchHistory.length, 8); i++) {
-        html += '<span class="history-tag" onclick="searchFromHistory(\'' + state.searchHistory[i].replace(/'/g, "\\'") + '\')">' + state.searchHistory[i] + '</span>';
+      html += '<div class="history-tags">';
+      for (var i = 0; i < Math.min(state.searchHistory.length, 10); i++) {
+        var hq = state.searchHistory[i].replace(/'/g, "\\'");
+        html += '<span class="history-tag" onclick="searchFor('' + hq + '')">' + state.searchHistory[i] + '</span>';
       }
       html += '</div></div>';
     }
     
-    // Hot searches
-    html += '<div class="search-hot">';
-    html += '<div class="search-history-title"><span>🔥 热门搜索</span></div>';
+    // Hot
+    html += '<div class="search-hot-section">';
+    html += '<div class="search-section-title"><span>🔥 热门搜索</span></div>';
+    html += '<div class="hot-list">';
     for (var j = 0; j < HOT_SEARCHES.length; j++) {
-      html += '<div class="hot-item" onclick="searchFromHistory(\'' + HOT_SEARCHES[j].replace(/'/g, "\\'") + '\')">';
+      var hq2 = HOT_SEARCHES[j].replace(/'/g, "\\'");
+      html += '<div class="hot-item-row" onclick="searchFor('' + hq2 + '')">';
       html += '<span class="hot-rank">' + (j+1) + '</span>';
       html += '<span>' + HOT_SEARCHES[j] + '</span>';
       html += '</div>';
     }
-    html += '</div>';
+    html += '</div></div>';
     
-    results.innerHTML = html;
-    results.classList.add('show');
+    dd.innerHTML = html;
+    dd.classList.add('show');
   }
 
   function addToHistory(query) {
-    // Remove duplicates
     var idx = state.searchHistory.indexOf(query);
     if (idx >= 0) state.searchHistory.splice(idx, 1);
-    // Add to front
     state.searchHistory.unshift(query);
-    // Trim
-    if (state.searchHistory.length > MAX_HISTORY) {
-      state.searchHistory = state.searchHistory.slice(0, MAX_HISTORY);
+    if (state.searchHistory.length > 15) {
+      state.searchHistory = state.searchHistory.slice(0, 15);
     }
     storeSet('searchHistory', state.searchHistory);
   }
 
-  function searchFromHistory(q) {
+  function searchFor(q) {
     var input = document.getElementById('searchInput');
     if (input) {
       input.value = q;
@@ -2180,24 +2647,22 @@ body.font-xl h2 { font-size: 28px; }
       if (clearBtn) clearBtn.classList.add('show');
     }
     addToHistory(q);
-    performSearch(q);
+    doFullSearch(q);
+    hideSearchDropdown();
   }
 
   function clearSearchHistory() {
     state.searchHistory = [];
     storeSet('searchHistory', []);
     showSearchHome();
+    showToast('已清空搜索历史');
     haptic();
   }
 
-  function hideSearchResults() {
-    var results = document.getElementById('searchResults');
-    if (results) results.classList.remove('show');
-  }
-
-  function performSearch(query) {
-    var results = document.getElementById('searchResults');
-    if (!results || !query.trim()) return;
+  // Dropdown search (card-level results)
+  function performDropdownSearch(query) {
+    var dd = document.getElementById('searchDropdown');
+    if (!dd || !query.trim()) return;
     
     var items = [];
     var q = query.toLowerCase();
@@ -2209,8 +2674,6 @@ body.font-xl h2 { font-size: 28px; }
       if (text.indexOf(q) >= 0) {
         var titleEl = card.querySelector('.card-title');
         var titleText = titleEl ? titleEl.textContent.trim().replace(/\s+/g, ' ') : '相关内容';
-        
-        // Find first match position
         var idx = text.indexOf(q);
         var start = Math.max(0, idx - 30);
         var end = Math.min(text.length, idx + query.length + 30);
@@ -2218,7 +2681,6 @@ body.font-xl h2 { font-size: 28px; }
         if (start > 0) preview = '...' + preview;
         if (end < text.length) preview = preview + '...';
         
-        // Find which subject
         var page = card.closest('.content');
         var pageId = page ? page.id : '';
         var subject = '';
@@ -2226,20 +2688,15 @@ body.font-xl h2 { font-size: 28px; }
         else if (pageId === 'page-subject2') subject = '传输有线';
         else if (pageId === 'page-home') subject = '首页';
         
-        items.push({ 
-          title: titleText, 
-          preview: preview, 
-          card: card,
-          subject: subject
-        });
+        items.push({ title: titleText, preview: preview, card: card, subject: subject });
       }
     }
     
     if (items.length === 0) {
-      results.innerHTML = '<div style="padding:40px 20px;text-align:center;color:var(--gray-400);"><div style="font-size:32px;margin-bottom:10px;">🔍</div>未找到"' + query + '"相关内容<br><span style="font-size:12px;">试试其他关键词</span></div>';
+      dd.innerHTML = '<div style="padding:40px 20px;text-align:center;color:var(--gray-400);"><div style="font-size:28px;margin-bottom:8px;">🔍</div>未找到相关内容</div>';
     } else {
-      var html = '<div class="search-count-info">找到 ' + items.length + ' 条结果</div>';
-      for (var i = 0; i < Math.min(items.length, 20); i++) {
+      var html = '<div style="padding:8px 16px;font-size:11px;color:var(--gray-400);background:var(--gray-50);">找到 ' + items.length + ' 条结果</div>';
+      for (var i = 0; i < Math.min(items.length, 15); i++) {
         var item = items[i];
         var highlighted = item.preview.replace(
           new RegExp(escapeRegExp(query), 'gi'),
@@ -2248,34 +2705,33 @@ body.font-xl h2 { font-size: 28px; }
         html += '<div class="search-result-item" data-idx="' + i + '">';
         html += '<div class="result-title">' + item.title;
         if (item.subject) {
-          html += ' <span style="font-size:10px;color:var(--primary);background:var(--primary-bg);padding:1px 6px;border-radius:8px;font-weight:500;">' + item.subject + '</span>';
+          html += ' <span class="result-badge">' + item.subject + '</span>';
         }
         html += '</div>';
         html += '<div class="result-preview">' + highlighted + '</div>';
         html += '</div>';
       }
-      results.innerHTML = html;
+      dd.innerHTML = html;
       
-      // Bind clicks
-      var resultEls = results.querySelectorAll('.search-result-item');
+      var resultEls = dd.querySelectorAll('.search-result-item');
       for (var j = 0; j < resultEls.length; j++) {
         (function(index) {
           resultEls[index].addEventListener('click', function() {
             addToHistory(query);
-            jumpToResult(items[index]);
+            jumpToResult(items[index], query);
           });
         })(j);
       }
     }
     
-    results.classList.add('show');
+    dd.classList.add('show');
   }
 
   function escapeRegExp(s) {
     return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
-  function jumpToResult(item) {
+  function jumpToResult(item, query) {
     var card = item.card;
     if (!card) return;
     
@@ -2287,7 +2743,6 @@ body.font-xl h2 { font-size: 28px; }
       if (tab) switchTab(tab);
       
       setTimeout(function() {
-        // Expand all in card
         var bodies = card.querySelectorAll('.collapse-body');
         var headers = card.querySelectorAll('.collapse-header');
         for (var i = 0; i < bodies.length; i++) {
@@ -2301,27 +2756,177 @@ body.font-xl h2 { font-size: 28px; }
         card.style.transition = 'box-shadow 0.3s';
         card.style.boxShadow = '0 0 0 3px var(--primary)';
         setTimeout(function() { card.style.boxShadow = ''; }, 2000);
+        
+        if (query) doFullSearch(query);
       }, 200);
     }
-    hideSearchResults();
+    hideSearchDropdown();
     haptic();
   }
 
-  // Click outside to close
+  // ===== Full page highlight search =====
+  var originalHTML = {}; // Store original text nodes
+
+  function doFullSearch(query) {
+    state.searchQuery = query;
+    clearHighlights();
+    
+    if (!query || query.length < 2) {
+      updateSearchNav(0, -1);
+      return;
+    }
+    
+    var content = document.querySelector('.content.active');
+    if (!content) {
+      updateSearchNav(0, -1);
+      return;
+    }
+    
+    var matches = [];
+    var regex = new RegExp(escapeRegExp(query), 'gi');
+    
+    // Walk all text nodes
+    var walker = document.createTreeWalker(content, NodeFilter.SHOW_TEXT, null, false);
+    var node;
+    
+    while (node = walker.nextNode()) {
+      if (!node.parentNode || node.parentNode.closest('.search-bar, .search-dropdown, #toastContainer, .font-panel')) continue;
+      
+      var text = node.nodeValue;
+      if (!text || text.trim() === '') continue;
+      
+      var match;
+      while ((match = regex.exec(text)) !== null) {
+        matches.push({
+          node: node,
+          index: match.index,
+          length: match[0].length,
+          text: match[0]
+        });
+      }
+    }
+    
+    // Apply highlights (from bottom to top to preserve indices)
+    state.searchMatches = [];
+    var highlightedElements = [];
+    
+    for (var i = matches.length - 1; i >= 0; i--) {
+      var m = matches[i];
+      try {
+        var range = document.createRange();
+        range.setStart(m.node, m.index);
+        range.setEnd(m.node, m.index + m.length);
+        
+        var span = document.createElement('span');
+        span.className = 'search-highlight';
+        range.surroundContents(span);
+        highlightedElements.unshift(span);
+      } catch(e) {
+        // Skip if can't surround (e.g., partial HTML)
+      }
+    }
+    
+    state.searchMatches = highlightedElements;
+    
+    if (highlightedElements.length > 0) {
+      state.currentMatchIndex = 0;
+      highlightedElements[0].classList.add('current');
+      scrollToHighlight(highlightedElements[0]);
+    } else {
+      state.currentMatchIndex = -1;
+    }
+    
+    updateSearchNav(highlightedElements.length, state.currentMatchIndex);
+  }
+
+  function clearHighlights() {
+    var highlights = document.querySelectorAll('.search-highlight');
+    for (var i = 0; i < highlights.length; i++) {
+      var parent = highlights[i].parentNode;
+      if (parent) {
+        parent.replaceChild(
+          document.createTextNode(highlights[i].textContent),
+          highlights[i]
+        );
+        parent.normalize();
+      }
+    }
+    state.searchMatches = [];
+    state.currentMatchIndex = -1;
+    updateSearchNav(0, -1);
+  }
+
+  function updateSearchNav(count, idx) {
+    var nav = document.getElementById('searchNav');
+    var countEl = document.getElementById('searchCount');
+    if (!nav) return;
+    
+    if (count > 0) {
+      nav.classList.add('show');
+      if (countEl) countEl.textContent = (idx + 1) + ' / ' + count;
+    } else {
+      nav.classList.remove('show');
+    }
+  }
+
+  function nextMatch() {
+    if (state.searchMatches.length === 0) return;
+    
+    // Remove current
+    if (state.currentMatchIndex >= 0 && state.searchMatches[state.currentMatchIndex]) {
+      state.searchMatches[state.currentMatchIndex].classList.remove('current');
+    }
+    
+    state.currentMatchIndex = (state.currentMatchIndex + 1) % state.searchMatches.length;
+    var el = state.searchMatches[state.currentMatchIndex];
+    el.classList.add('current');
+    scrollToHighlight(el);
+    updateSearchNav(state.searchMatches.length, state.currentMatchIndex);
+    haptic();
+  }
+
+  function prevMatch() {
+    if (state.searchMatches.length === 0) return;
+    
+    if (state.currentMatchIndex >= 0 && state.searchMatches[state.currentMatchIndex]) {
+      state.searchMatches[state.currentMatchIndex].classList.remove('current');
+    }
+    
+    state.currentMatchIndex = (state.currentMatchIndex - 1 + state.searchMatches.length) % state.searchMatches.length;
+    var el = state.searchMatches[state.currentMatchIndex];
+    el.classList.add('current');
+    scrollToHighlight(el);
+    updateSearchNav(state.searchMatches.length, state.currentMatchIndex);
+    haptic();
+  }
+
+  function scrollToHighlight(el) {
+    var rect = el.getBoundingClientRect();
+    var searchBarH = document.querySelector('.search-bar') ? 
+      document.querySelector('.search-bar').offsetHeight : 60;
+    
+    if (rect.top < searchBarH + 20 || rect.bottom > window.innerHeight - 20) {
+      var top = window.pageYOffset + rect.top - searchBarH - 40;
+      window.scrollTo({top: Math.max(0, top), behavior: 'smooth'});
+    }
+  }
+
+  // Click outside
   document.addEventListener('click', function(e) {
-    var results = document.getElementById('searchResults');
     var searchBar = document.querySelector('.search-bar');
-    if (results && searchBar && !searchBar.contains(e.target)) {
-      results.classList.remove('show');
+    var dd = document.getElementById('searchDropdown');
+    if (searchBar && dd && !searchBar.contains(e.target)) {
+      // Don't hide - keep highlights visible, just close dropdown
+      dd.classList.remove('show');
     }
   });
 
   // ============================================================
-  // Swipe between tabs
+  // Swipe tabs
   // ============================================================
   var touchStartX = 0;
   var touchStartY = 0;
-  var SWIPE_THRESHOLD = 60;
+  var SWIPE_THRESHOLD = 70;
 
   document.addEventListener('touchstart', function(e) {
     touchStartX = e.touches[0].clientX;
@@ -2332,123 +2937,95 @@ body.font-xl h2 { font-size: 28px; }
     var dx = e.changedTouches[0].clientX - touchStartX;
     var dy = e.changedTouches[0].clientY - touchStartY;
     
-    // Only swipe if horizontal > vertical
     if (Math.abs(dx) < Math.abs(dy)) return;
     if (Math.abs(dx) < SWIPE_THRESHOLD) return;
     
-    // Don't swipe if there's a search open or modal
-    var results = document.getElementById('searchResults');
-    if (results && results.classList.contains('show')) return;
+    var dd = document.getElementById('searchDropdown');
+    if (dd && dd.classList.contains('show')) return;
     
     var tabs = ['home', 'subject1', 'subject2'];
-    var idx = tabs.indexOf(state.currentTab);
+    var current = state.currentTab === 'search' ? 'home' : state.currentTab;
+    var idx = tabs.indexOf(current);
     
     if (dx > 0 && idx > 0) {
-      // Swipe right -> previous tab
       switchTab(tabs[idx - 1]);
     } else if (dx < 0 && idx < tabs.length - 1) {
-      // Swipe left -> next tab
       switchTab(tabs[idx + 1]);
     }
   }, { passive: true });
 
   // ============================================================
-  // Pinch to zoom font
+  // Pinch to zoom
   // ============================================================
-  var initialPinchDist = 0;
-  var initialFontSize = '';
+  var pinchStartDist = 0;
+  var pinchStartSize = 0;
   
   document.addEventListener('touchstart', function(e) {
     if (e.touches.length === 2) {
       var dx = e.touches[0].clientX - e.touches[1].clientX;
       var dy = e.touches[0].clientY - e.touches[1].clientY;
-      initialPinchDist = Math.sqrt(dx*dx + dy*dy);
-      initialFontSize = state.fontSize;
+      pinchStartDist = Math.sqrt(dx*dx + dy*dy);
+      pinchStartSize = state.fontSize;
     }
   }, { passive: true });
 
   document.addEventListener('touchmove', function(e) {
-    if (e.touches.length !== 2 || initialPinchDist === 0) return;
+    if (e.touches.length !== 2 || pinchStartDist === 0) return;
     
     var dx = e.touches[0].clientX - e.touches[1].clientX;
     var dy = e.touches[0].clientY - e.touches[1].clientY;
     var dist = Math.sqrt(dx*dx + dy*dy);
-    var ratio = dist / initialPinchDist;
+    var ratio = dist / pinchStartDist;
     
-    var currentIdx = fontLevels.indexOf(initialFontSize);
-    if (ratio > 1.15 && currentIdx < fontLevels.length - 1) {
-      setFontSize(fontLevels[currentIdx + 1]);
-      initialPinchDist = dist;
-      initialFontSize = fontLevels[currentIdx + 1];
-    } else if (ratio < 0.87 && currentIdx > 0) {
-      setFontSize(fontLevels[currentIdx - 1]);
-      initialPinchDist = dist;
-      initialFontSize = fontLevels[currentIdx - 1];
+    var newSize = Math.round(pinchStartSize * ratio);
+    newSize = Math.max(FONT_MIN, Math.min(FONT_MAX, newSize));
+    
+    if (newSize !== state.fontSize) {
+      setFontSize(newSize);
     }
   }, { passive: true });
 
   document.addEventListener('touchend', function() {
-    initialPinchDist = 0;
+    pinchStartDist = 0;
   });
-
-  // ============================================================
-  // Haptic feedback (simulated via CSS transform)
-  // ============================================================
-  function haptic() {
-    // On real devices with vibration API
-    if (navigator.vibrate) {
-      navigator.vibrate(8);
-    }
-  }
 
   // ============================================================
   // Init
   // ============================================================
   function init() {
-    // Restore font size
-    state.fontSize = storeGet('fontSize', 'normal');
-    setFontSize(state.fontSize);
+    // Font
+    var savedFont = storeGet('fontSize', FONT_DEFAULT);
+    setFontSize(savedFont);
     
-    // Restore tab
+    // Tab
     var savedTab = storeGet('currentTab', 'home');
-    if (savedTab !== 'home') {
-      switchTab(savedTab);
-    }
+    if (savedTab !== 'home') switchTab(savedTab);
     
-    // Restore collapse states
+    // Collapse
     restoreCollapseStates();
     
-    // Init search
+    // Search
     initSearch();
     
-    // Initial scroll state
+    // Initial scroll
     updateScrollUI();
   }
 
-  // Expose globals
+  // Expose
   window.switchTab = switchTab;
   window.toggleCollapse = toggleCollapse;
   window.scrollToEl = scrollToEl;
   window.scrollToTop = scrollToTop;
   window.setFontSize = setFontSize;
+  window.resetFontSize = resetFontSize;
   window.adjustFont = adjustFont;
   window.expandAllInPage = expandAllInPage;
   window.collapseAllInPage = collapseAllInPage;
-  window.performSearch = performSearch;
-  window.searchFromHistory = searchFromHistory;
+  window.searchFor = searchFor;
   window.clearSearchHistory = clearSearchHistory;
-  window.hideSearchResults = hideSearchResults;
-  window.goSearch = function() {
-    switchTab('home');
-    setTimeout(function() {
-      var input = document.getElementById('searchInput');
-      if (input) {
-        input.focus();
-        window.scrollTo({top: 0, behavior: 'smooth'});
-        input.click();
-      }
-    }, 150);
-  };
+  window.nextMatch = nextMatch;
+  window.prevMatch = prevMatch;
+  window.hideSearchDropdown = hideSearchDropdown;
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
