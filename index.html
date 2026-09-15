@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#1e3a5f">
-<title>通信中级考试 · 冲刺笔记 V5</title>
+<title>通信中级考试 · 冲刺笔记 V6</title>
 <style>
 /* ===== Reset & Base ===== */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -722,6 +722,279 @@ body.font-large .section-title { font-size: 16px; }
 body.font-large .callout { font-size: 15px; }
 body.font-large p,
 body.font-large li { font-size: 15px; }
+
+/* ===== V6: Search Enhancement ===== */
+.search-bar {
+  position: relative;
+}
+.search-bar .search-clear {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--gray-300);
+  color: white;
+  font-size: 12px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  z-index: 2;
+}
+.search-bar .search-clear.show { display: flex; }
+.search-results {
+  max-height: 50vh;
+  border-radius: 0 0 16px 16px;
+  margin-top: 4px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.search-history {
+  padding: 12px 16px;
+}
+.search-history-title {
+  font-size: 12px;
+  color: var(--gray-500);
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.search-history-title .clear-history {
+  color: var(--primary);
+  font-size: 11px;
+  cursor: pointer;
+}
+.search-history-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.history-tag {
+  padding: 5px 12px;
+  background: var(--gray-100);
+  border-radius: 20px;
+  font-size: 12px;
+  color: var(--gray-600);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.history-tag:active {
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  transform: scale(0.95);
+}
+.search-hot {
+  padding: 12px 16px;
+  border-top: 1px solid var(--gray-100);
+}
+.hot-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 13px;
+  color: var(--gray-700);
+  cursor: pointer;
+}
+.hot-item:active { background: var(--gray-50); }
+.hot-rank {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--gray-200);
+  color: var(--gray-600);
+  flex-shrink: 0;
+}
+.hot-item:nth-child(1) .hot-rank { background: #ef4444; color: white; }
+.hot-item:nth-child(2) .hot-rank { background: #f97316; color: white; }
+.hot-item:nth-child(3) .hot-rank { background: #f59e0b; color: white; }
+.search-count-info {
+  padding: 8px 16px;
+  font-size: 11px;
+  color: var(--gray-400);
+  background: var(--gray-50);
+  border-bottom: 1px solid var(--gray-100);
+}
+
+/* ===== V6: Font Size Enhancement ===== */
+.font-controls {
+  display: flex;
+  gap: 3px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 3px;
+}
+.font-btn {
+  width: 28px;
+  height: 26px;
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0.7;
+}
+.font-btn.active {
+  background: white;
+  color: var(--primary-dark);
+  opacity: 1;
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+body {
+  transition: font-size 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+body.font-xs { font-size: 12px; }
+body.font-xs .card-title { font-size: 13px; }
+body.font-xs h2 { font-size: 17px; }
+body.font-small { font-size: 13px; }
+body.font-small .card-title { font-size: 14px; }
+body.font-small h2 { font-size: 19px; }
+body.font-large { font-size: 17px; }
+body.font-large .card-title { font-size: 17px; }
+body.font-large h2 { font-size: 25px; }
+body.font-xl { font-size: 19px; }
+body.font-xl .card-title { font-size: 19px; }
+body.font-xl h2 { font-size: 28px; }
+.font-size-indicator {
+  font-size: 10px;
+  opacity: 0.7;
+  margin-right: 6px;
+  align-self: center;
+}
+
+/* ===== V6: Collapse Enhancement ===== */
+.collapse-header {
+  transition: background 0.2s;
+}
+.collapse-header:active { background: var(--gray-50); }
+.collapse-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.collapse-body.open {
+  max-height: 2000px;
+}
+.chevron {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.collapse-header.open .chevron {
+  transform: rotate(180deg);
+}
+
+/* ===== V6: Pull to Refresh ===== */
+.pull-indicator {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 50;
+}
+.pull-indicator.show { opacity: 1; }
+.pull-indicator.spinning { animation: spin 0.8s linear infinite; }
+@keyframes spin {
+  from { transform: translateX(-50%) rotate(0deg); }
+  to { transform: translateX(-50%) rotate(360deg); }
+}
+
+/* ===== V6: Tab Switch Animation ===== */
+.content {
+  display: none;
+  animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.content.active { display: block; }
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ===== V6: Card Haptic Effect ===== */
+.card, .chapter-btn, .subject-card, .action-btn, .tab-item {
+  -webkit-tap-highlight-color: transparent;
+}
+.card:active, .chapter-btn:active, .subject-card:active {
+  transform: scale(0.98);
+  transition: transform 0.1s;
+}
+
+/* ===== V6: Bottom Nav Enhancement ===== */
+.bottom-nav .tab-item {
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.bottom-nav .tab-item.active {
+  color: var(--primary);
+  transform: translateY(-2px);
+}
+.bottom-nav .tab-item.active .tab-icon {
+  transform: scale(1.15);
+}
+.bottom-nav .tab-item .tab-icon {
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== V6: Back to top ===== */
+.back-top {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.back-top:active {
+  transform: scale(0.9);
+  background: var(--primary);
+  color: white;
+}
+
+/* ===== V6: Subject cards hover ===== */
+.subject-card {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.subject-card:active {
+  transform: scale(0.96);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ===== V6: Scrollbar for mobile ===== */
+::-webkit-scrollbar { width: 0; height: 0; }
+* { scrollbar-width: none; }
+
+/* ===== V6: Safe area ===== */
+.bottom-nav {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.top-header {
+  padding-top: calc(12px + env(safe-area-inset-top));
+}
+
 </style>
 </head>
 <body>
@@ -732,7 +1005,7 @@ body.font-large li { font-size: 15px; }
 <div id="page-home" class="content active">
   <div class="hero-card">
     <h2>通信工程师中级考试</h2>
-    <div class="hero-sub">冲刺复习笔记 V5 · 精简高效版</div>
+    <div class="hero-sub">冲刺复习笔记 V6 · 极致体验版</div>
     <div class="hero-meta">
       <span>📹 7个精讲视频</span>
       <span>⏱️ 11.8小时</span>
@@ -1576,223 +1849,603 @@ body.font-large li { font-size: 15px; }
 
 <script>
 
-// ===== Tab Navigation =====
-function switchTab(tab) {
-  var pages = { 'home': 'page-home', 'subject1': 'page-subject1', 'subject2': 'page-subject2' };
-  
-  var contents = document.querySelectorAll('.content');
-  for (var i = 0; i < contents.length; i++) {
-    contents[i].classList.remove('active');
-  }
-  
-  var tabs = document.querySelectorAll('.tab-item');
-  for (var i = 0; i < tabs.length; i++) {
-    tabs[i].classList.remove('active');
-  }
-  
-  var pageId = pages[tab] || 'page-home';
-  document.getElementById(pageId).classList.add('active');
-  
-  var tabNames = ['home', 'subject1', 'subject2'];
-  var idx = tabNames.indexOf(tab);
-  if (idx >= 0 && tabs[idx]) {
-    tabs[idx].classList.add('active');
-  }
-  
-  window.scrollTo({top: 0, behavior: 'smooth'});
-  hideSearchResults();
-}
+// ===== V6: Enhanced App =====
+(function() {
+  'use strict';
 
-// ===== Collapse/Expand =====
-function toggleCollapse(el) {
-  el.classList.toggle('open');
-  var body = el.nextElementSibling;
-  if (body && body.classList.contains('collapse-body')) {
-    body.classList.toggle('open');
+  // ============================================================
+  // State
+  // ============================================================
+  var state = {
+    currentTab: 'home',
+    fontSize: 'normal',
+    searchHistory: [],
+    collapsedSections: {}
+  };
+
+  // ============================================================
+  // Storage helpers
+  // ============================================================
+  function storeGet(key, def) {
+    try {
+      var v = localStorage.getItem(key);
+      return v ? JSON.parse(v) : def;
+    } catch(e) { return def; }
   }
-}
-
-// ===== Scroll helpers =====
-function scrollToEl(id) {
-  var el = document.getElementById(id);
-  if (el) {
-    var offset = 10;
-    var top = el.getBoundingClientRect().top + window.pageYOffset - offset;
-    window.scrollTo({top: top, behavior: 'smooth'});
+  function storeSet(key, val) {
+    try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
   }
-}
 
-function scrollToTop() {
-  window.scrollTo({top: 0, behavior: 'smooth'});
-}
+  // ============================================================
+  // Tab Navigation
+  // ============================================================
+  function switchTab(tab) {
+    state.currentTab = tab;
+    storeSet('currentTab', tab);
 
-// ===== Back to top =====
-window.addEventListener('scroll', function() {
-  var btn = document.getElementById('backTop');
-  if (btn) {
-    if (window.scrollY > 300) {
-      btn.classList.add('show');
-    } else {
-      btn.classList.remove('show');
+    var pages = { 'home': 'page-home', 'subject1': 'page-subject1', 'subject2': 'page-subject2' };
+    var tabNames = ['home', 'subject1', 'subject2'];
+
+    var contents = document.querySelectorAll('.content');
+    for (var i = 0; i < contents.length; i++) {
+      contents[i].classList.remove('active');
+    }
+    var tabs = document.querySelectorAll('.tab-item');
+    for (var i = 0; i < tabs.length; i++) {
+      tabs[i].classList.remove('active');
+    }
+
+    var pageId = pages[tab] || 'page-home';
+    var page = document.getElementById(pageId);
+    if (page) page.classList.add('active');
+
+    var idx = tabNames.indexOf(tab);
+    if (idx >= 0 && tabs[idx]) {
+      tabs[idx].classList.add('active');
+    }
+
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    hideSearchResults();
+    haptic();
+  }
+
+  // ============================================================
+  // Collapse / Expand
+  // ============================================================
+  function toggleCollapse(el) {
+    el.classList.toggle('open');
+    var body = el.nextElementSibling;
+    if (body && body.classList.contains('collapse-body')) {
+      body.classList.toggle('open');
+      
+      // Save state
+      var id = el.getAttribute('data-collapse-id');
+      if (!id) {
+        id = 'col_' + Math.random().toString(36).substr(2, 9);
+        el.setAttribute('data-collapse-id', id);
+      }
+      state.collapsedSections[id] = !el.classList.contains('open');
+      storeSet('collapsedSections', state.collapsedSections);
+    }
+    haptic();
+  }
+
+  function restoreCollapseStates() {
+    state.collapsedSections = storeGet('collapsedSections', {});
+    var headers = document.querySelectorAll('.collapse-header');
+    for (var i = 0; i < headers.length; i++) {
+      var el = headers[i];
+      var id = el.getAttribute('data-collapse-id');
+      if (id && state.collapsedSections[id]) {
+        el.classList.remove('open');
+        var body = el.nextElementSibling;
+        if (body) body.classList.remove('open');
+      }
     }
   }
-  updateProgress();
-});
 
-// ===== Progress =====
-function updateProgress() {
-  var scrollTop = window.scrollY;
-  var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-  var fill = document.querySelector('.progress-fill');
-  if (fill) fill.style.width = progress + '%';
-}
+  function expandAllInPage(pageId) {
+    var page = document.getElementById(pageId);
+    if (!page) return;
+    var headers = page.querySelectorAll('.collapse-header');
+    for (var i = 0; i < headers.length; i++) {
+      headers[i].classList.add('open');
+      var body = headers[i].nextElementSibling;
+      if (body) body.classList.add('open');
+    }
+    haptic();
+  }
 
-// ===== Font Size (V5 FIXED) =====
-function setFontSize(size) {
-  document.body.classList.remove('font-small', 'font-large');
-  if (size === 'small') document.body.classList.add('font-small');
-  if (size === 'large') document.body.classList.add('font-large');
-  try { localStorage.setItem('fontSize', size); } catch(e) {}
-  
-  // Update button states
-  var btns = document.querySelectorAll('.font-btn');
-  for (var i = 0; i < btns.length; i++) {
-    var btnSize = btns[i].getAttribute('data-size');
-    if (btnSize === size) {
-      btns[i].classList.add('active');
-    } else {
-      btns[i].classList.remove('active');
+  function collapseAllInPage(pageId) {
+    var page = document.getElementById(pageId);
+    if (!page) return;
+    var headers = page.querySelectorAll('.collapse-header');
+    for (var i = 0; i < headers.length; i++) {
+      headers[i].classList.remove('open');
+      var body = headers[i].nextElementSibling;
+      if (body) body.classList.remove('open');
+    }
+    haptic();
+  }
+
+  // ============================================================
+  // Scroll Helpers
+  // ============================================================
+  function scrollToEl(id) {
+    var el = document.getElementById(id);
+    if (el) {
+      var top = el.getBoundingClientRect().top + window.pageYOffset - 20;
+      window.scrollTo({top: top, behavior: 'smooth'});
+      // Auto-expand first level
+      var card = el.closest('.card');
+      if (card) {
+        var body = card.querySelector('.collapse-body');
+        var header = card.querySelector('.collapse-header');
+        if (body && !body.classList.contains('open') && header) {
+          header.classList.add('open');
+          body.classList.add('open');
+        }
+      }
+    }
+    haptic();
+  }
+
+  function scrollToTop() {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    haptic();
+  }
+
+  // ============================================================
+  // Progress & Back to Top
+  // ============================================================
+  var ticking = false;
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(updateScrollUI);
+      ticking = true;
     }
   }
-}
 
-// ===== Search (V5 FIXED) =====
-function toggleSearch() {
-  switchTab('home');
-  setTimeout(function() {
+  function updateScrollUI() {
+    ticking = false;
+    var y = window.scrollY;
+    
+    // Progress
+    var docH = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docH > 0 ? (y / docH) * 100 : 0;
+    var fill = document.querySelector('.progress-fill');
+    if (fill) fill.style.width = pct + '%';
+    
+    // Back to top
+    var btn = document.getElementById('backTop');
+    if (btn) {
+      if (y > 300) btn.classList.add('show');
+      else btn.classList.remove('show');
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // ============================================================
+  // Font Size (V6 Enhanced)
+  // ============================================================
+  var fontLevels = ['xs', 'small', 'normal', 'large', 'xl'];
+  var fontLabels = { 'xs': '特小', 'small': '小', 'normal': '中', 'large': '大', 'xl': '特大' };
+
+  function setFontSize(size) {
+    // Remove all font classes
+    document.body.classList.remove('font-xs', 'font-small', 'font-large', 'font-xl');
+    
+    if (size === 'xs') document.body.classList.add('font-xs');
+    else if (size === 'small') document.body.classList.add('font-small');
+    else if (size === 'large') document.body.classList.add('font-large');
+    else if (size === 'xl') document.body.classList.add('font-xl');
+    
+    state.fontSize = size;
+    storeSet('fontSize', size);
+    
+    // Update buttons
+    var btns = document.querySelectorAll('.font-btn');
+    for (var i = 0; i < btns.length; i++) {
+      var btnSize = btns[i].getAttribute('data-size');
+      btns[i].classList.toggle('active', btnSize === size);
+    }
+    
+    haptic();
+  }
+
+  function adjustFont(delta) {
+    var idx = fontLevels.indexOf(state.fontSize);
+    var newIdx = Math.max(0, Math.min(fontLevels.length - 1, idx + delta));
+    if (newIdx !== idx) {
+      setFontSize(fontLevels[newIdx]);
+    }
+  }
+
+  // ============================================================
+  // Search (V6 Enhanced)
+  // ============================================================
+  var HOT_SEARCHES = [
+    'SDH', 'OTN', 'DWDM', 'PON', '光纤损耗', 
+    'PTN', '移动通信', '现代通信网', 'EPON', 'GPON'
+  ];
+  var MAX_HISTORY = 10;
+
+  function initSearch() {
+    state.searchHistory = storeGet('searchHistory', []);
+    var input = document.getElementById('searchInput');
+    var clearBtn = document.getElementById('searchClear');
+    
+    if (input) {
+      input.addEventListener('focus', onSearchFocus);
+      input.addEventListener('input', onSearchInput);
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          var q = input.value.trim();
+          if (q) {
+            addToHistory(q);
+            performSearch(q);
+          }
+        }
+      });
+    }
+    
+    if (clearBtn) {
+      clearBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        input.value = '';
+        clearBtn.classList.remove('show');
+        hideSearchResults();
+        input.focus();
+      });
+    }
+  }
+
+  function onSearchFocus() {
+    var input = document.getElementById('searchInput');
+    if (!input.value.trim()) {
+      showSearchHome();
+    }
+  }
+
+  function onSearchInput() {
+    var input = document.getElementById('searchInput');
+    var clearBtn = document.getElementById('searchClear');
+    var q = input.value.trim();
+    
+    if (clearBtn) {
+      clearBtn.classList.toggle('show', q.length > 0);
+    }
+    
+    if (q) {
+      performSearch(q);
+    } else {
+      showSearchHome();
+    }
+  }
+
+  function showSearchHome() {
+    var results = document.getElementById('searchResults');
+    if (!results) return;
+    
+    var html = '';
+    
+    // History
+    if (state.searchHistory.length > 0) {
+      html += '<div class="search-history">';
+      html += '<div class="search-history-title">';
+      html += '<span>🕐 搜索历史</span>';
+      html += '<span class="clear-history" onclick="clearSearchHistory()">清空</span>';
+      html += '</div>';
+      html += '<div class="search-history-tags">';
+      for (var i = 0; i < Math.min(state.searchHistory.length, 8); i++) {
+        html += '<span class="history-tag" onclick="searchFromHistory(\'' + state.searchHistory[i].replace(/'/g, "\\'") + '\')">' + state.searchHistory[i] + '</span>';
+      }
+      html += '</div></div>';
+    }
+    
+    // Hot searches
+    html += '<div class="search-hot">';
+    html += '<div class="search-history-title"><span>🔥 热门搜索</span></div>';
+    for (var j = 0; j < HOT_SEARCHES.length; j++) {
+      html += '<div class="hot-item" onclick="searchFromHistory(\'' + HOT_SEARCHES[j].replace(/'/g, "\\'") + '\')">';
+      html += '<span class="hot-rank">' + (j+1) + '</span>';
+      html += '<span>' + HOT_SEARCHES[j] + '</span>';
+      html += '</div>';
+    }
+    html += '</div>';
+    
+    results.innerHTML = html;
+    results.classList.add('show');
+  }
+
+  function addToHistory(query) {
+    // Remove duplicates
+    var idx = state.searchHistory.indexOf(query);
+    if (idx >= 0) state.searchHistory.splice(idx, 1);
+    // Add to front
+    state.searchHistory.unshift(query);
+    // Trim
+    if (state.searchHistory.length > MAX_HISTORY) {
+      state.searchHistory = state.searchHistory.slice(0, MAX_HISTORY);
+    }
+    storeSet('searchHistory', state.searchHistory);
+  }
+
+  function searchFromHistory(q) {
     var input = document.getElementById('searchInput');
     if (input) {
-      input.focus();
-      window.scrollTo({top: 0});
+      input.value = q;
+      var clearBtn = document.getElementById('searchClear');
+      if (clearBtn) clearBtn.classList.add('show');
     }
-  }, 100);
-}
-
-function hideSearchResults() {
-  var results = document.getElementById('searchResults');
-  if (results) results.classList.remove('show');
-}
-
-function performSearch(query) {
-  var results = document.getElementById('searchResults');
-  if (!results) return;
-  
-  if (!query.trim()) {
-    results.classList.remove('show');
-    return;
+    addToHistory(q);
+    performSearch(q);
   }
-  
-  var items = [];
-  var q = query.toLowerCase();
-  var cards = document.querySelectorAll('.card');
-  
-  for (var i = 0; i < cards.length; i++) {
-    var card = cards[i];
-    var text = card.textContent.toLowerCase();
-    if (text.indexOf(q) >= 0) {
-      var titleEl = card.querySelector('.card-title');
-      var titleText = titleEl ? titleEl.textContent.trim().replace(/\s+/g, ' ') : '相关内容';
-      
-      var idx = text.indexOf(q);
-      var start = Math.max(0, idx - 20);
-      var end = Math.min(text.length, idx + query.length + 20);
-      var preview = text.substring(start, end);
-      if (start > 0) preview = '...' + preview;
-      if (end < text.length) preview = preview + '...';
-      
-      items.push({ title: titleText, preview: preview, card: card });
-    }
+
+  function clearSearchHistory() {
+    state.searchHistory = [];
+    storeSet('searchHistory', []);
+    showSearchHome();
+    haptic();
   }
-  
-  if (items.length === 0) {
-    results.innerHTML = '<div class="search-result-item" style="color:var(--gray-500);text-align:center;">未找到相关内容</div>';
-  } else {
-    var html = '';
-    for (var i = 0; i < Math.min(items.length, 15); i++) {
-      var item = items[i];
-      var highlighted = item.preview.replace(
-        new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'),
-        function(m) { return '<mark>' + m + '</mark>'; }
-      );
-      html += '<div class="search-result-item" data-idx="' + i + '">' +
-        '<div class="result-title">' + item.title + '</div>' +
-        '<div class="result-preview">' + highlighted + '</div>' +
-        '</div>';
-    }
-    results.innerHTML = html;
+
+  function hideSearchResults() {
+    var results = document.getElementById('searchResults');
+    if (results) results.classList.remove('show');
+  }
+
+  function performSearch(query) {
+    var results = document.getElementById('searchResults');
+    if (!results || !query.trim()) return;
     
-    // Bind click events
-    var resultEls = results.querySelectorAll('.search-result-item');
-    for (var j = 0; j < resultEls.length; j++) {
-      (function(index) {
-        resultEls[index].addEventListener('click', function() {
-          jumpToResult(items[index]);
+    var items = [];
+    var q = query.toLowerCase();
+    var cards = document.querySelectorAll('.card');
+    
+    for (var i = 0; i < cards.length; i++) {
+      var card = cards[i];
+      var text = card.textContent.toLowerCase();
+      if (text.indexOf(q) >= 0) {
+        var titleEl = card.querySelector('.card-title');
+        var titleText = titleEl ? titleEl.textContent.trim().replace(/\s+/g, ' ') : '相关内容';
+        
+        // Find first match position
+        var idx = text.indexOf(q);
+        var start = Math.max(0, idx - 30);
+        var end = Math.min(text.length, idx + query.length + 30);
+        var preview = text.substring(start, end);
+        if (start > 0) preview = '...' + preview;
+        if (end < text.length) preview = preview + '...';
+        
+        // Find which subject
+        var page = card.closest('.content');
+        var pageId = page ? page.id : '';
+        var subject = '';
+        if (pageId === 'page-subject1') subject = '综合能力';
+        else if (pageId === 'page-subject2') subject = '传输有线';
+        else if (pageId === 'page-home') subject = '首页';
+        
+        items.push({ 
+          title: titleText, 
+          preview: preview, 
+          card: card,
+          subject: subject
         });
-      })(j);
+      }
+    }
+    
+    if (items.length === 0) {
+      results.innerHTML = '<div style="padding:40px 20px;text-align:center;color:var(--gray-400);"><div style="font-size:32px;margin-bottom:10px;">🔍</div>未找到"' + query + '"相关内容<br><span style="font-size:12px;">试试其他关键词</span></div>';
+    } else {
+      var html = '<div class="search-count-info">找到 ' + items.length + ' 条结果</div>';
+      for (var i = 0; i < Math.min(items.length, 20); i++) {
+        var item = items[i];
+        var highlighted = item.preview.replace(
+          new RegExp(escapeRegExp(query), 'gi'),
+          function(m) { return '<mark>' + m + '</mark>'; }
+        );
+        html += '<div class="search-result-item" data-idx="' + i + '">';
+        html += '<div class="result-title">' + item.title;
+        if (item.subject) {
+          html += ' <span style="font-size:10px;color:var(--primary);background:var(--primary-bg);padding:1px 6px;border-radius:8px;font-weight:500;">' + item.subject + '</span>';
+        }
+        html += '</div>';
+        html += '<div class="result-preview">' + highlighted + '</div>';
+        html += '</div>';
+      }
+      results.innerHTML = html;
+      
+      // Bind clicks
+      var resultEls = results.querySelectorAll('.search-result-item');
+      for (var j = 0; j < resultEls.length; j++) {
+        (function(index) {
+          resultEls[index].addEventListener('click', function() {
+            addToHistory(query);
+            jumpToResult(items[index]);
+          });
+        })(j);
+      }
+    }
+    
+    results.classList.add('show');
+  }
+
+  function escapeRegExp(s) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  function jumpToResult(item) {
+    var card = item.card;
+    if (!card) return;
+    
+    var page = card.closest('.content');
+    if (page) {
+      var pageId = page.id;
+      var tabMap = { 'page-home': 'home', 'page-subject1': 'subject1', 'page-subject2': 'subject2' };
+      var tab = tabMap[pageId];
+      if (tab) switchTab(tab);
+      
+      setTimeout(function() {
+        // Expand all in card
+        var bodies = card.querySelectorAll('.collapse-body');
+        var headers = card.querySelectorAll('.collapse-header');
+        for (var i = 0; i < bodies.length; i++) {
+          bodies[i].classList.add('open');
+        }
+        for (var i = 0; i < headers.length; i++) {
+          headers[i].classList.add('open');
+        }
+        
+        card.scrollIntoView({behavior: 'smooth', block: 'start'});
+        card.style.transition = 'box-shadow 0.3s';
+        card.style.boxShadow = '0 0 0 3px var(--primary)';
+        setTimeout(function() { card.style.boxShadow = ''; }, 2000);
+      }, 200);
+    }
+    hideSearchResults();
+    haptic();
+  }
+
+  // Click outside to close
+  document.addEventListener('click', function(e) {
+    var results = document.getElementById('searchResults');
+    var searchBar = document.querySelector('.search-bar');
+    if (results && searchBar && !searchBar.contains(e.target)) {
+      results.classList.remove('show');
+    }
+  });
+
+  // ============================================================
+  // Swipe between tabs
+  // ============================================================
+  var touchStartX = 0;
+  var touchStartY = 0;
+  var SWIPE_THRESHOLD = 60;
+
+  document.addEventListener('touchstart', function(e) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    var dy = e.changedTouches[0].clientY - touchStartY;
+    
+    // Only swipe if horizontal > vertical
+    if (Math.abs(dx) < Math.abs(dy)) return;
+    if (Math.abs(dx) < SWIPE_THRESHOLD) return;
+    
+    // Don't swipe if there's a search open or modal
+    var results = document.getElementById('searchResults');
+    if (results && results.classList.contains('show')) return;
+    
+    var tabs = ['home', 'subject1', 'subject2'];
+    var idx = tabs.indexOf(state.currentTab);
+    
+    if (dx > 0 && idx > 0) {
+      // Swipe right -> previous tab
+      switchTab(tabs[idx - 1]);
+    } else if (dx < 0 && idx < tabs.length - 1) {
+      // Swipe left -> next tab
+      switchTab(tabs[idx + 1]);
+    }
+  }, { passive: true });
+
+  // ============================================================
+  // Pinch to zoom font
+  // ============================================================
+  var initialPinchDist = 0;
+  var initialFontSize = '';
+  
+  document.addEventListener('touchstart', function(e) {
+    if (e.touches.length === 2) {
+      var dx = e.touches[0].clientX - e.touches[1].clientX;
+      var dy = e.touches[0].clientY - e.touches[1].clientY;
+      initialPinchDist = Math.sqrt(dx*dx + dy*dy);
+      initialFontSize = state.fontSize;
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchmove', function(e) {
+    if (e.touches.length !== 2 || initialPinchDist === 0) return;
+    
+    var dx = e.touches[0].clientX - e.touches[1].clientX;
+    var dy = e.touches[0].clientY - e.touches[1].clientY;
+    var dist = Math.sqrt(dx*dx + dy*dy);
+    var ratio = dist / initialPinchDist;
+    
+    var currentIdx = fontLevels.indexOf(initialFontSize);
+    if (ratio > 1.15 && currentIdx < fontLevels.length - 1) {
+      setFontSize(fontLevels[currentIdx + 1]);
+      initialPinchDist = dist;
+      initialFontSize = fontLevels[currentIdx + 1];
+    } else if (ratio < 0.87 && currentIdx > 0) {
+      setFontSize(fontLevels[currentIdx - 1]);
+      initialPinchDist = dist;
+      initialFontSize = fontLevels[currentIdx - 1];
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchend', function() {
+    initialPinchDist = 0;
+  });
+
+  // ============================================================
+  // Haptic feedback (simulated via CSS transform)
+  // ============================================================
+  function haptic() {
+    // On real devices with vibration API
+    if (navigator.vibrate) {
+      navigator.vibrate(8);
     }
   }
-  
-  results.classList.add('show');
-}
 
-function jumpToResult(item) {
-  var card = item.card;
-  if (!card) return;
-  
-  var page = card.closest('.content');
-  if (page) {
-    var pageId = page.id;
-    var tabMap = { 'page-home': 'home', 'page-subject1': 'subject1', 'page-subject2': 'subject2' };
-    var tab = tabMap[pageId];
-    if (tab) switchTab(tab);
+  // ============================================================
+  // Init
+  // ============================================================
+  function init() {
+    // Restore font size
+    state.fontSize = storeGet('fontSize', 'normal');
+    setFontSize(state.fontSize);
     
-    setTimeout(function() {
-      // Expand any collapsed sections in card
-      var bodies = card.querySelectorAll('.collapse-body');
-      var headers = card.querySelectorAll('.collapse-header');
-      for (var i = 0; i < bodies.length; i++) {
-        bodies[i].classList.add('open');
-      }
-      for (var i = 0; i < headers.length; i++) {
-        headers[i].classList.add('open');
-      }
-      
-      card.scrollIntoView({behavior: 'smooth', block: 'start'});
-      card.style.transition = 'box-shadow 0.3s';
-      card.style.boxShadow = '0 0 0 3px var(--primary)';
-      setTimeout(function() { card.style.boxShadow = ''; }, 1500);
-    }, 150);
+    // Restore tab
+    var savedTab = storeGet('currentTab', 'home');
+    if (savedTab !== 'home') {
+      switchTab(savedTab);
+    }
+    
+    // Restore collapse states
+    restoreCollapseStates();
+    
+    // Init search
+    initSearch();
+    
+    // Initial scroll state
+    updateScrollUI();
   }
-  hideSearchResults();
-}
 
-// Click outside to close search
-document.addEventListener('click', function(e) {
-  var results = document.getElementById('searchResults');
-  var searchBar = document.querySelector('.search-bar');
-  if (results && searchBar && !searchBar.contains(e.target)) {
-    results.classList.remove('show');
+  // Expose globals
+  window.switchTab = switchTab;
+  window.toggleCollapse = toggleCollapse;
+  window.scrollToEl = scrollToEl;
+  window.scrollToTop = scrollToTop;
+  window.setFontSize = setFontSize;
+  window.adjustFont = adjustFont;
+  window.expandAllInPage = expandAllInPage;
+  window.collapseAllInPage = collapseAllInPage;
+  window.performSearch = performSearch;
+  window.searchFromHistory = searchFromHistory;
+  window.clearSearchHistory = clearSearchHistory;
+  window.hideSearchResults = hideSearchResults;
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
   }
-});
 
-// ===== Init =====
-document.addEventListener('DOMContentLoaded', function() {
-  // Restore font size
-  var saved = 'normal';
-  try { saved = localStorage.getItem('fontSize') || 'normal'; } catch(e) {}
-  setFontSize(saved);
-});
+})();
 
 </script>
 </body>
