@@ -6766,6 +6766,7 @@ function startQuizWithQuestions(questions) {
         '</div>';
     }
     player.classList.add('show');
+    player.style.display = '';
     player.style.overflow = '';
     player.style.flexDirection = '';
     player.style.padding = '';
@@ -6984,12 +6985,15 @@ function renderQuestion() {
   }
   
   // Update nav buttons
-  document.getElementById('quizPrevBtn').disabled = quizState.currentIdx === 0;
+  var prevBtn = document.getElementById('quizPrevBtn');
+  if (prevBtn) prevBtn.disabled = quizState.currentIdx === 0;
   var nextBtn = document.getElementById('quizNextBtn');
-  if (quizState.currentIdx === quizState.questions.length - 1) {
-    nextBtn.textContent = '完成';
-  } else {
-    nextBtn.textContent = '下一题';
+  if (nextBtn) {
+    if (quizState.currentIdx === quizState.questions.length - 1) {
+      nextBtn.textContent = '完成';
+    } else {
+      nextBtn.textContent = '下一题';
+    }
   }
 }
 
@@ -7224,14 +7228,13 @@ function showResults() {
 }
 
 function backToQuizHome() {
-  document.getElementById('quizResults').classList.remove('show');
-  document.getElementById('quizPlayer').classList.remove('show');
-  document.getElementById('quizChapterPage').style.display = 'none';
-  document.getElementById('quizChapterPage').classList.remove('active');
-  document.getElementById('quizWrongListPage').style.display = 'none';
-  document.getElementById('quizWrongListPage').classList.remove('active');
-  document.getElementById('page-quiz').classList.add('active');
-  // Update bottom nav
+  var el = function(id) { return document.getElementById(id); };
+  var r = el('quizResults'); if (r) r.classList.remove('show');
+  var p = el('quizPlayer'); if (p) { p.classList.remove('show'); p.style.display = ''; }
+  var cp = el('quizChapterPage'); if (cp) { cp.style.display = 'none'; cp.classList.remove('active'); }
+  var wlp = el('quizWrongListPage'); if (wlp) { wlp.style.display = 'none'; wlp.classList.remove('active'); }
+  var mrp = el('mockResultPage'); if (mrp) mrp.style.display = 'none';
+  var pg = el('page-quiz'); if (pg) pg.classList.add('active');
   var tabs = document.querySelectorAll('.tab-item');
   for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
   if (tabs[3]) tabs[3].classList.add('active');
@@ -7319,9 +7322,12 @@ window.initQuiz = initQuiz;
 })();
 
 function exitQuiz() {
-  document.getElementById('quizPlayer').classList.remove('show');
-  document.getElementById('quizResults').classList.remove('show');
-  document.getElementById('page-quiz').classList.add('active');
+  var p = document.getElementById('quizPlayer');
+  if (p) { p.classList.remove('show'); p.style.display = ''; }
+  var r = document.getElementById('quizResults');
+  if (r) r.classList.remove('show');
+  var pg = document.getElementById('page-quiz');
+  if (pg) pg.classList.add('active');
   var tabs = document.querySelectorAll('.tab-item');
   for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
   if (tabs[3]) tabs[3].classList.add('active');
@@ -7393,6 +7399,8 @@ renderQuestion = function() {
     title.textContent = titles[quizState.mode] || '练习';
   }
 }
+window.initQuiz = initQuiz;
+window.renderQuestion = renderQuestion;
 
 // ===== Chapter Practice Functions =====
 var currentChapterSubject = '综合能力';
@@ -7571,23 +7579,27 @@ var originalBackToQuizHome = backToQuizHome;
 backToQuizHome = function() {
   if (mockExamState.timerInterval) { clearInterval(mockExamState.timerInterval); mockExamState.timerInterval = null; }
   mockExamState.active = false;
-  // Hide mock result page
   var resultPage = document.getElementById('mockResultPage');
   if (resultPage) resultPage.style.display = 'none';
-  document.getElementById('quizResults').classList.remove('show');
+  var r = document.getElementById('quizResults');
+  if (r) r.classList.remove('show');
   var player = document.getElementById('quizPlayer');
-  player.classList.remove('show');
-  player.style.display = 'none';
-  player.style.overflow = '';
-  player.style.flexDirection = '';
-  player.style.padding = '';
+  if (player) {
+    player.classList.remove('show');
+    player.style.display = 'none';
+    player.style.overflow = '';
+    player.style.flexDirection = '';
+    player.style.padding = '';
+  }
   hideAllQuizSubPages();
-  document.getElementById('page-quiz').classList.add('active');
+  var pg = document.getElementById('page-quiz');
+  if (pg) pg.classList.add('active');
   var tabs = document.querySelectorAll('.tab-item');
   for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
   if (tabs[3]) tabs[3].classList.add('active');
   initQuiz();
 };
+window.backToQuizHome = backToQuizHome;
 
 window.showExamPapersPage = showExamPapersPage;
 window.startExamPaper = startExamPaper;
@@ -7912,15 +7924,18 @@ function submitMockExam(isAuto) {
   quizStoreSet('quizDoneIds', doneIds);
   
   mockExamState.active = false;
-  
+
   // Hide quizPlayer
   var player = document.getElementById('quizPlayer');
-  player.classList.remove('show');
-  player.style.display = 'none';
-  
+  if (player) {
+    player.classList.remove('show');
+    player.style.display = 'none';
+  }
+
   // Show results in pre-existing mockResultPage
   var resultPage = document.getElementById('mockResultPage');
   var resultContent = document.getElementById('mockResultContent');
+  if (!resultPage || !resultContent) return;
   resultContent.innerHTML = '' +
     '<div style="font-size:48px;margin-bottom:12px;text-align:center;">' + (passed ? '🎉' : '💪') + '</div>' +
     '<div style="font-size:28px;font-weight:700;color:' + (passed ? '#10b981' : '#ef4444') + ';margin-bottom:4px;text-align:center;">' + score + '分</div>' +
