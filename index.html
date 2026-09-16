@@ -2829,12 +2829,42 @@ body.font-xl h2 { font-size: 28px; }
         <div class="quiz-grid-label">章节练习</div>
         <div class="quiz-grid-sub">按章节刷题</div>
       </div>
+      <div class="quiz-grid-item" onclick="showExamPapersPage()">
+        <div class="quiz-grid-icon" style="background:#fff7ed">📋</div>
+        <div class="quiz-grid-label">历年真题</div>
+        <div class="quiz-grid-sub">真实考题</div>
+      </div>
       <div class="quiz-grid-item" onclick="clearAllStats()">
         <div class="quiz-grid-icon" style="background:#f1f5f9">🔄</div>
         <div class="quiz-grid-label">重置进度</div>
         <div class="quiz-grid-sub">清空记录</div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ========== EXAM PAPERS PAGE ========== -->
+<div id="quizExamPapersPage" class="content" style="display:none;">
+  <div class="quiz-home">
+    <div class="quiz-player-header" style="background:linear-gradient(135deg, #f59e0b 0%, #d97706 100%);color:#fff;padding:16px;border-radius:12px;margin-bottom:16px;">
+      <button class="quiz-back-btn" onclick="backToQuizHome()" style="background:rgba(255,255,255,0.2);color:#fff;border:none;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;">←</button>
+      <div class="quiz-player-title" style="flex:1;text-align:center;font-size:17px;font-weight:600;">历年真题</div>
+      <div style="width:36px;"></div>
+    </div>
+    <div style="font-size:12px;color:#94a3b8;margin-bottom:12px;padding:0 4px;">以下真题来源于考生回忆版，供复习参考</div>
+    <div id="examPapersList"></div>
+  </div>
+</div>
+
+<!-- ========== EXAM PAPER QUESTIONS PAGE ========== -->
+<div id="quizExamQuestionsPage" class="content" style="display:none;">
+  <div class="quiz-home">
+    <div class="quiz-player-header" style="background:linear-gradient(135deg, #f59e0b 0%, #d97706 100%);color:#fff;padding:16px;border-radius:12px;margin-bottom:16px;">
+      <button class="quiz-back-btn" onclick="backToExamPapers()" style="background:rgba(255,255,255,0.2);color:#fff;border:none;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;">←</button>
+      <div class="quiz-player-title" id="examQuestionsTitle" style="flex:1;text-align:center;font-size:17px;font-weight:600;">真题练习</div>
+      <div style="width:36px;"></div>
+    </div>
+    <div id="examQuestionsList"></div>
   </div>
 </div>
 
@@ -3782,11 +3812,154 @@ body.font-xl h2 { font-size: 28px; }
   window.hideSearchDropdown = hideSearchDropdown;
 
 // ===== V8: Quiz System =====
+// ===== Exam Papers (Real Past Exams) =====
+var EXAM_PAPERS = {
+  '2024': {
+    subject: '综合能力',
+    source: '考生回忆版',
+    count: 100,
+    questions: [
+      {id: 1, q: "Satellite IoT requires the use of _____ for connectivity.", options: ["Sensors","The access points","Satellites","Modems"], answer: 1},
+      {id: 2, q: "The meaning of 'Massive' is ( ).", options: ["A large number of","Small in size","Light in weight","Insignificant"], answer: 0},
+      {id: 3, q: "More than 3400 satellites ( ).", options: ["Are about to be launched","Had been launched","Have been launched","Are launching"], answer: 2},
+      {id: 4, q: "The system is able to support remote sensing ( ).", options: ["In delayed mode","Periodically","Intermittently","In real time"], answer: 3},
+      {id: 5, q: "High-performance CPUs can be seen as ( ).", options: ["Clients of mobile edge computing","Servers of mobile edge computing","Users of mobile edge computing","Components of mobile edge computing"], answer: 1},
+      {id: 6, q: "LAN中，有中心的结构化网络，无线站点充当中心站的特点是 ( )。", options: ["网络抗毁性好，建网困难但费用较低","网络抗毁性差，建网容易但费用较高","网络抗毁性好，建网容易且费用较高","网络抗毁性差，建网困难且费用较低"], answer: 1},
+      {id: 7, q: "下列 ( ) 是连续消息？", options: ["符号","文字","数字数据","温度"], answer: 3},
+      {id: 8, q: "TCP/IP网络中，( ) 是因为数据流采用明码，用户账号和口令容易被窃取。", options: ["缺乏完整性","缺乏可用性","缺乏认证性","缺乏保密性"], answer: 3},
+      {id: 9, q: "低轨道卫星高度 ( ) 以下。", options: ["500 km","1000 km","1200 km","1500 km"], answer: 3},
+      {id: 10, q: "频分双工技术，将传输 ( ) 划分上下行信道。", options: ["时间","空间","功率","载波信号"], answer: 3},
+      {id: 11, q: "移动通信为了保证准确，必须对终端的 ( ) 进行管理。", options: ["功率","频率","信号","位置"], answer: 3},
+      {id: 12, q: "用户和基站的距离随机变化，导致信号电平起伏变化的现象是 ( )。", options: ["远近效应","阴影效应","多径效应","多普勒效应"], answer: 0},
+      {id: 13, q: "攻击方式：( ) 使用几十上百台计算机攻击一台主机，使系统无法接收正常用户的请求。", options: ["扫描窥探攻击","木马攻击","拒绝服务型攻击","伪装攻击"], answer: 2},
+      {id: 14, q: "IMS使用 ( ) 作为唯一的会话控制协议。", options: ["Diameter","H.248","COPS","SIP"], answer: 3},
+      {id: 15, q: "按照 ( ) 不同，建设项目分为筹建、正式、收尾、竣工、停缓建等类。", options: ["投资来源","建设性质","建设规模","建设阶段"], answer: 3},
+      {id: 16, q: "在项目的 ( ) 阶段，主要投入是智力劳动。", options: ["规划","执行","启动","收尾"], answer: 2},
+      {id: 17, q: "用户逾期不交纳电信费用，按照所欠费用每日加收 ( ) 的违约金。", options: ["3%","5%","1%","0.5%"], answer: 0},
+      {id: 18, q: "( ) 业务是指经营者通过组建城域网，并可利用有相应经营权运营者的互联网骨干网和国际出入口提供的互联网数据传送业务。", options: ["国际数据通信业务","互联网国际数据传送业务","互联网本地数据传送业务","固定网国内数据传送业务"], answer: 2},
+      {id: 19, q: "( ) 的意义是指信息基础设施安全领域同时考虑计算机和通信网络安全。", options: ["信息安全","网络安全","网络空间安全","物理安全"], answer: 2},
+      {id: 20, q: "下图所示的是 ( )（图中有F，f上下行频率）。", options: ["CDMA","FDMA","TDMA","SDMA"], answer: 1},
+      {id: 21, q: "大区制中，天线高度约为 ( )。", options: ["几十米至百余米","几米","上千米","一米"], answer: 0},
+      {id: 22, q: "数据通信的4类保障机制中，( ) 可以调节数据发送的数量和传输速率。", options: ["差错控制","流量控制","路由选择","拥塞控制"], answer: 1},
+      {id: 23, q: "TCP是 ( ) 的协议。", options: ["应用层","网络层","传输层","数据链路层"], answer: 2},
+      {id: 24, q: "通信系统的调制器输入信号功率相同，且信道噪声功率频谱密度相同，( ) 的大小反映了该调制系统的抗噪声性能。", options: ["输入信号功率","输入信噪比","输出信噪比","信道带宽"], answer: 2},
+      {id: 25, q: "可以替代IP地址的 ( ) 也称为主机名或企业等机构逻辑组织名称。", options: ["URL","域名地址","MAC地址","物理地址"], answer: 1},
+      {id: 26, q: "( ) 的特点指信息没有被偶然或蓄意删除、修改、伪造、插入等。", options: ["机密性","可用性","完整性","可靠性"], answer: 2},
+      {id: 27, q: "IPv6 ( )，简化和加速了路由选择功能。", options: ["具有更高的安全性","增加了多播支持","具有更大的地址空间","使用一组可选的报头格式"], answer: 3},
+      {id: 28, q: "模拟通信系统的有效性可用 ( ) 来衡量。", options: ["有效带宽","输出信噪比","传输速率","符号速率"], answer: 0},
+      {id: 29, q: "接入网的 ( ) 将SNI与公共承载适配。", options: ["业务口功能","传输功能","控制功能","管理功能"], answer: 0},
+      {id: 30, q: "工程建设过程的最后一个环节是 ( )。", options: ["竣工验收","项目设计","项目施工","项目立项"], answer: 0},
+      {id: 31, q: "涉及全国范围同步实施的网间互联，向主导的电信业务经营者当面提交书面要求，互联双方应当从启动之日起 ( ) 内签订互联协议。", options: ["四个月","两个月","三个月","六个月"], answer: 1},
+      {id: 32, q: "TMN的网管功能中，( ) 管理的目的是保证网络能够提供连接可靠的服务。", options: ["配置管理","故障管理","性能管理","安全管理"], answer: 1},
+      {id: 33, q: "Turbo码作为一类性能优异的 ( ) 级联码。", options: ["串行","交织","反馈","并行"], answer: 3},
+      {id: 34, q: "通信系统模型中，( ) 的功能是把获得的电信号还原成相应的消息。", options: ["信源","信道","信号","信宿"], answer: 3},
+      {id: 35, q: "抽样是指模拟信号在 ( ) 上的离散化。", options: ["频率","相位","幅值","时间"], answer: 3},
+      {id: 36, q: "( ) 是长期存储在计算机上有组织、可共享的数据集合。", options: ["程序","文件系统","数据库","磁盘"], answer: 2},
+      {id: 37, q: "数字光纤通信系统，光信号到达接收端后，检测出电信号发送给电端机，再进行 ( ) 恢复出原来的信息。", options: ["模数转换","数模转换","解调","编码"], answer: 1},
+      {id: 38, q: "计算机中，用来长期存放程序和数据的是 ( )。", options: ["外存储器","内存储器","缓存","寄存器"], answer: 0},
+      {id: 39, q: "下图所示是 ( ) 已调信号频谱图。", options: ["标准调幅（AM）","单边带调制（SSB）","抑制载波双边带调制（DSB-SC）","残留边带调制（VSB）"], answer: 2},
+      {id: 40, q: "香农公式 C = B·log2(1 + S/N) 中，B指 ( )。", options: ["信噪比","信号功率","信道带宽","噪声功率"], answer: 2},
+      {id: 41, q: "The value of data in circulation and transaction is significant in ( ) economies.", options: ["Developed","Advanced","Underdeveloped","Sophisticated"], answer: 2},
+      {id: 42, q: "从通信科技全程全网、联合作业的劳动过程看，通信科技职业具有 ( )。", options: ["实践性","应用性","准确性","高度的集中统一性"], answer: 3},
+      {id: 43, q: "在移动通信系统中，采用 ( ) 分集有利于克服多普勒效应。", options: ["频率","时间","空间","极化"], answer: 1},
+      {id: 44, q: "通信网有不同的分类方式，按传输介质可分为 ( )。", options: ["接入网、骨干网、城域网","有线通信网、无线通信网","公用网、专用网","电缆通信网、光缆通信网、卫星通信网等"], answer: 3},
+      {id: 45, q: "职业道德主要表现在'走入社会'的成年人的意识和行为中，它是道德意识和道德行为 ( ) 的阶段。", options: ["形成","开始","成熟","消退"], answer: 2},
+      {id: 46, q: "In the era of burgeoning digital economy, data is essential for the development of new quality productive forces, which has become a ( ) element of production.", options: ["Basic","Premium","Secondary","Optional"], answer: 0},
+      {id: 47, q: "通信系统，恒参信道中的 ( ) 指输入和输出的振幅关系不是直接成比例。", options: ["线性失真","非线性失真","线性畸变","非线性畸变"], answer: 1},
+      {id: 48, q: "电信网络安全中，( ) 是指面向网络上承载的数据和信息的安全特性。", options: ["可靠性","机密性","可用性","完整性"], answer: 1},
+      {id: 49, q: "电信网络在执行其信息 ( ) 功能过程中引入的安全问题是整个信息系统安全问题的基础。", options: ["处理","存储","应用","传递"], answer: 3},
+      {id: 50, q: "第二代计算机通常称为 ( ) 计算机。", options: ["晶体管","集成电路","大规模集成电路","真空管"], answer: 0},
+      {id: 51, q: "由于制作光缆侧压力，导致纤芯与包层出现 ( ) 损耗。", options: ["吸收损耗","色散损耗","微弯损耗","散射损耗"], answer: 2},
+      {id: 52, q: "增值电信业务的代码是 ( )。", options: ["A","B","C","D"], answer: 1},
+      {id: 53, q: "微波波长范围 ( )。", options: ["30 MHz - 300 MHz","300 MHz - 300 GHz","3 GHz - 30 GHz","300 GHz - 3 THz"], answer: 1},
+      {id: 54, q: "我国同步网采用的同步方式是 ( ) 同步。", options: ["分布式","自适应","等级主从","全网同步"], answer: 2},
+      {id: 55, q: "在通信前，需要为主叫用户与被叫用户之间建立一条物理连接的交换方式是 ( )。", options: ["分组交换","报文交换","电路交换","数据交换"], answer: 2},
+      {id: 56, q: "最原始的信源编码是 ( )。", options: ["莫尔斯电码","ASCII码","汉字编码","UTF-8编码"], answer: 0},
+      {id: 57, q: "计算机信息系统安全等级中的 ( ) 是用户自主保护等级。", options: ["第三级","第一等级","第四级","第二级"], answer: 1},
+      {id: 58, q: "若编码序列中平均每4个信息码元就添加1个监督码元，则这种编码的编码效率为 ( )。", options: ["4/4","4/6","4/5","5/4"], answer: 2},
+      {id: 59, q: "在大容量公网移动通信系统中，无线接入的射频通常是采用 ( ) 频率段，主要以空间波方式传播。", options: ["短波","超短波","高频","微波"], answer: 3},
+      {id: 60, q: "根据我国网络的实际情况，信令网采用 ( ) 级网络结构。", options: ["3","6","4","5"], answer: 2},
+      {id: 61, q: "《中华人民共和国网络安全法》，关键信息基础设施对其网络的安全性和可能存在的风险每年至少进行 ( ) 检测评估。", options: ["一次","两次","三次","四次"], answer: 0},
+      {id: 62, q: "在《电信业务分类目录（2015）版》中，互联网数据中心业务属于 ( )。", options: ["第一类增值电信业务","第一类基础电信业务","第二类增值电信业务","第二类基础电信业务"], answer: 0},
+      {id: 63, q: "计算机语言中，由0、1代码组成，能被机器直接理解、执行的指令集合是 ( )。", options: ["汇编语言","机器语言","高级语言","脚本语言"], answer: 1},
+      {id: 64, q: "为了运行、管理和维护计算机而编制的各种程序、数据和文档被统称为计算机的 ( )。", options: ["硬件系统","操作系统","软件系统","应用程序"], answer: 2},
+      {id: 65, q: "通信建设工程质量控制的原则中，( ) 是指对工程项目建设各阶段的人、机、料、法、环等生产要素，实施全方位的质量控制。", options: ["全过程的质量控制","全方位的质量控制","主动控制","被动控制"], answer: 1},
+      {id: 66, q: "计算机硬件系统的核心部件中央处理器CPU，由运算器和 ( ) 组成。", options: ["控制器","寄存器","存储器","输入输出设备"], answer: 0},
+      {id: 67, q: "横向滤波器由多级抽头延迟线、可调的加权系数相乘器和相加器组成，是实现 ( ) 自适应均衡的主体。", options: ["频域","空间域","时域","码域"], answer: 2},
+      {id: 68, q: "通信系统的信道中存在的不需要的电信号统称为噪声，下列选项中 ( ) 属于起伏噪声。", options: ["热噪声","天电干扰","电火花","电弧焊"], answer: 0},
+      {id: 69, q: "Compared ( ) 5G, 5G-A technology…", options: ["As","For","With","To"], answer: 2},
+      {id: 70, q: "文字、声音、图形、图像信息必须经过 ( ) 后，才能被加工、处理、存储等操作。", options: ["压缩","编码","解码","数字化编码"], answer: 3},
+      {id: 71, q: "卫星通信覆盖面积大，一颗地球同步卫星可以覆盖地球表面积的 ( )。", options: ["1/3","2/3","50%","42%"], answer: 0},
+      {id: 72, q: "在《电信业务分类目录（2015）版》中，( ) 业务指地球表面上的移动地球站或移动用户使用手持终端通过通信卫星等实现语音、数据、多媒体通信等业务。", options: ["卫星转发器出租、出售","卫星固定通信","国内甚小口径终端地球站通信","卫星移动通信业务"], answer: 3},
+      {id: 73, q: "在SDN的网络架构中，( ) 包含标准化网络设备和虚拟的网络设备。", options: ["基础设施层","应用层","控制层","物理层"], answer: 0},
+      {id: 74, q: "云计算、( )、中间件、嵌入式技术是物联网应用层的技术。", options: ["大数据","人工智能","传感器","数据挖掘"], answer: 0},
+      {id: 75, q: "在OSI参考模型中，( ) 保证分组从源节点到目的节点之间的正确传输。", options: ["传输层","网络层","数据链路层","物理层"], answer: 0},
+      {id: 76, q: "直接序列扩频系统通过将伪随机序列直接与基带脉冲数据 ( ) 来扩展基带信号。", options: ["相加","相减","相乘","相除"], answer: 2},
+      {id: 77, q: "天波传输是利用高频电磁波在电离层 ( ) 的特性进行传播。", options: ["散射","反射","直射","绕射"], answer: 1},
+      {id: 78, q: "在蜂窝移动通信系统中，( ) 位于远端，完成无线覆盖，为移动台提供无线信道接入。", options: ["基站","移动交换中心","中继传输系统","移动台"], answer: 0},
+      {id: 79, q: "按业务类型分类，移动通信系统可以分为 ( )。", options: ["模拟移动通信系统、数字移动通信系统","大区制移动通信系统、小区制移动通信系统","公共移动通信系统、专用移动通信系统","电话网、数据网和多媒体网移动通信系统"], answer: 3},
+      {id: 80, q: "无源光网络，使用 ( ) 复用技术，实现单纤双向传输。", options: ["波分","空分","频分","时分"], answer: 3},
+      {id: 81, q: "ITU-T规定了SDH-N帧是以 ( ) 为单位的矩形块帧结构。", options: ["字节","比特","码组","字符"], answer: 0},
+      {id: 82, q: "在对通信系统按 ( ) 分类时，可将通信系统分为基带传输系统和带通传输系统。", options: ["传输介质","传送方式","调制方式","信道特性"], answer: 2},
+      {id: 83, q: "在计算机网络的安全策略中，( ) 策略的目的是保护网内传输的数据、文件、口令。", options: ["访问控制","身份认证","网络加密控制","安全审计"], answer: 2},
+      {id: 84, q: "《电信业务分类目录（2015）版》规定，电信业务分为 ( )。", options: ["一大类两个级别","两大类四个级别","三大类六个级别","四大类八个级别"], answer: 1},
+      {id: 85, q: "OFDM系统可以实现很高的小区容量，具有 ( ) 的特点。", options: ["频谱效率低","抗干扰能力差","频谱效率高","功耗大"], answer: 2},
+      {id: 86, q: "在网络功能虚拟化架构中，( ) 包括物理的计算、存储和网络资源及其虚拟化资源。", options: ["虚拟化网络","管理和协同","网络功能虚拟化基础设施","硬件资源"], answer: 3},
+      {id: 87, q: "在物联网基本特征中，( ) 是依托各种通信网络、随时随地进行信息交互和共享。", options: ["智能处理","全面感知","可靠传送","开放平台"], answer: 2},
+      {id: 88, q: "十进制408转换为二进制数是 ( )。", options: ["110011000","1100110000","110011100","110011001"], answer: 0},
+      {id: 89, q: "Autonomous driving, augmented reality, and other advanced technologies, ( ), are becoming more prevalent.", options: ["Those","They","It","Which"], answer: 1},
+      {id: 90, q: "在《电信业务分类目录（2015）版》中，( ) 业务通过公用通信网或互联网，采取信息收集与检索等方式，为用户提供网页信息、文本、图片、音视频等信息检索查询服务。", options: ["查询服务","信息即时交互服务","信息保护与处理服务","信息社区平台服务"], answer: 0},
+      {id: 91, q: "《网络安全法》第五十六条规定，( ) 人民政府有关部门在履行网络安全监督管理职责中，可以对该网络运营者的法定代表人进行约谈。", options: ["市级","乡级","省级以上","县级"], answer: 2},
+      {id: 92, q: "光纤的 ( ) 是光纤介质的一种固有特性，而不是光波信号的特性。", options: ["色散","吸收","非线性","直线传播"], answer: 0},
+      {id: 93, q: "TDD双工方式采用两个独立的 ( ) 信道分别作为上行信道和下行信道。", options: ["频率","码分","时间","空间"], answer: 2},
+      {id: 94, q: "计算机网络可以划分为通信子网和资源子网，下列选项中，( ) 是通信子网的设备。", options: ["服务器","路由器","网络打印机","网络终端"], answer: 1},
+      {id: 95, q: "Going forward, humanoid robots will require equipment ( ) complex tasks.", options: ["Solved","Solving","Solve","To solve"], answer: 3},
+      {id: 96, q: "FTTx+LAN接入网中，边缘接入设备的主要功能不包括 ( )。", options: ["提供用户接入接口","完成用户认证","提供基本的交换功能","汇聚用户流量，实现IP包转发"], answer: 2},
+      {id: 97, q: "实际应用中，语音信号的抽样频率是8000Hz，根据抽样定理，可以推断语音信号的最高频率通常低于 ( )。", options: ["3400Hz","4000Hz","8000Hz","16000Hz"], answer: 1},
+      {id: 98, q: "HFC系统结构中，干线是指前端到服务区光节点之间的部分。其拓扑结构是 ( )。", options: ["星形","总线形","环形","网状形"], answer: 0},
+      {id: 99, q: "信息采集是物联网体系结构中 ( ) 的功能。", options: ["网络层","传输层","感知层","应用层"], answer: 2},
+      {id: 100, q: "在《电信业务分类目录（2015）版》中，蜂窝移动通信业务的编号是 ( )。", options: ["A12","A13","A11","A14"], answer: 0}
+    ]
+  },
+  '2023': {
+    subject: '综合能力',
+    source: '考生回忆版',
+    count: 10,
+    questions: [
+      {id: 1, q: "计算机硬件系统的核心部件CPU由( )和控制器组成。", options: ["存储器","指令寄存器","运算器","程序计数器"], answer: 2},
+      {id: 2, q: "下列选项中，属于计算机外(辅)存储器的是( )。", options: ["RAM","EPROM","ROM","磁盘"], answer: 3},
+      {id: 3, q: "操作系统中的( )管理主要是对处理机进行管理，协调多道程序之间的关系。", options: ["进程","设备","文件","作业"], answer: 0},
+      {id: 4, q: "二进制数110011000转换为十进制数是( )。", options: ["630","524","408","280"], answer: 2},
+      {id: 5, q: "文字、声音、图形、图像等信息必须经过( )后，才能被计算机加工、处理、存储。", options: ["数字编码","模拟调制","物理整形","逻辑复用"], answer: 0},
+      {id: 6, q: "( )是位于用户与操作系统之间的一层数据管理软件。", options: ["数据库","数据库系统","数据库管理系统","数据模型"], answer: 2},
+      {id: 7, q: "在通信系统中，消息可以分成连续消息和离散消息，下列选项中( )是离散消息。", options: ["语音","文字","温度","图像"], answer: 1},
+      {id: 8, q: "发送设备的作用是将信源产生的原始电信号变换成适合在信道中传输的信号，使其具有足够的( )以满足远距离传输。", options: ["电压","电流","功率","带宽"], answer: 2},
+      {id: 9, q: "按( )分类，可以把通信系统分成模拟通信系统和数字通信系统。", options: ["传输介质","信号特征","工作波段","传送方式"], answer: 1},
+      {id: 10, q: "数字通信系统的( )可以用信号在传输过程中的差错率来衡量。", options: ["安全性","有效性","扩展性","可靠性"], answer: 3}
+    ]
+  },
+  '2025': {
+    subject: '综合能力',
+    source: '考生回忆版',
+    count: 10,
+    questions: [
+      {id: 1, q: "在互联网应用的工作模式中，( )是网络节点之间采取对等的方式，通过直接交换信息达到共享计算机资源和服务的工作模式。", options: ["B/S","C/S","P2P","B/S"], answer: 2},
+      {id: 2, q: "数字通信网同步的含义是……工作在一个相同的( )上。", options: ["时钟频率","相位","比特率","平均速率"], answer: 3},
+      {id: 3, q: "若通信建设项目按照( )分类，可以分为基本建设和技术改造两大类。", options: ["建设性质","建设规模","投资用途","建设阶段"], answer: 0},
+      {id: 4, q: "OSI协议模型中：( )的作用是物理地址寻址、数据的成帧、流量控制等。", options: ["物理层","网络层","数据链路层","传输层"], answer: 2},
+      {id: 5, q: "影响计算机网络安全的因素中，改变信息流的次序、时序和流向，更改信息的内容和形式属于( )。", options: ["破坏信息的可用性","破坏信息的机密性","破坏信息的完整性","非法访问"], answer: 2},
+      {id: 6, q: "《电信网间互联管理规定》规定，互联点是两个电信网进行网间直接相联时的( )接口点。", options: ["软件","虚拟","物理","逻辑"], answer: 2},
+      {id: 7, q: "IP交换是用于( )网上传送IP分组的技术。", options: ["ATM","ISDN","以太网","帧中继"], answer: 0},
+      {id: 8, q: "在《电信业务分类目录》中，( )业务为国内用户在互联网上两点或多点之间提供的交互式多媒体综合应用。", options: ["国内互联网会议电视及图像服务","在线数据处理与交易处理业务","互联网接入服务","互联网数据中心业务"], answer: 0},
+      {id: 9, q: "( )在局端，为核心网交换机，在网络中起控制和管理作用。", options: ["移动交换中心","基站控制器","基站","移动台"], answer: 0},
+      {id: 10, q: "在通信系统中，消息可以分成连续消息和离散消息，下列选项中( )是连续消息。", options: ["语音","文字","符号","数字数据"], answer: 0}
+    ]
+  }
+};
+
 var QUESTIONS = [
   {
     "id": 1,
-    "subject": "综合能力",
-    "chapter": "通信职业道德",
     "type": "single",
     "q": "通信科技人员职业道德的核心是？",
     "options": [
@@ -7202,6 +7375,112 @@ window.clearAllStats = clearAllStats;
 window.showChapterPage = showChapterPage;
 window.switchChapterSubject = switchChapterSubject;
 window.startChapterQuiz = startChapterQuiz;
+
+// ===== Exam Papers Functions =====
+function showExamPapersPage() {
+  document.getElementById('page-quiz').classList.remove('active');
+  document.getElementById('quizChapterPage').style.display = 'none';
+  document.getElementById('quizChapterPage').classList.remove('active');
+  document.getElementById('quizWrongListPage').style.display = 'none';
+  document.getElementById('quizWrongListPage').classList.remove('active');
+  document.getElementById('quizExamPapersPage').style.display = 'block';
+  document.getElementById('quizExamPapersPage').classList.add('active');
+  renderExamPapersList();
+}
+
+function renderExamPapersList() {
+  var html = '';
+  var years = Object.keys(EXAM_PAPERS).sort().reverse();
+  for (var i = 0; i < years.length; i++) {
+    var year = years[i];
+    var paper = EXAM_PAPERS[year];
+    var doneIds = quizStoreGet('quizDoneIds', []);
+    var doneCount = 0;
+    for (var j = 0; j < paper.questions.length; j++) {
+      if (doneIds.indexOf('exam_' + year + '_' + paper.questions[j].id) >= 0) doneCount++;
+    }
+    var pct = paper.questions.length > 0 ? Math.round(doneCount / paper.questions.length * 100) : 0;
+    
+    html += '<div class="quiz-chapter-item" onclick="startExamPaper(\'' + year + '\')">';
+    html += '<div class="quiz-chapter-icon" style="background:#fff7ed;font-size:18px;">📋</div>';
+    html += '<div class="quiz-chapter-info">';
+    html += '<div class="quiz-chapter-name">' + year + '年 ' + paper.subject + '考试真题</div>';
+    html += '<div class="quiz-chapter-progress"><div class="quiz-chapter-progress-fill" style="width:' + pct + '%;background:linear-gradient(90deg,#f59e0b,#d97706);"></div></div>';
+    html += '<div class="quiz-chapter-stats">';
+    html += '<span style="color:var(--gray-500);font-size:11px;">共' + paper.count + '题</span>';
+    html += '<span style="color:var(--success);font-size:11px;">已做' + doneCount + '题</span>';
+    html += '<span style="color:#f59e0b;font-size:10px;background:#fff7ed;padding:1px 4px;border-radius:3px;">' + paper.source + '</span>';
+    html += '</div></div></div>';
+    html += '<div class="quiz-chapter-arrow">›</div>';
+    html += '</div>';
+  }
+  document.getElementById('examPapersList').innerHTML = html;
+}
+
+function startExamPaper(year) {
+  var paper = EXAM_PAPERS[year];
+  if (!paper || !paper.questions.length) {
+    alert('该年份真题暂未收录');
+    return;
+  }
+  
+  // Convert exam questions to quiz format
+  var qs = paper.questions.map(function(q) {
+    return {
+      id: 'exam_' + year + '_' + q.id,
+      subject: paper.subject,
+      chapter: year + '年真题',
+      type: 'single',
+      q: q.q,
+      options: q.options,
+      answer: q.answer,
+      explain: year + '年真题（' + paper.source + '）'
+    };
+  });
+  
+  document.getElementById('quizExamPapersPage').style.display = 'none';
+  document.getElementById('quizExamPapersPage').classList.remove('active');
+  
+  quizState.mode = 'sequential';
+  quizState.subject = paper.subject;
+  startQuizWithQuestions(qs);
+  
+  var title = document.getElementById('quizPlayerTitle');
+  if (title) title.textContent = year + '年真题';
+}
+
+function backToExamPapers() {
+  document.getElementById('quizExamQuestionsPage').style.display = 'none';
+  document.getElementById('quizExamQuestionsPage').classList.remove('active');
+  document.getElementById('quizExamPapersPage').style.display = 'block';
+  document.getElementById('quizExamPapersPage').classList.add('active');
+  renderExamPapersList();
+}
+
+// Update backToQuizHome to handle exam papers pages
+var originalBackToQuizHome = backToQuizHome;
+backToQuizHome = function() {
+  document.getElementById('quizResults').classList.remove('show');
+  document.getElementById('quizPlayer').classList.remove('show');
+  document.getElementById('quizChapterPage').style.display = 'none';
+  document.getElementById('quizChapterPage').classList.remove('active');
+  document.getElementById('quizWrongListPage').style.display = 'none';
+  document.getElementById('quizWrongListPage').classList.remove('active');
+  document.getElementById('quizExamPapersPage').style.display = 'none';
+  document.getElementById('quizExamPapersPage').classList.remove('active');
+  document.getElementById('quizExamQuestionsPage').style.display = 'none';
+  document.getElementById('quizExamQuestionsPage').classList.remove('active');
+  document.getElementById('page-quiz').classList.add('active');
+  var tabs = document.querySelectorAll('.tab-item');
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+  if (tabs[3]) tabs[3].classList.add('active');
+  initQuiz();
+};
+
+window.showExamPapersPage = showExamPapersPage;
+window.startExamPaper = startExamPaper;
+window.backToExamPapers = backToExamPapers;
+window.backToQuizHome = backToQuizHome;
 
 // ===== Wrong Question List Functions =====
 function showWrongListPage() {
