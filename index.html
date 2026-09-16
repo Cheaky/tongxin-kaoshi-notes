@@ -6567,7 +6567,9 @@ function renderQuestion() {
   var q = quizState.questions[quizState.currentIdx];
   if (!q) return;
   
-  quizState.answered = false;
+  // Check if this question has been answered before
+  var wasAnswered = quizState.answers.hasOwnProperty(q.id);
+  quizState.answered = wasAnswered;
   quizState.selectedOptions = []; // For multi-select
   
   // Update progress
@@ -6651,6 +6653,53 @@ function renderQuestion() {
   html += '</div>';
   
   document.getElementById('quizQuestionArea').innerHTML = html;
+  
+  // If already answered, restore the answered state UI
+  if (wasAnswered) {
+    var isCorrect = quizState.answers[q.id];
+    var options = document.querySelectorAll('.quiz-option');
+    
+    if (q.type === 'judge') {
+      for (var oi = 0; oi < options.length; oi++) {
+        var valStr = options[oi].getAttribute('data-val');
+        var optVal = (valStr === 'true');
+        if (optVal === q.answer) {
+          options[oi].classList.add('correct');
+        } else if (!isCorrect) {
+          // Only show wrong if user selected this wrong answer
+          // We don't store user's selection, so just show correct answer
+        }
+        options[oi].style.pointerEvents = 'none';
+      }
+    } else if (q.type === 'multi') {
+      var correctAnswers = q.answer.slice();
+      for (var mi = 0; mi < options.length; mi++) {
+        var mVal = parseInt(options[mi].getAttribute('data-val'));
+        var isCorrectOpt = correctAnswers.indexOf(mVal) >= 0;
+        if (isCorrectOpt) {
+          options[mi].classList.add('correct');
+        }
+        options[mi].style.pointerEvents = 'none';
+      }
+      // Hide confirm button
+      var cfmBtn = document.getElementById('multiConfirmBtn');
+      if (cfmBtn) cfmBtn.style.display = 'none';
+    } else {
+      for (var si = 0; si < options.length; si++) {
+        var sVal = parseInt(options[si].getAttribute('data-val'));
+        if (sVal === q.answer) {
+          options[si].classList.add('correct');
+        } else if (!isCorrect) {
+          // We don't know which wrong answer user selected, so only highlight correct
+        }
+        options[si].style.pointerEvents = 'none';
+      }
+    }
+    
+    // Show explanation
+    var explain = document.getElementById('quizExplain');
+    if (explain) explain.classList.add('show');
+  }
   
   // Update nav buttons
   document.getElementById('quizPrevBtn').disabled = quizState.currentIdx === 0;
