@@ -3024,8 +3024,8 @@ body.font-xl h2 { font-size: 28px; }
 </div></div>
 
 <!-- ========== MOCK EXAM RESULT PAGE ========== -->
-<div id="mockResultPage" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:#f8fafc;z-index:9999;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px;">
-  <div id="mockResultContent" style="max-width:500px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;justify-content:center;"></div>
+<div id="mockResultPage" style="display:none;background:#f8fafc;min-height:100vh;padding:20px 16px 80px;">
+  <div id="mockResultContent" style="max-width:500px;margin:0 auto;"></div>
 </div>
 
 <!-- Bottom Navigation Bar -->
@@ -7911,19 +7911,12 @@ function submitMockExam(isAuto) {
     '</div>' +
     '<div style="font-size:12px;color:#94a3b8;margin-top:4px;text-align:center;">正确率 ' + pct + '%</div>' +
     '</div>' +
-    '<a href="javascript:void(0)" onclick="window._doReviewMock()" style="display:block;width:100%;padding:14px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;color:#475569;font-size:15px;margin-bottom:10px;font-weight:600;text-align:center;text-decoration:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">查看错题解析</a>' +
-    '<a href="javascript:void(0)" onclick="window._doBackHome()" style="display:block;width:100%;padding:14px;border-radius:10px;border:none;background:#f59e0b;color:#fff;font-size:15px;font-weight:600;text-align:center;text-decoration:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">返回首页</a>';
+    '<button onclick="reviewMockExam()" style="width:100%;padding:14px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;color:#475569;font-size:15px;margin-bottom:10px;font-weight:600;-webkit-tap-highlight-color:transparent;">查看错题解析</button>' +
+    '<button onclick="backToQuizHome()" style="width:100%;padding:14px;border-radius:10px;border:none;background:#f59e0b;color:#fff;font-size:15px;font-weight:600;-webkit-tap-highlight-color:transparent;">返回首页</button>';
   resultPage.style.display = 'block';
   resultPage.scrollTop = 0;
+  window.scrollTo(0, 0);
 }
-
-// Global handlers for mock exam result buttons
-window._doReviewMock = function() {
-  reviewMockExam();
-};
-window._doBackHome = function() {
-  backToQuizHome();
-};
 
 function reviewMockExam() {
   // Use pre-existing mockResultPage
@@ -7935,7 +7928,7 @@ function reviewMockExam() {
   
   var html = '<div style="padding:0 0 16px 0;">';
   html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;padding:12px;background:#fff7ed;border-radius:12px;">';
-  html += '<a href="javascript:void(0)" onclick="window._doBackHome()" style="background:#fff;border:1px solid #e5e7eb;width:36px;height:36px;border-radius:50%;font-size:18px;text-align:center;line-height:36px;text-decoration:none;color:#475569;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">←</a>';
+  html += '<button onclick="backToQuizHome()" style="background:#fff;border:1px solid #e5e7eb;width:36px;height:36px;border-radius:50%;font-size:18px;-webkit-tap-highlight-color:transparent;">←</button>';
   html += '<div style="flex:1;text-align:center;font-size:16px;font-weight:600;color:#d97706;">考试错题解析</div>';
   html += '<div style="width:36px;"></div>';
   html += '</div>';
@@ -8008,11 +8001,12 @@ function reviewMockExam() {
   }
   
   html += '</div>';
-  html += '<a href="javascript:void(0)" onclick="window._doBackHome()" style="display:block;width:100%;padding:14px;border-radius:10px;border:none;background:#f59e0b;color:#fff;font-size:15px;font-weight:600;margin-top:16px;text-align:center;text-decoration:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">返回首页</a>';
+  html += '<button onclick="backToQuizHome()" style="width:100%;padding:14px;border-radius:10px;border:none;background:#f59e0b;color:#fff;font-size:15px;font-weight:600;margin-top:16px;-webkit-tap-highlight-color:transparent;">返回首页</button>';
   html += '</div>';
   
   resultContent.innerHTML = html;
   resultPage.scrollTop = 0;
+  window.scrollTo(0, 0);
 }
 
 function renderMockExamHistory() {
