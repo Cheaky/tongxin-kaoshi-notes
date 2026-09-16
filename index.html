@@ -3021,11 +3021,12 @@ body.font-xl h2 { font-size: 28px; }
     <button class="quiz-result-btn secondary" onclick="exitQuiz()">返回</button>
     <button class="quiz-result-btn primary" onclick="retryQuiz()">再做一次</button>
   </div>
-</div></div>
+</div>
 
-<!-- ========== MOCK EXAM RESULT PAGE ========== -->
-<div id="mockResultPage" style="display:none;background:#f8fafc;min-height:100vh;padding:20px 16px 80px;">
+<!-- ========== MOCK EXAM RESULT PAGE (inside .app) ========== -->
+<div id="mockResultPage" style="display:none;position:absolute;top:0;left:0;right:0;background:#f8fafc;padding:20px 16px 80px;z-index:9999;min-height:100vh;">
   <div id="mockResultContent" style="max-width:500px;margin:0 auto;"></div>
+</div>
 </div>
 
 <!-- Bottom Navigation Bar -->
