@@ -1691,8 +1691,17 @@ body.font-xl h2 { font-size: 28px; }
 
 /* Quiz Player */
 .quiz-player {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #f8fafc;
   padding: 0 0 80px;
   display: none;
+  z-index: 100;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .quiz-player.show { display: block; }
 
@@ -1826,11 +1835,20 @@ body.font-xl h2 { font-size: 28px; }
 
 /* Quiz Results */
 .quiz-results {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #f8fafc;
   display: none;
   padding: 40px 16px 80px;
   text-align: center;
+  z-index: 100;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
-.quiz-results.show { display: block; }
+.quiz-results.show { display: flex; flex-direction: column; align-items: center; justify-content: center; }
 .quiz-result-score {
   font-size: 56px;
   font-weight: 800;
