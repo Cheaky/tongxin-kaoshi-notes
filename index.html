@@ -2375,8 +2375,11 @@ body.font-xl h2 { font-size: 28px; }
     }
 
     window.scrollTo({top: 0, behavior: 'smooth'});
-    hideSearchDropdown();
-    clearHighlights();
+    // Don't hide dropdown/clear highlights when switching to search tab
+    if (tab !== 'search') {
+      hideSearchDropdown();
+      clearHighlights();
+    }
     haptic();
   }
 
@@ -2499,7 +2502,9 @@ body.font-xl h2 { font-size: 28px; }
     state.fontSize = px;
     storeSet('fontSize', px);
     
-    // Set base font size on html
+    // Use zoom to scale entire page proportionally
+    var scale = px / 15;
+    document.body.style.zoom = scale.toString();
     document.documentElement.style.fontSize = px + 'px';
     
     // Update slider
@@ -2812,53 +2817,74 @@ body.font-xl h2 { font-size: 28px; }
       return;
     }
     
-    var content = document.querySelector('.content.active');
-    if (!content) {
-      updateSearchNav(0, -1);
-      return;
-    }
+    // Search across ALL pages, not just active one
+    var allContent = document.querySelectorAll('.content');
     
-    var matches = [];
     var regex = new RegExp(escapeRegExp(query), 'gi');
     
-    // Walk all text nodes
-    var walker = document.createTreeWalker(content, NodeFilter.SHOW_TEXT, null, false);
-    var node;
-    
-    while (node = walker.nextNode()) {
-      if (!node.parentNode || node.parentNode.closest('.search-bar, .search-dropdown, #toastContainer, .font-panel')) continue;
-      
-      var text = node.nodeValue;
-      if (!text || text.trim() === '') continue;
-      
-      var match;
-      while ((match = regex.exec(text)) !== null) {
-        matches.push({
-          node: node,
-          index: match.index,
-          length: match[0].length,
-          text: match[0]
-        });
-      }
-    }
-    
-    // Apply highlights (from bottom to top to preserve indices)
+    // Apply highlights using innerHTML replacement (more reliable than surroundContents)
     state.searchMatches = [];
     var highlightedElements = [];
     
-    for (var i = matches.length - 1; i >= 0; i--) {
-      var m = matches[i];
-      try {
-        var range = document.createRange();
-        range.setStart(m.node, m.index);
-        range.setEnd(m.node, m.index + m.length);
+    // First, expand all collapsed sections so search can find content
+    var allBodies = document.querySelectorAll('.collapse-body');
+    var allHeaders = document.querySelectorAll('.collapse-header');
+    for (var i = 0; i < allBodies.length; i++) {
+      allBodies[i].classList.add('open');
+    }
+    for (var i = 0; i < allHeaders.length; i++) {
+      allHeaders[i].classList.add('open');
+    }
+    
+    // Collect all text nodes from ALL pages and highlight
+    var textNodes = [];
+    for (var p = 0; p < allContent.length; p++) {
+      var walker = document.createTreeWalker(allContent[p], NodeFilter.SHOW_TEXT, null, false);
+    var node;
+    while (node = walker.nextNode()) {
+      if (!node.parentNode || node.parentNode.closest) {
+        if (node.parentNode.closest('.search-bar, .search-dropdown, #toastContainer, .font-panel, .progress-bar, .tab-bar')) continue;
+      }
+      var text = node.nodeValue;
+      if (!text || text.trim() === '') continue;
+      // Reset regex lastIndex before test
+      regex.lastIndex = 0;
+      if (!regex.test(text)) continue;
+      textNodes.push(node);
+    }
+    } // end for allContent
+    
+    // Reset regex for replacement
+    regex.lastIndex = 0;
+    
+    for (var i = 0; i < textNodes.length; i++) {
+      var textNode = textNodes[i];
+      var text = textNode.nodeValue;
+      var parent = textNode.parentNode;
+      if (!parent) continue;
+      
+      // Skip if parent is already a highlight span
+      if (parent.className === 'search-highlight' || parent.className === 'search-highlight current') continue;
+      
+      // Create replacement HTML
+      var replacement = text.replace(regex, function(m) {
+        return '<span class="search-highlight">' + m + '</span>';
+      });
+      
+      if (replacement !== text) {
+        var wrapper = document.createElement('span');
+        wrapper.innerHTML = replacement;
+        // Move wrapped content to replace original text node
+        while (wrapper.firstChild) {
+          parent.insertBefore(wrapper.firstChild, textNode);
+        }
+        parent.removeChild(textNode);
         
-        var span = document.createElement('span');
-        span.className = 'search-highlight';
-        range.surroundContents(span);
-        highlightedElements.unshift(span);
-      } catch(e) {
-        // Skip if can't surround (e.g., partial HTML)
+        // Collect highlight spans
+        var spans = parent.querySelectorAll('.search-highlight');
+        for (var j = 0; j < spans.length; j++) {
+          highlightedElements.push(spans[j]);
+        }
       }
     }
     
