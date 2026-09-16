@@ -5238,6 +5238,79 @@ var QUESTIONS = [
 ];
 
 
+// ===== Quiz State & Helpers =====
+var quizState = {
+  questions: [],
+  currentIdx: 0,
+  answered: false,
+  answers: {},
+  mode: '',
+  subject: ''
+};
+
+function quizStoreGet(key, def) {
+  try {
+    var v = localStorage.getItem(key);
+    if (v === null) return def;
+    return JSON.parse(v);
+  } catch(e) { return def; }
+}
+
+function quizStoreSet(key, val) {
+  try {
+    localStorage.setItem(key, JSON.stringify(val));
+  } catch(e) {}
+}
+
+function startQuizWithQuestions(questions) {
+  if (!questions || questions.length === 0) {
+    alert('暂无题目');
+    return;
+  }
+  quizState.questions = questions;
+  quizState.currentIdx = 0;
+  quizState.answered = false;
+  quizState.answers = {};
+
+  var player = document.getElementById('quizPlayer');
+  var results = document.getElementById('quizResults');
+  if (results) results.classList.remove('show');
+  if (player) player.classList.add('show');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  renderQuestion();
+}
+
+function startQuizMode(mode) {
+  var qs = QUESTIONS.slice();
+  if (quizState.subject && quizState.subject !== 'all') {
+    qs = qs.filter(function(q){ return q.subject === quizState.subject; });
+  }
+  if (mode === 'random') {
+    qs.sort(function(){ return Math.random() - 0.5; });
+    qs = qs.slice(0, Math.min(20, qs.length));
+  } else if (mode === 'wrong') {
+    var wrongIds = quizStoreGet('quizWrongIds', []);
+    qs = qs.filter(function(q){ return wrongIds.indexOf(q.id) >= 0; });
+    if (qs.length === 0) {
+      alert('暂无错题，先去做题吧！');
+      return;
+    }
+  }
+  quizState.mode = mode;
+  startQuizWithQuestions(qs);
+}
+
+function startQuiz(subject) {
+  var qs = QUESTIONS.filter(function(q){ return q.subject === subject; });
+  quizState.subject = subject;
+  quizState.mode = 'sequential';
+  startQuizWithQuestions(qs);
+}
+
+function startWrongReview() {
+  startQuizMode('wrong');
+}
+
 function initQuiz() {
   var qs = QUESTIONS;
   var s1 = qs.filter(function(q){return q.subject === '综合能力'}).length;
@@ -5281,14 +5354,17 @@ function renderQuestion() {
   // Update progress
   var total = quizState.questions.length;
   var cur = quizState.currentIdx + 1;
-  document.getElementById('quizProgText').textContent = '第 ' + cur + ' 题 / 共 ' + total + ' 题';
-  
+  var progText = document.getElementById('quizProgText');
+  if (progText) progText.textContent = '第 ' + cur + ' 题 / 共 ' + total + ' 题';
+
   var correctCount = 0;
   for (var k in quizState.answers) {
     if (quizState.answers[k]) correctCount++;
   }
-  document.getElementById('quizScoreText').textContent = '答对: ' + correctCount;
-  document.getElementById('quizProgFill').style.width = (cur / total * 100) + '%';
+  var scoreText = document.getElementById('quizScoreText');
+  if (scoreText) scoreText.textContent = '答对: ' + correctCount;
+  var progFill = document.getElementById('quizProgFill');
+  if (progFill) progFill.style.width = (cur / total * 100) + '%';
   
   // Build question HTML
   var tagClass = q.type === 'judge' ? 'judge' : 'single';
@@ -5386,8 +5462,9 @@ function selectAnswer(val) {
   }
   
   // Show explanation
-  document.getElementById('quizExplain').classList.add('show');
-  
+  var explain = document.getElementById('quizExplain');
+  if (explain) explain.classList.add('show');
+
   // Vibrate
   if (navigator.vibrate) {
     try { navigator.vibrate(isCorrect ? 10 : 30); } catch(e) {}
@@ -5427,7 +5504,8 @@ function prevQuestion() {
         }
         options[i].style.pointerEvents = 'none';
       }
-      document.getElementById('quizExplain').classList.add('show');
+      var ex = document.getElementById('quizExplain');
+      if (ex) ex.classList.add('show');
     } else {
       renderQuestion();
     }
