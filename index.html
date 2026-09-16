@@ -7542,8 +7542,11 @@ backToQuizHome = function() {
   if (mockExamState.timerInterval) { clearInterval(mockExamState.timerInterval); mockExamState.timerInterval = null; }
   mockExamState.active = false;
   document.getElementById('quizResults').classList.remove('show');
-  document.getElementById('quizPlayer').classList.remove('show');
-  document.getElementById('quizPlayer').style.display = 'none';
+  var player = document.getElementById('quizPlayer');
+  player.classList.remove('show');
+  player.style.display = 'none';
+  player.style.overflow = '';
+  player.style.flexDirection = '';
   hideAllQuizSubPages();
   document.getElementById('page-quiz').classList.add('active');
   var tabs = document.querySelectorAll('.tab-item');
@@ -7624,6 +7627,7 @@ function showMockExamPlayer() {
   player.classList.add('show');
   player.style.display = 'flex';
   player.style.flexDirection = 'column';
+  player.style.overflow = 'visible';
   
   var header = '<div style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;padding:12px 16px;border-radius:12px;margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-shrink:0;">';
   header += '<button onclick="submitMockExam()" style="background:rgba(255,255,255,0.2);color:#fff;border:none;padding:6px 12px;border-radius:6px;font-size:13px;cursor:pointer;font-weight:600;">交卷</button>';
@@ -7874,6 +7878,7 @@ function submitMockExam(isAuto) {
   var player = document.getElementById('quizPlayer');
   player.style.display = 'flex';
   player.style.flexDirection = 'column';
+  player.style.overflow = 'visible';
   player.innerHTML = '<div style="padding:20px;text-align:center;overflow-y:auto;flex:1;">' +
     '<div style="font-size:48px;margin-bottom:12px;">' + (passed ? '🎉' : '💪') + '</div>' +
     '<div style="font-size:28px;font-weight:700;color:' + (passed ? '#10b981' : '#ef4444') + ';margin-bottom:4px;">' + score + '分</div>' +
@@ -7902,6 +7907,7 @@ function reviewMockExam() {
   var player = document.getElementById('quizPlayer');
   player.style.display = 'flex';
   player.style.flexDirection = 'column';
+  player.style.overflow = 'visible';
   var html = '<div style="overflow-y:auto;flex:1;padding-bottom:80px;">';
   html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;padding:12px;background:#fff7ed;border-radius:12px;">';
   html += '<button onclick="backToQuizHome()" style="background:#fff;border:1px solid #e5e7eb;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;">←</button>';
@@ -8235,6 +8241,7 @@ window.removeFav = removeFav;
 window.startFavQuiz = startFavQuiz;
 window.showStatsPage = showStatsPage;
 window.hideAllQuizSubPages = hideAllQuizSubPages;
+window.backToQuizHome = backToQuizHome;
 
 // ===== Wrong Question List Functions =====
 function showWrongListPage() {
