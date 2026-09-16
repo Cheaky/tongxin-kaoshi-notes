@@ -7740,13 +7740,14 @@ function renderMockQuestion() {
       html += '</div>';
     }
   } else if (q.type === 'judge') {
-    for (var j = 0; j < q.options.length; j++) {
-      var opt = q.options[j];
-      var optVal = (opt === true || opt === 'true' || opt === '正确' || opt === '对');
+    var judgeOpts = [{val: true, text: '正确'}, {val: false, text: '错误'}];
+    for (var j = 0; j < judgeOpts.length; j++) {
+      var optVal = judgeOpts[j].val;
+      var optText = judgeOpts[j].text;
       var isSelected = answered && mockExamState.answers[q.id] === optVal;
-      html += '<div class="quiz-option' + (isSelected ? ' selected' : '') + '" onclick="selectMockJudge(' + optVal + ')" style="padding:12px 14px;margin-bottom:8px;border-radius:8px;border:2px solid ' + (isSelected ? '#f59e0b' : '#e5e7eb') + ';background:' + (isSelected ? '#fff7ed' : '#fff') + ';font-size:14px;cursor:pointer;">';
-      html += '<span style="display:inline-block;width:20px;height:20px;border-radius:50%;border:2px solid ' + (isSelected ? '#f59e0b' : '#cbd5e1') + ';vertical-align:middle;margin-right:8px;"></span>';
-      html += (opt === true || opt === 'true' ? '正确' : opt === false || opt === 'false' ? '错误' : opt);
+      html += '<div class="quiz-option' + (isSelected ? ' selected' : '') + '" onclick="selectMockJudge(' + optVal + ')" style="padding:12px 14px;margin-bottom:8px;border-radius:8px;border:2px solid ' + (isSelected ? '#f59e0b' : '#e5e7eb') + ';background:' + (isSelected ? '#fff7ed' : '#fff') + ';font-size:14px;cursor:pointer;display:flex;align-items:center;gap:8px;">';
+      html += '<span style="width:24px;height:24px;border-radius:50%;border:2px solid ' + (isSelected ? '#f59e0b' : '#cbd5e1') + ';display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;color:' + (isSelected ? '#f59e0b' : '#94a3b8') + ';">' + (optVal ? 'T' : 'F') + '</span>';
+      html += '<span>' + optText + '</span>';
       html += '</div>';
     }
   } else {
@@ -8010,13 +8011,17 @@ function reviewMockExam() {
     html += '<span style="font-size:11px;color:#fff;background:#ef4444;padding:1px 6px;border-radius:4px;">答错</span>';
     html += '</div>';
     html += '<div style="font-size:14px;line-height:1.5;margin-bottom:12px;font-weight:500;">' + q.q + '</div>';
-    
-    for (var j = 0; j < q.options.length; j++) {
+
+    var reviewOpts = q.options || [];
+    if (q.type === 'judge' && reviewOpts.length === 0) {
+      reviewOpts = [true, false];
+    }
+    for (var j = 0; j < reviewOpts.length; j++) {
       var isRight = false;
       if (q.type === 'multi') {
         isRight = Array.isArray(q.answer) && q.answer.indexOf(j) >= 0;
       } else if (q.type === 'judge') {
-        var jVal = (q.options[j] === true || q.options[j] === 'true' || q.options[j] === '正确');
+        var jVal = (reviewOpts[j] === true || reviewOpts[j] === 'true' || reviewOpts[j] === '正确');
         var aVal = q.answer;
         if (typeof q.answer === 'string') aVal = q.answer === 'true';
         isRight = jVal === aVal;
@@ -8027,20 +8032,21 @@ function reviewMockExam() {
       if (q.type === 'multi') {
         isUserSelected = Array.isArray(userAns) && userAns.indexOf(j) >= 0;
       } else if (q.type === 'judge') {
-        var uVal = (q.options[j] === true || q.options[j] === 'true' || q.options[j] === '正确');
+        var uVal = (reviewOpts[j] === true || reviewOpts[j] === 'true' || reviewOpts[j] === '正确');
         isUserSelected = userAns === uVal;
       } else {
         isUserSelected = userAns === j;
       }
-      
+
       var bg = isRight ? '#dcfce7' : (isUserSelected ? '#fef2f2' : '#fff');
       var border = isRight ? '2px solid #10b981' : (isUserSelected ? '2px solid #ef4444' : '1px solid #e5e7eb');
       var icon = isRight ? '✓' : (isUserSelected ? '✗' : '');
       var iconColor = isRight ? '#10b981' : '#ef4444';
-      
+
+      var optText = q.type === 'judge' ? (reviewOpts[j] === true || reviewOpts[j] === 'true' ? '正确' : '错误') : reviewOpts[j];
       html += '<div style="padding:10px 12px;margin-bottom:6px;border-radius:8px;border:' + border + ';background:' + bg + ';font-size:13px;display:flex;align-items:center;gap:8px;">';
       if (icon) html += '<span style="color:' + iconColor + ';font-weight:700;font-size:14px;">' + icon + '</span>';
-      html += '<span style="flex:1;">' + q.options[j] + '</span>';
+      html += '<span style="flex:1;">' + optText + '</span>';
       html += '</div>';
     }
     
