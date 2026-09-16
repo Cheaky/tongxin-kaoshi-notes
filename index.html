@@ -509,7 +509,26 @@ tr:nth-child(even) td { background: var(--gray-50); }
   font-size: 22px;
   margin-bottom: 2px;
 }
-.tab-item.active { color: var(--primary); }
+.tab-item.active {
+  color: var(--primary);
+  font-weight: 700;
+  position: relative;
+}
+.tab-item.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+}
+.tab-item.active .tab-icon {
+  transform: scale(1.2);
+  filter: drop-shadow(0 2px 4px rgba(37, 99, 235, 0.4));
+}
 .tab-item:active { opacity: 0.6; }
 
 /* ===== Floating Action Button ===== */
@@ -955,13 +974,25 @@ body.font-xl h2 { font-size: 28px; }
 }
 .bottom-nav .tab-item.active {
   color: var(--primary);
-  transform: translateY(-2px);
+  font-weight: 700;
+}
+.bottom-nav .tab-item.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-dark, #2563eb));
 }
 .bottom-nav .tab-item.active .tab-icon {
-  transform: scale(1.15);
+  transform: scale(1.2);
+  filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.4));
 }
 .bottom-nav .tab-item .tab-icon {
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), filter 0.25s ease;
 }
 
 /* ===== V6: Back to top ===== */
@@ -2755,13 +2786,6 @@ body.font-xl h2 { font-size: 28px; }
 <!-- ========== QUIZ HOME PAGE ========== -->
 <div id="page-quiz" class="content">
   <div class="quiz-home">
-    <!-- Subject Tabs -->
-    <div class="quiz-subject-tabs">
-      <div class="quiz-subject-tab active" onclick="switchQuizSubject('all')" id="qtab-all">全部</div>
-      <div class="quiz-subject-tab" onclick="switchQuizSubject('综合能力')" id="qtab-s1">综合能力</div>
-      <div class="quiz-subject-tab" onclick="switchQuizSubject('传输有线')" id="qtab-s2">传输有线</div>
-    </div>
-
     <!-- Stats Bar -->
     <div class="quiz-stats-bar">
       <div class="quiz-stat-item" onclick="showWrongListPage()">
@@ -2784,13 +2808,13 @@ body.font-xl h2 { font-size: 28px; }
 
     <!-- Featured Cards -->
     <div class="quiz-featured">
-      <div class="quiz-featured-card green" onclick="startQuizMode('sequential')">
+      <div class="quiz-featured-card green" onclick="showSubjectPicker('sequential')">
         <div class="quiz-featured-badge" id="qfSeqBadge">0/0</div>
         <div class="quiz-featured-icon">📋</div>
         <div class="quiz-featured-title">顺序练习</div>
         <div class="quiz-featured-sub">逐题练习，覆盖全部考点</div>
       </div>
-      <div class="quiz-featured-card blue" onclick="startQuizMode('random')">
+      <div class="quiz-featured-card blue" onclick="showSubjectPicker('random')">
         <div class="quiz-featured-icon">🎯</div>
         <div class="quiz-featured-title">随机抽题</div>
         <div class="quiz-featured-sub">随机出题，检验水平</div>
@@ -2837,6 +2861,42 @@ body.font-xl h2 { font-size: 28px; }
     </div>
   </div>
 </div>
+
+<!-- ========== SUBJECT PICKER MODAL ========== -->
+<div id="subjectPickerModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:9999;justify-content:center;align-items:flex-end;-webkit-tap-highlight-color:transparent;">
+  <div style="background:#fff;width:100%;max-width:500px;border-radius:20px 20px 0 0;padding:24px 20px 32px;animation:slideUp 0.3s ease;box-shadow:0 -4px 20px rgba(0,0,0,0.15);">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <div style="font-size:18px;font-weight:700;color:#1e293b;" id="subjectPickerTitle">选择科目</div>
+      <button onclick="closeSubjectPicker()" style="background:#f1f5f9;border:none;width:32px;height:32px;border-radius:50%;font-size:16px;color:#64748b;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+    </div>
+    <div style="font-size:13px;color:#94a3b8;margin-bottom:16px;">选择要练习的科目范围</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div onclick="pickSubject('all')" style="display:flex;align-items:center;gap:12px;padding:16px;border-radius:12px;border:2px solid #e5e7eb;background:#fff;cursor:pointer;-webkit-tap-highlight-color:transparent;" id="pick-all">
+        <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#3b82f6,#2563eb);display:flex;align-items:center;justify-content:center;font-size:20px;">📚</div>
+        <div style="flex:1;">
+          <div style="font-size:15px;font-weight:600;color:#1e293b;">全部科目</div>
+          <div style="font-size:12px;color:#94a3b8;" id="pick-all-count">综合能力 + 传输有线</div>
+        </div>
+      </div>
+      <div onclick="pickSubject('综合能力')" style="display:flex;align-items:center;gap:12px;padding:16px;border-radius:12px;border:2px solid #e5e7eb;background:#fff;cursor:pointer;-webkit-tap-highlight-color:transparent;" id="pick-s1">
+        <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#3b82f6,#60a5fa);display:flex;align-items:center;justify-content:center;font-size:20px;">📘</div>
+        <div style="flex:1;">
+          <div style="font-size:15px;font-weight:600;color:#1e293b;">综合能力</div>
+          <div style="font-size:12px;color:#94a3b8;" id="pick-s1-count">通信专业综合能力</div>
+        </div>
+      </div>
+      <div onclick="pickSubject('传输有线')" style="display:flex;align-items:center;gap:12px;padding:16px;border-radius:12px;border:2px solid #e5e7eb;background:#fff;cursor:pointer;-webkit-tap-highlight-color:transparent;" id="pick-s2">
+        <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#10b981,#34d399);display:flex;align-items:center;justify-content:center;font-size:20px;">📗</div>
+        <div style="flex:1;">
+          <div style="font-size:15px;font-weight:600;color:#1e293b;">传输有线</div>
+          <div style="font-size:12px;color:#94a3b8;" id="pick-s2-count">传输与接入（有线）</div>
+        </div>
+      </div>
+    </div>
+    <button onclick="closeSubjectPicker()" style="width:100%;margin-top:20px;padding:14px;border-radius:12px;border:none;background:#f1f5f9;color:#64748b;font-size:15px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;">取消</button>
+  </div>
+</div>
+<style>@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}</style>
 
 <!-- ========== EXAM PAPERS PAGE ========== -->
 <div id="quizExamPapersPage" class="content" style="display:none;">
@@ -6811,6 +6871,39 @@ function startQuizWithQuestions(questions) {
   renderQuestion();
 }
 
+var subjectPickerMode = 'sequential';
+
+function showSubjectPicker(mode) {
+  subjectPickerMode = mode || 'sequential';
+  var modal = document.getElementById('subjectPickerModal');
+  if (!modal) return;
+  var title = document.getElementById('subjectPickerTitle');
+  if (title) title.textContent = mode === 'random' ? '随机抽题 - 选择科目' : '顺序练习 - 选择科目';
+
+  var s1 = QUESTIONS.filter(function(q){return q.subject === '综合能力'}).length;
+  var s2 = QUESTIONS.filter(function(q){return q.subject === '传输有线'}).length;
+  var allCount = s1 + s2;
+  var el1 = document.getElementById('pick-all-count');
+  var el2 = document.getElementById('pick-s1-count');
+  var el3 = document.getElementById('pick-s2-count');
+  if (el1) el1.textContent = '共 ' + allCount + ' 题';
+  if (el2) el2.textContent = '共 ' + s1 + ' 题';
+  if (el3) el3.textContent = '共 ' + s2 + ' 题';
+
+  modal.style.display = 'flex';
+}
+
+function closeSubjectPicker() {
+  var modal = document.getElementById('subjectPickerModal');
+  if (modal) modal.style.display = 'none';
+}
+
+function pickSubject(subject) {
+  closeSubjectPicker();
+  quizState.subject = subject;
+  startQuizMode(subjectPickerMode);
+}
+
 function startQuizMode(mode) {
   var qs = QUESTIONS.slice();
   if (quizState.subject && quizState.subject !== 'all') {
@@ -7284,6 +7377,9 @@ function retryQuiz() {
 
 window.startQuiz = startQuiz;
 window.startQuizMode = startQuizMode;
+window.showSubjectPicker = showSubjectPicker;
+window.closeSubjectPicker = closeSubjectPicker;
+window.pickSubject = pickSubject;
 window.startWrongReview = startWrongReview;
 window.selectAnswer = selectAnswer;
 window.nextQuestion = nextQuestion;
