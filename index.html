@@ -6747,7 +6747,29 @@ function startQuizWithQuestions(questions) {
   var player = document.getElementById('quizPlayer');
   var results = document.getElementById('quizResults');
   if (results) results.classList.remove('show');
-  if (player) player.classList.add('show');
+  if (player) {
+    // Restore original quizPlayer structure if it was modified by mock exam
+    if (!document.getElementById('quizQuestionArea')) {
+      player.innerHTML = '' +
+        '<div class="quiz-player-header">' +
+          '<button class="quiz-back-btn" onclick="exitQuiz()">←</button>' +
+          '<div class="quiz-player-title" id="quizPlayerTitle">顺序练习</div>' +
+          '<div class="quiz-player-counter" id="quizPlayerCounter">1/10</div>' +
+        '</div>' +
+        '<div class="quiz-progress-bar">' +
+          '<div class="quiz-progress-fill" id="quizProgFill" style="width:10%"></div>' +
+        '</div>' +
+        '<div class="quiz-question-area" id="quizQuestionArea"></div>' +
+        '<div class="quiz-nav" style="padding:0 16px;">' +
+          '<button class="quiz-nav-btn prev" id="quizPrevBtn" onclick="prevQuestion()">上一题</button>' +
+          '<button class="quiz-nav-btn next" id="quizNextBtn" onclick="nextQuestion()">下一题</button>' +
+        '</div>';
+    }
+    player.classList.add('show');
+    player.style.overflow = '';
+    player.style.flexDirection = '';
+    player.style.padding = '';
+  }
   window.scrollTo({top: 0, behavior: 'smooth'});
   renderQuestion();
 }
@@ -6818,6 +6840,8 @@ function initQuiz() {
 
 
 function renderQuestion() {
+  var qArea = document.getElementById('quizQuestionArea');
+  if (!qArea) return;
   var q = quizState.questions[quizState.currentIdx];
   if (!q) return;
   
