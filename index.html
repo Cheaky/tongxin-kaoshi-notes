@@ -6971,6 +6971,57 @@ window.backToQuizHome = backToQuizHome;
 window.retryQuiz = retryQuiz;
 window.initQuiz = initQuiz;
 
+// ===== Swipe Navigation for Mobile =====
+(function(){
+  var touchStartX = 0;
+  var touchStartY = 0;
+  var touchEndX = 0;
+  var touchEndY = 0;
+  var minSwipeDistance = 50; // minimum swipe distance in px
+  
+  function handleSwipe() {
+    var player = document.getElementById('quizPlayer');
+    if (!player || !player.classList.contains('show')) return;
+    
+    var diffX = touchEndX - touchStartX;
+    var diffY = touchEndY - touchStartY;
+    
+    // Only trigger if horizontal swipe is significantly larger than vertical
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > minSwipeDistance) {
+      if (diffX > 0) {
+        // Swipe right -> previous question
+        prevQuestion();
+      } else {
+        // Swipe left -> next question
+        nextQuestion();
+      }
+    }
+  }
+  
+  function initSwipe() {
+    var player = document.getElementById('quizPlayer');
+    if (!player) return;
+    
+    player.addEventListener('touchstart', function(e){
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+    
+    player.addEventListener('touchend', function(e){
+      touchEndX = e.changedTouches[0].screenX;
+      touchEndY = e.changedTouches[0].screenY;
+      handleSwipe();
+    }, { passive: true });
+  }
+  
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSwipe);
+  } else {
+    initSwipe();
+  }
+})();
+
 function exitQuiz() {
   document.getElementById('quizPlayer').classList.remove('show');
   document.getElementById('quizResults').classList.remove('show');
