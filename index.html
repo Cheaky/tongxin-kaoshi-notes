@@ -2643,7 +2643,7 @@ body.font-xl h2 { font-size: 28px; }
       html += '<div class="history-tags">';
       for (var i = 0; i < Math.min(state.searchHistory.length, 10); i++) {
         var hq = state.searchHistory[i].replace(/'/g, "\\'");
-        html += '<span class="history-tag" onclick="searchFor('' + hq + '')">' + state.searchHistory[i] + '</span>';
+        html += '<span class="history-tag" onclick="searchFor(\'' + hq + '\')">' + state.searchHistory[i] + '</span>';
       }
       html += '</div></div>';
     }
@@ -2654,7 +2654,7 @@ body.font-xl h2 { font-size: 28px; }
     html += '<div class="hot-list">';
     for (var j = 0; j < HOT_SEARCHES.length; j++) {
       var hq2 = HOT_SEARCHES[j].replace(/'/g, "\\'");
-      html += '<div class="hot-item-row" onclick="searchFor('' + hq2 + '')">';
+      html += '<div class="hot-item-row" onclick="searchFor(\'' + hq2 + '\')">';
       html += '<span class="hot-rank">' + (j+1) + '</span>';
       html += '<span>' + HOT_SEARCHES[j] + '</span>';
       html += '</div>';
