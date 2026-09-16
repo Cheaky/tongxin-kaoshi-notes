@@ -2804,6 +2804,16 @@ body.font-xl h2 { font-size: 28px; }
 
     <!-- Feature Grid -->
     <div class="quiz-grid">
+      <div class="quiz-grid-item" onclick="showChapterPage()">
+        <div class="quiz-grid-icon" style="background:#f3e8ff">📚</div>
+        <div class="quiz-grid-label">章节练习</div>
+        <div class="quiz-grid-sub">按章节刷题</div>
+      </div>
+      <div class="quiz-grid-item" onclick="showExamPapersPage()">
+        <div class="quiz-grid-icon" style="background:#fff7ed">📋</div>
+        <div class="quiz-grid-label">历年真题</div>
+        <div class="quiz-grid-sub">真实考题</div>
+      </div>
       <div class="quiz-grid-item" onclick="showWrongListPage()">
         <div class="quiz-grid-icon" style="background:#fef2f2">❌</div>
         <div class="quiz-grid-label">错题本</div>
@@ -2818,36 +2828,6 @@ body.font-xl h2 { font-size: 28px; }
         <div class="quiz-grid-icon" style="background:#e0f2fe">📊</div>
         <div class="quiz-grid-label">学习统计</div>
         <div class="quiz-grid-sub">掌握度</div>
-      </div>
-      <div class="quiz-grid-item" onclick="startQuizSubject('综合能力')">
-        <div class="quiz-grid-icon" style="background:#dbeafe">📘</div>
-        <div class="quiz-grid-label">综合能力</div>
-        <div class="quiz-grid-sub" id="qgS1">0题</div>
-      </div>
-      <div class="quiz-grid-item" onclick="startQuizSubject('传输有线')">
-        <div class="quiz-grid-icon" style="background:#dcfce7">📗</div>
-        <div class="quiz-grid-label">传输有线</div>
-        <div class="quiz-grid-sub" id="qgS2">0题</div>
-      </div>
-      <div class="quiz-grid-item" onclick="startQuizMode('random')">
-        <div class="quiz-grid-icon" style="background:#f3e8ff">🎲</div>
-        <div class="quiz-grid-label">随机练习</div>
-        <div class="quiz-grid-sub">随机出题</div>
-      </div>
-      <div class="quiz-grid-item" onclick="startQuizMode('sequential')">
-        <div class="quiz-grid-icon" style="background:#e0e7ff">📝</div>
-        <div class="quiz-grid-label">全部练习</div>
-        <div class="quiz-grid-sub" id="qgTotal">0题</div>
-      </div>
-      <div class="quiz-grid-item" onclick="showChapterPage()">
-        <div class="quiz-grid-icon" style="background:#f3e8ff">📚</div>
-        <div class="quiz-grid-label">章节练习</div>
-        <div class="quiz-grid-sub">按章节刷题</div>
-      </div>
-      <div class="quiz-grid-item" onclick="showExamPapersPage()">
-        <div class="quiz-grid-icon" style="background:#fff7ed">📋</div>
-        <div class="quiz-grid-label">历年真题</div>
-        <div class="quiz-grid-sub">真实考题</div>
       </div>
       <div class="quiz-grid-item" onclick="clearAllStats()">
         <div class="quiz-grid-icon" style="background:#f1f5f9">🔄</div>
