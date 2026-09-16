@@ -3023,6 +3023,11 @@ body.font-xl h2 { font-size: 28px; }
   </div>
 </div></div>
 
+<!-- ========== MOCK EXAM RESULT PAGE ========== -->
+<div id="mockResultPage" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:#f8fafc;z-index:9999;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px;">
+  <div id="mockResultContent" style="max-width:500px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;justify-content:center;"></div>
+</div>
+
 <!-- Bottom Navigation Bar -->
 <nav class="tab-bar" id="tabBar">
   <div class="tab-item active" data-tab="home" onclick="switchTab('home')">
@@ -7541,9 +7546,9 @@ var originalBackToQuizHome = backToQuizHome;
 backToQuizHome = function() {
   if (mockExamState.timerInterval) { clearInterval(mockExamState.timerInterval); mockExamState.timerInterval = null; }
   mockExamState.active = false;
-  // Hide mock result overlay
-  var overlay = document.getElementById('mockResultOverlay');
-  if (overlay) overlay.style.display = 'none';
+  // Hide mock result page
+  var resultPage = document.getElementById('mockResultPage');
+  if (resultPage) resultPage.style.display = 'none';
   document.getElementById('quizResults').classList.remove('show');
   var player = document.getElementById('quizPlayer');
   player.classList.remove('show');
@@ -7882,69 +7887,55 @@ function submitMockExam(isAuto) {
   
   mockExamState.active = false;
   
-  // Show results - use a separate overlay div instead of quizPlayer
+  // Hide quizPlayer
   var player = document.getElementById('quizPlayer');
   player.classList.remove('show');
   player.style.display = 'none';
   
-  // Create or get mock results overlay
-  var overlay = document.getElementById('mockResultOverlay');
-  if (!overlay) {
-    overlay = document.createElement('div');
-    overlay.id = 'mockResultOverlay';
-    overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:#f8fafc;z-index:9999;overflow-y:auto;-webkit-overflow-scrolling:touch;';
-    document.body.appendChild(overlay);
-  }
-  overlay.style.display = 'block';
-  overlay.innerHTML = '<div style="padding:20px;text-align:center;min-height:100vh;display:flex;flex-direction:column;justify-content:center;">' +
-    '<div style="font-size:48px;margin-bottom:12px;">' + (passed ? '🎉' : '💪') + '</div>' +
-    '<div style="font-size:28px;font-weight:700;color:' + (passed ? '#10b981' : '#ef4444') + ';margin-bottom:4px;">' + score + '分</div>' +
-    '<div style="font-size:14px;color:#94a3b8;margin-bottom:16px;">' + (passed ? '恭喜通过！' : '继续努力，下次一定能过！') + '</div>' +
+  // Show results in pre-existing mockResultPage
+  var resultPage = document.getElementById('mockResultPage');
+  var resultContent = document.getElementById('mockResultContent');
+  resultContent.innerHTML = '' +
+    '<div style="font-size:48px;margin-bottom:12px;text-align:center;">' + (passed ? '🎉' : '💪') + '</div>' +
+    '<div style="font-size:28px;font-weight:700;color:' + (passed ? '#10b981' : '#ef4444') + ';margin-bottom:4px;text-align:center;">' + score + '分</div>' +
+    '<div style="font-size:14px;color:#94a3b8;margin-bottom:16px;text-align:center;">' + (passed ? '恭喜通过！' : '继续努力，下次一定能过！') + '</div>' +
     '<div style="background:#fff;border-radius:12px;padding:16px;margin-bottom:16px;">' +
     '<div style="display:flex;justify-content:space-around;margin-bottom:12px;">' +
-    '<div><div style="font-size:20px;font-weight:700;color:#10b981;">' + correct + '</div><div style="font-size:11px;color:#94a3b8;">答对</div></div>' +
-    '<div><div style="font-size:20px;font-weight:700;color:#ef4444;">' + (total - correct) + '</div><div style="font-size:11px;color:#94a3b8;">答错</div></div>' +
-    '<div><div style="font-size:20px;font-weight:700;color:#94a3b8;">' + unanswered + '</div><div style="font-size:11px;color:#94a3b8;">未答</div></div>' +
-    '<div><div style="font-size:20px;font-weight:700;color:#0ea5e9;">' + durMin + '分' + durSec + '秒</div><div style="font-size:11px;color:#94a3b8;">用时</div></div>' +
+    '<div style="text-align:center;"><div style="font-size:20px;font-weight:700;color:#10b981;">' + correct + '</div><div style="font-size:11px;color:#94a3b8;">答对</div></div>' +
+    '<div style="text-align:center;"><div style="font-size:20px;font-weight:700;color:#ef4444;">' + (total - correct) + '</div><div style="font-size:11px;color:#94a3b8;">答错</div></div>' +
+    '<div style="text-align:center;"><div style="font-size:20px;font-weight:700;color:#94a3b8;">' + unanswered + '</div><div style="font-size:11px;color:#94a3b8;">未答</div></div>' +
+    '<div style="text-align:center;"><div style="font-size:20px;font-weight:700;color:#0ea5e9;">' + durMin + '分' + durSec + '秒</div><div style="font-size:11px;color:#94a3b8;">用时</div></div>' +
     '</div>' +
     '<div style="height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden;">' +
     '<div style="width:' + pct + '%;height:100%;background:linear-gradient(90deg,#10b981,#34d399);"></div>' +
     '</div>' +
-    '<div style="font-size:12px;color:#94a3b8;margin-top:4px;">正确率 ' + pct + '%</div>' +
+    '<div style="font-size:12px;color:#94a3b8;margin-top:4px;text-align:center;">正确率 ' + pct + '%</div>' +
     '</div>' +
-    '<button onclick="window._doReviewMock()" ontouchend="window._doReviewMock();return false;" style="width:100%;padding:14px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;color:#475569;font-size:15px;margin-bottom:10px;font-weight:600;-webkit-tap-highlight-color:transparent;touch-action:manipulation;cursor:pointer;">查看错题解析</button>' +
-    '<button onclick="window._doBackHome()" ontouchend="window._doBackHome();return false;" style="width:100%;padding:14px;border-radius:10px;border:none;background:#f59e0b;color:#fff;font-size:15px;font-weight:600;-webkit-tap-highlight-color:transparent;touch-action:manipulation;cursor:pointer;">返回首页</button>' +
-    '</div>';
-  overlay.scrollTop = 0;
+    '<a href="javascript:void(0)" onclick="window._doReviewMock()" style="display:block;width:100%;padding:14px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;color:#475569;font-size:15px;margin-bottom:10px;font-weight:600;text-align:center;text-decoration:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">查看错题解析</a>' +
+    '<a href="javascript:void(0)" onclick="window._doBackHome()" style="display:block;width:100%;padding:14px;border-radius:10px;border:none;background:#f59e0b;color:#fff;font-size:15px;font-weight:600;text-align:center;text-decoration:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">返回首页</a>';
+  resultPage.style.display = 'block';
+  resultPage.scrollTop = 0;
 }
 
 // Global handlers for mock exam result buttons
 window._doReviewMock = function() {
-  // Use setTimeout to break out of any event chain
-  setTimeout(function() { reviewMockExam(); }, 0);
+  reviewMockExam();
 };
 window._doBackHome = function() {
-  setTimeout(function() { backToQuizHome(); }, 0);
+  backToQuizHome();
 };
 
 function reviewMockExam() {
-  // Hide results overlay
-  var resultOverlay = document.getElementById('mockResultOverlay');
-  if (resultOverlay) resultOverlay.style.display = 'none';
+  // Use pre-existing mockResultPage
+  var resultPage = document.getElementById('mockResultPage');
+  var resultContent = document.getElementById('mockResultContent');
+  if (!resultPage || !resultContent) return;
   
-  // Use the same overlay for review content
-  var overlay = document.getElementById('mockResultOverlay');
-  if (!overlay) {
-    overlay = document.createElement('div');
-    overlay.id = 'mockResultOverlay';
-    overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:#f8fafc;z-index:9999;overflow-y:auto;-webkit-overflow-scrolling:touch;';
-    document.body.appendChild(overlay);
-  }
-  overlay.style.display = 'block';
+  resultPage.style.display = 'block';
   
-  var html = '<div style="padding:16px 16px 80px;">';
+  var html = '<div style="padding:0 0 16px 0;">';
   html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;padding:12px;background:#fff7ed;border-radius:12px;">';
-  html += '<button onclick="window._doBackHome()" ontouchend="window._doBackHome();return false;" style="background:#fff;border:1px solid #e5e7eb;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">←</button>';
+  html += '<a href="javascript:void(0)" onclick="window._doBackHome()" style="background:#fff;border:1px solid #e5e7eb;width:36px;height:36px;border-radius:50%;font-size:18px;text-align:center;line-height:36px;text-decoration:none;color:#475569;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">←</a>';
   html += '<div style="flex:1;text-align:center;font-size:16px;font-weight:600;color:#d97706;">考试错题解析</div>';
   html += '<div style="width:36px;"></div>';
   html += '</div>';
@@ -8017,11 +8008,11 @@ function reviewMockExam() {
   }
   
   html += '</div>';
-  html += '<button onclick="window._doBackHome()" ontouchend="window._doBackHome();return false;" style="width:100%;padding:14px;border-radius:10px;border:none;background:#f59e0b;color:#fff;font-size:15px;font-weight:600;margin-top:16px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;cursor:pointer;">返回首页</button>';
+  html += '<a href="javascript:void(0)" onclick="window._doBackHome()" style="display:block;width:100%;padding:14px;border-radius:10px;border:none;background:#f59e0b;color:#fff;font-size:15px;font-weight:600;margin-top:16px;text-align:center;text-decoration:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">返回首页</a>';
   html += '</div>';
   
-  overlay.innerHTML = html;
-  overlay.scrollTop = 0;
+  resultContent.innerHTML = html;
+  resultPage.scrollTop = 0;
 }
 
 function renderMockExamHistory() {
