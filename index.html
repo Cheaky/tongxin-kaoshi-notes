@@ -2798,7 +2798,7 @@ body.font-xl h2 { font-size: 28px; }
       <div class="quiz-featured-card orange" onclick="startMockExam()" style="background:linear-gradient(135deg,#f59e0b,#d97706);">
         <div class="quiz-featured-icon">⏱</div>
         <div class="quiz-featured-title">模拟考试</div>
-        <div class="quiz-featured-sub">限时答题，仿真考试</div>
+        <div class="quiz-featured-sub">自定义题量与时长，仿真考试</div>
       </div>
     </div>
 
@@ -2892,25 +2892,70 @@ body.font-xl h2 { font-size: 28px; }
       <div style="width:36px;"></div>
     </div>
     <div id="mockExamSetup" style="padding:0 4px;">
-      <div style="background:#fff7ed;border-radius:12px;padding:16px;margin-bottom:16px;">
-        <div style="font-size:15px;font-weight:600;color:#d97706;margin-bottom:8px;">📋 考试说明</div>
-        <div style="font-size:13px;color:#94a3b8;line-height:1.6;">
-          · 考试时间：<b style="color:#f59e0b;">60分钟</b><br>
-          · 题目数量：<b style="color:#f59e0b;">100题</b>（不足时取全部题量）<br>
-          · 题型：单选题、多选题、判断题<br>
-          · 评分标准：每题1分，总分100分<br>
-          · 及格线：<b style="color:#10b981;">60分</b><br>
-          · 作答过程中<b>不显示答案</b>，交卷后统一评分
+      <div style="background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+        <div style="font-size:15px;font-weight:600;margin-bottom:12px;">📚 选择科目</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;" id="mockSubjectTabs">
+          <button onclick="selectMockSubject('all')" style="flex:1;min-width:100px;padding:12px;border-radius:8px;border:2px solid #f59e0b;background:#fff7ed;color:#d97706;font-size:14px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;" data-subject="all">全部科目</button>
+          <button onclick="selectMockSubject('综合能力')" style="flex:1;min-width:100px;padding:12px;border-radius:8px;border:2px solid #e5e7eb;background:#fff;color:#475569;font-size:14px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;" data-subject="综合能力">综合能力</button>
+          <button onclick="selectMockSubject('传输有线')" style="flex:1;min-width:100px;padding:12px;border-radius:8px;border:2px solid #e5e7eb;background:#fff;color:#475569;font-size:14px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;" data-subject="传输有线">传输有线</button>
+        </div>
+        <div id="mockSubjectInfo" style="margin-top:10px;padding:8px 12px;background:#f8fafc;border-radius:8px;font-size:12px;color:#64748b;line-height:1.5;">
+          可用题量：<b id="mockAvailCount" style="color:#f59e0b;">0</b> 题
         </div>
       </div>
-      <div style="background:#fff;border-radius:12px;padding:16px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
-        <div style="font-size:15px;font-weight:600;margin-bottom:12px;">选择科目</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <button onclick="startMockExamWith('all')" style="flex:1;min-width:100px;padding:12px;border-radius:8px;border:2px solid #f59e0b;background:#fff7ed;color:#d97706;font-size:14px;font-weight:600;cursor:pointer;">全部科目</button>
-          <button onclick="startMockExamWith('综合能力')" style="flex:1;min-width:100px;padding:12px;border-radius:8px;border:2px solid #e5e7eb;background:#fff;color:#475569;font-size:14px;font-weight:600;cursor:pointer;">综合能力</button>
-          <button onclick="startMockExamWith('传输有线')" style="flex:1;min-width:100px;padding:12px;border-radius:8px;border:2px solid #e5e7eb;background:#fff;color:#475569;font-size:14px;font-weight:600;cursor:pointer;">传输有线</button>
+
+      <div style="background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+        <div style="font-size:15px;font-weight:600;margin-bottom:12px;">⚙️ 考试设置</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding:8px 0;border-bottom:1px solid #f1f5f9;">
+          <span style="font-size:14px;color:#334155;">题目数量</span>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <button onclick="adjustMockCount(-10)" style="width:32px;height:32px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;color:#475569;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;">-</button>
+            <input type="number" id="mockCountInput" value="100" min="10" max="200" style="width:60px;text-align:center;font-size:15px;font-weight:600;border:1px solid #e5e7eb;border-radius:8px;padding:6px 4px;color:#334155;" onchange="onMockCountChange()">
+            <button onclick="adjustMockCount(10)" style="width:32px;height:32px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;color:#475569;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;">+</button>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding:8px 0;border-bottom:1px solid #f1f5f9;">
+          <span style="font-size:14px;color:#334155;">考试时长</span>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <button onclick="adjustMockTime(-5)" style="width:32px;height:32px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;color:#475569;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;">-</button>
+            <div style="display:flex;align-items:center;gap:2px;">
+              <input type="number" id="mockTimeInput" value="60" min="10" max="180" style="width:50px;text-align:center;font-size:15px;font-weight:600;border:1px solid #e5e7eb;border-radius:8px;padding:6px 4px;color:#334155;" onchange="onMockTimeChange()">
+              <span style="font-size:13px;color:#94a3b8;">分钟</span>
+            </div>
+            <button onclick="adjustMockTime(5)" style="width:32px;height:32px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;color:#475569;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;">+</button>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding:8px 0;border-bottom:1px solid #f1f5f9;">
+          <span style="font-size:14px;color:#334155;">及格分数</span>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <input type="number" id="mockPassInput" value="60" min="1" max="200" style="width:60px;text-align:center;font-size:15px;font-weight:600;border:1px solid #e5e7eb;border-radius:8px;padding:6px 4px;color:#334155;">
+            <span style="font-size:13px;color:#94a3b8;">分</span>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;">
+          <div>
+            <span style="font-size:14px;color:#334155;">选项乱序</span>
+            <div style="font-size:11px;color:#94a3b8;margin-top:2px;">选项随机排列，防止背答案</div>
+          </div>
+          <div onclick="toggleMockOptionShuffle()" id="mockShuffleToggle" style="width:44px;height:26px;border-radius:13px;background:#cbd5e1;position:relative;cursor:pointer;transition:background 0.3s;-webkit-tap-highlight-color:transparent;">
+            <div id="mockShuffleKnob" style="width:22px;height:22px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transition:left 0.3s;box-shadow:0 1px 3px rgba(0,0,0,0.2);"></div>
+          </div>
         </div>
       </div>
+
+      <div style="background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <span style="font-size:13px;color:#64748b;">总题数</span>
+          <span id="mockTotalDisplay" style="font-size:18px;font-weight:700;color:#0ea5e9;">100 题</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:13px;color:#64748b;">总分</span>
+          <span id="mockScoreDisplay" style="font-size:18px;font-weight:700;color:#0ea5e9;">100 分</span>
+        </div>
+      </div>
+
+      <button onclick="beginMockExam()" style="width:100%;padding:16px;border-radius:12px;border:none;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;font-size:17px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;box-shadow:0 4px 12px rgba(245,158,11,0.3);margin-bottom:16px;">开始考试</button>
+
       <div style="background:#fff;border-radius:12px;padding:16px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
         <div style="font-size:15px;font-weight:600;margin-bottom:8px;">📊 历史成绩</div>
         <div id="mockExamHistory" style="font-size:13px;color:#94a3b8;">暂无考试记录</div>
@@ -7614,8 +7659,206 @@ var mockExamState = {
   startTime: 0,
   endTime: 0,
   timerInterval: null,
-  subject: 'all'
+  subject: 'all',
+  config: {
+    subject: 'all',
+    count: 100,
+    timeLimit: 60,
+    passScore: 60,
+    shuffleOptions: false
+  }
 };
+
+var mockConfigState = {
+  subject: 'all',
+  shuffleOptions: false
+};
+
+function selectMockSubject(subject) {
+  mockConfigState.subject = subject;
+  var tabs = document.querySelectorAll('#mockSubjectTabs button');
+  for (var i = 0; i < tabs.length; i++) {
+    if (tabs[i].getAttribute('data-subject') === subject) {
+      tabs[i].style.borderColor = '#f59e0b';
+      tabs[i].style.background = '#fff7ed';
+      tabs[i].style.color = '#d97706';
+    } else {
+      tabs[i].style.borderColor = '#e5e7eb';
+      tabs[i].style.background = '#fff';
+      tabs[i].style.color = '#475569';
+    }
+  }
+  updateMockAvailCount();
+}
+
+function updateMockAvailCount() {
+  var pool = QUESTIONS.slice();
+  if (mockConfigState.subject && mockConfigState.subject !== 'all') {
+    pool = pool.filter(function(q) { return q.subject === mockConfigState.subject; });
+  }
+  var availEl = document.getElementById('mockAvailCount');
+  if (availEl) availEl.textContent = pool.length;
+
+  var countInput = document.getElementById('mockCountInput');
+  if (countInput) {
+    var currentVal = parseInt(countInput.value) || 100;
+    if (currentVal > pool.length) {
+      countInput.value = pool.length;
+      updateMockSummary();
+    }
+  }
+}
+
+function adjustMockCount(delta) {
+  var input = document.getElementById('mockCountInput');
+  if (!input) return;
+  var newVal = (parseInt(input.value) || 100) + delta;
+  if (newVal < 10) newVal = 10;
+  if (newVal > 200) newVal = 200;
+
+  var pool = QUESTIONS.slice();
+  if (mockConfigState.subject && mockConfigState.subject !== 'all') {
+    pool = pool.filter(function(q) { return q.subject === mockConfigState.subject; });
+  }
+  if (newVal > pool.length) newVal = pool.length;
+
+  input.value = newVal;
+  updateMockSummary();
+}
+
+function onMockCountChange() {
+  var input = document.getElementById('mockCountInput');
+  if (!input) return;
+  var val = parseInt(input.value) || 100;
+  if (val < 10) val = 10;
+  if (val > 200) val = 200;
+
+  var pool = QUESTIONS.slice();
+  if (mockConfigState.subject && mockConfigState.subject !== 'all') {
+    pool = pool.filter(function(q) { return q.subject === mockConfigState.subject; });
+  }
+  if (val > pool.length) val = pool.length;
+
+  input.value = val;
+  updateMockSummary();
+}
+
+function adjustMockTime(delta) {
+  var input = document.getElementById('mockTimeInput');
+  if (!input) return;
+  var newVal = (parseInt(input.value) || 60) + delta;
+  if (newVal < 10) newVal = 10;
+  if (newVal > 180) newVal = 180;
+  input.value = newVal;
+}
+
+function onMockTimeChange() {
+  var input = document.getElementById('mockTimeInput');
+  if (!input) return;
+  var val = parseInt(input.value) || 60;
+  if (val < 10) val = 10;
+  if (val > 180) val = 180;
+  input.value = val;
+}
+
+function toggleMockOptionShuffle() {
+  mockConfigState.shuffleOptions = !mockConfigState.shuffleOptions;
+  var toggle = document.getElementById('mockShuffleToggle');
+  var knob = document.getElementById('mockShuffleKnob');
+  if (toggle && knob) {
+    if (mockConfigState.shuffleOptions) {
+      toggle.style.background = '#f59e0b';
+      knob.style.left = '20px';
+    } else {
+      toggle.style.background = '#cbd5e1';
+      knob.style.left = '2px';
+    }
+  }
+}
+
+function updateMockSummary() {
+  var countInput = document.getElementById('mockCountInput');
+  var count = countInput ? (parseInt(countInput.value) || 100) : 100;
+  var totalEl = document.getElementById('mockTotalDisplay');
+  var scoreEl = document.getElementById('mockScoreDisplay');
+  if (totalEl) totalEl.textContent = count + ' 题';
+  if (scoreEl) scoreEl.textContent = count + ' 分';
+}
+
+function beginMockExam() {
+  var countInput = document.getElementById('mockCountInput');
+  var timeInput = document.getElementById('mockTimeInput');
+  var passInput = document.getElementById('mockPassInput');
+
+  var count = countInput ? (parseInt(countInput.value) || 100) : 100;
+  var timeLimit = timeInput ? (parseInt(timeInput.value) || 60) : 60;
+  var passScore = passInput ? (parseInt(passInput.value) || 60) : 60;
+  var subject = mockConfigState.subject || 'all';
+  var shuffle = mockConfigState.shuffleOptions || false;
+
+  var pool = QUESTIONS.slice();
+  if (subject && subject !== 'all') {
+    pool = pool.filter(function(q) { return q.subject === subject; });
+  }
+  if (pool.length === 0) {
+    alert('该科目暂无题目');
+    return;
+  }
+
+  for (var i = pool.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp;
+  }
+  var examQs = pool.slice(0, Math.min(count, pool.length));
+
+  if (shuffle) {
+    for (var k = 0; k < examQs.length; k++) {
+      var q = examQs[k];
+      if (q.options && q.options.length > 1 && q.type !== 'judge') {
+        var indices = [];
+        for (var m = 0; m < q.options.length; m++) indices.push(m);
+        for (var n = indices.length - 1; n > 0; n--) {
+          var r = Math.floor(Math.random() * (n + 1));
+          var t = indices[n]; indices[n] = indices[r]; indices[r] = t;
+        }
+        var newOptions = [];
+        var newAnswer = q.answer;
+        for (var p = 0; p < indices.length; p++) {
+          newOptions.push(q.options[indices[p]]);
+        }
+        if (q.type === 'multi') {
+          newAnswer = [];
+          for (var s = 0; s < q.answer.length; s++) {
+            newAnswer.push(indices.indexOf(q.answer[s]));
+          }
+        } else {
+          newAnswer = indices.indexOf(q.answer);
+        }
+        q.options = newOptions;
+        q.answer = newAnswer;
+      }
+    }
+  }
+
+  mockExamState.active = true;
+  mockExamState.questions = examQs;
+  mockExamState.currentIdx = 0;
+  mockExamState.answers = {};
+  mockExamState.startTime = Date.now();
+  mockExamState.subject = subject;
+  mockExamState.config = {
+    subject: subject,
+    count: examQs.length,
+    timeLimit: timeLimit,
+    passScore: passScore,
+    shuffleOptions: shuffle
+  };
+
+  var mockPage = document.getElementById('quizMockExamPage');
+  if (mockPage) { mockPage.style.display = 'none'; mockPage.classList.remove('active'); }
+
+  showMockExamPlayer();
+}
 
 var favStoreGet = function(key, def) {
   try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : def; } catch(e) { return def; }
@@ -7625,11 +7868,14 @@ var favStoreSet = function(key, val) {
 };
 
 function startMockExam() {
-  document.getElementById('page-quiz').classList.remove('active');
+  var pg = document.getElementById('page-quiz');
+  if (pg) pg.classList.remove('active');
   hideAllQuizSubPages();
-  document.getElementById('quizMockExamPage').style.display = 'block';
-  document.getElementById('quizMockExamPage').classList.add('active');
+  var mockPage = document.getElementById('quizMockExamPage');
+  if (mockPage) { mockPage.style.display = 'block'; mockPage.classList.add('active'); }
   renderMockExamHistory();
+  selectMockSubject('all');
+  updateMockSummary();
 }
 
 function hideAllQuizSubPages() {
@@ -7669,32 +7915,38 @@ function startMockExamWith(subject) {
 function showMockExamPlayer() {
   var player = document.getElementById('quizPlayer');
   if (!player) return;
-  
+
   player.classList.add('show');
   player.style.display = 'flex';
   player.style.flexDirection = 'column';
   player.style.overflow = 'visible';
-  
+
+  var timeLimit = (mockExamState.config && mockExamState.config.timeLimit) || 60;
+  var initTimer = timeLimit < 10 ? 10 : timeLimit;
+  var initMin = Math.floor(initTimer);
+  var initSec = 0;
+
   var header = '<div style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;padding:12px 16px;border-radius:12px;margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-shrink:0;">';
   header += '<button onclick="submitMockExam()" style="background:rgba(255,255,255,0.2);color:#fff;border:none;padding:6px 12px;border-radius:6px;font-size:13px;cursor:pointer;font-weight:600;">交卷</button>';
   header += '<div style="flex:1;text-align:center;font-size:15px;font-weight:600;">模拟考试</div>';
-  header += '<div id="mockTimer" style="font-size:14px;font-weight:700;min-width:50px;text-align:right;">60:00</div>';
+  header += '<div id="mockTimer" style="font-size:14px;font-weight:700;min-width:50px;text-align:right;">' + (initMin < 10 ? '0' : '') + initMin + ':00</div>';
   header += '</div>';
-  
+
   var body = '<div id="mockExamContent" style="flex:1;overflow-y:auto;"></div>';
-  
+
   // Question number grid
   var gridHtml = '<div id="mockQuestionGrid" style="background:#fff;border-top:1px solid #e5e7eb;padding:8px 12px;z-index:200;max-height:120px;overflow-y:auto;flex-shrink:0;"></div>';
-  
+
   player.innerHTML = header + body + gridHtml;
-  
+
   renderMockQuestion();
   renderMockQuestionGrid();
-  
+
   // Start timer
+  var totalSeconds = timeLimit * 60;
   mockExamState.timerInterval = setInterval(function() {
     var elapsed = Math.floor((Date.now() - mockExamState.startTime) / 1000);
-    var remaining = 3600 - elapsed;
+    var remaining = totalSeconds - elapsed;
     if (remaining <= 0) {
       clearInterval(mockExamState.timerInterval);
       submitMockExam(true);
@@ -7856,9 +8108,10 @@ function submitMockExam(isAuto) {
     try { confirmed = confirm('还有 ' + unanswered + ' 题未作答，确定交卷吗？'); } catch(e) { confirmed = true; }
     if (!confirmed) {
       // Resume timer
+      var resumeTotalSec = (mockExamState.config && mockExamState.config.timeLimit || 60) * 60;
       mockExamState.timerInterval = setInterval(function() {
         var elapsed = Math.floor((Date.now() - mockExamState.startTime) / 1000);
-        var remaining = 3600 - elapsed;
+        var remaining = resumeTotalSec - elapsed;
         if (remaining <= 0) { submitMockExam(true); return; }
         var min2 = Math.floor(remaining / 60);
         var sec2 = remaining % 60;
@@ -7899,7 +8152,8 @@ function submitMockExam(isAuto) {
   
   var score = correct;
   var pct = Math.round(correct / total * 100);
-  var passed = score >= 60;
+  var passScore = (mockExamState.config && mockExamState.config.passScore) || 60;
+  var passed = score >= passScore;
   var duration = Math.floor((mockExamState.endTime - mockExamState.startTime) / 1000);
   var durMin = Math.floor(duration / 60);
   var durSec = duration % 60;
@@ -7941,6 +8195,11 @@ function submitMockExam(isAuto) {
     '<div style="font-size:48px;margin-bottom:12px;text-align:center;">' + (passed ? '🎉' : '💪') + '</div>' +
     '<div style="font-size:28px;font-weight:700;color:' + (passed ? '#10b981' : '#ef4444') + ';margin-bottom:4px;text-align:center;">' + score + '分</div>' +
     '<div style="font-size:14px;color:#94a3b8;margin-bottom:16px;text-align:center;">' + (passed ? '恭喜通过！' : '继续努力，下次一定能过！') + '</div>' +
+    '<div style="background:#f8fafc;border-radius:8px;padding:8px 12px;margin-bottom:16px;text-align:center;font-size:12px;color:#64748b;">' +
+      '科目：' + (mockExamState.subject === 'all' ? '全部科目' : mockExamState.subject) + '  |  ' +
+      '题量：' + total + '  |  ' +
+      '及格线：' + passScore + '分' +
+    '</div>' +
     '<div style="background:#fff;border-radius:12px;padding:16px;margin-bottom:16px;">' +
     '<div style="display:flex;justify-content:space-around;margin-bottom:12px;">' +
     '<div style="text-align:center;"><div style="font-size:20px;font-weight:700;color:#10b981;">' + correct + '</div><div style="font-size:11px;color:#94a3b8;">答对</div></div>' +
@@ -8311,6 +8570,17 @@ window.mockJumpTo = mockJumpTo;
 window.selectMockSingle = selectMockSingle;
 window.toggleMockMulti = toggleMockMulti;
 window.selectMockJudge = selectMockJudge;
+window.selectMockSubject = selectMockSubject;
+window.adjustMockCount = adjustMockCount;
+window.onMockCountChange = onMockCountChange;
+window.adjustMockTime = adjustMockTime;
+window.onMockTimeChange = onMockTimeChange;
+window.toggleMockOptionShuffle = toggleMockOptionShuffle;
+window.beginMockExam = beginMockExam;
+window.updateMockSummary = updateMockSummary;
+window.updateMockAvailCount = updateMockAvailCount;
+window.mockConfigState = mockConfigState;
+window.mockExamState = mockExamState;
 window.showFavoritesPage = showFavoritesPage;
 window.toggleFavorite = toggleFavorite;
 window.removeFav = removeFav;
