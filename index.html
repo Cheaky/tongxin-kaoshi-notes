@@ -1463,6 +1463,68 @@ body.font-xl h2 { font-size: 28px; }
   margin-top: 2px;
 }
 
+/* Chapter List */
+.quiz-chapter-item {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  background: white;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+.quiz-chapter-item:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.quiz-chapter-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #f3e8ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+.quiz-chapter-info {
+  flex: 1;
+  min-width: 0;
+}
+.quiz-chapter-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 6px;
+}
+.quiz-chapter-progress {
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 2px;
+  margin-bottom: 6px;
+  overflow: hidden;
+}
+.quiz-chapter-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+.quiz-chapter-stats {
+  display: flex;
+  gap: 12px;
+}
+.quiz-chapter-arrow {
+  font-size: 24px;
+  color: #cbd5e1;
+  margin-left: 8px;
+  font-weight: 300;
+}
+
 /* Featured Cards (顺序练习 + 模拟考试) */
 .quiz-featured {
   display: flex;
@@ -2636,11 +2698,37 @@ body.font-xl h2 { font-size: 28px; }
         <div class="quiz-grid-label">全部练习</div>
         <div class="quiz-grid-sub" id="qgTotal">0题</div>
       </div>
+      <div class="quiz-grid-item" onclick="showChapterPage()">
+        <div class="quiz-grid-icon" style="background:#f3e8ff">📚</div>
+        <div class="quiz-grid-label">章节练习</div>
+        <div class="quiz-grid-sub">按章节刷题</div>
+      </div>
       <div class="quiz-grid-item" onclick="clearAllStats()">
         <div class="quiz-grid-icon" style="background:#f1f5f9">🔄</div>
         <div class="quiz-grid-label">重置进度</div>
         <div class="quiz-grid-sub">清空记录</div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== CHAPTER PRACTICE PAGE ========== -->
+<div id="quizChapterPage" class="content" style="display:none;">
+  <div class="quiz-home">
+    <div class="quiz-player-header" style="background:linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);color:#fff;padding:16px;border-radius:12px;margin-bottom:16px;">
+      <button class="quiz-back-btn" onclick="backToQuizHome()" style="background:rgba(255,255,255,0.2);color:#fff;border:none;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;">←</button>
+      <div class="quiz-player-title" style="flex:1;text-align:center;font-size:17px;font-weight:600;">章节练习</div>
+      <div style="width:36px;"></div>
+    </div>
+    
+    <!-- Subject Tabs for chapters -->
+    <div class="quiz-subject-tabs" id="chapterSubjectTabs">
+      <div class="quiz-subject-tab active" onclick="switchChapterSubject('综合能力')" id="ctab-s1">综合能力</div>
+      <div class="quiz-subject-tab" onclick="switchChapterSubject('传输有线')" id="ctab-s2">传输有线</div>
+    </div>
+    
+    <div id="chapterList" style="margin-top:12px;">
+      <!-- Chapters will be rendered by JS -->
     </div>
   </div>
 </div>
@@ -5234,6 +5322,846 @@ var QUESTIONS = [
     ],
     "answer": 0,
     "explain": "SDH所有等级帧周期都是125μs(8000帧/秒)。"
+  },
+  {
+    "id": 123,
+    "subject": "综合能力",
+    "chapter": "计算机基础",
+    "type": "single",
+    "q": "计算机中存储容量的基本单位是？",
+    "options": [
+      "位(bit)",
+      "字节(Byte)",
+      "字(Word)",
+      "千字节(KB)"
+    ],
+    "answer": 1,
+    "explain": "字节(Byte)是计算机存储容量的基本单位，1字节=8位(bit)。"
+  },
+  {
+    "id": 124,
+    "subject": "综合能力",
+    "chapter": "计算机基础",
+    "type": "single",
+    "q": "CPU的主要组成部分不包括？",
+    "options": [
+      "运算器",
+      "控制器",
+      "寄存器",
+      "硬盘"
+    ],
+    "answer": 3,
+    "explain": "CPU主要由运算器、控制器和寄存器组成，硬盘属于外部存储设备。"
+  },
+  {
+    "id": 125,
+    "subject": "综合能力",
+    "chapter": "计算机基础",
+    "type": "single",
+    "q": "下列不属于操作系统的是？",
+    "options": [
+      "Windows",
+      "Linux",
+      "Oracle",
+      "Unix"
+    ],
+    "answer": 2,
+    "explain": "Oracle是数据库管理系统，不是操作系统。Windows、Linux、Unix都是操作系统。"
+  },
+  {
+    "id": 126,
+    "subject": "综合能力",
+    "chapter": "计算机基础",
+    "type": "single",
+    "q": "计算机病毒的主要特征不包括？",
+    "options": [
+      "传染性",
+      "破坏性",
+      "潜伏性",
+      "可预见性"
+    ],
+    "answer": 3,
+    "explain": "计算机病毒具有传染性、破坏性、潜伏性、隐蔽性、可触发性等特征，不具有可预见性。"
+  },
+  {
+    "id": 127,
+    "subject": "综合能力",
+    "chapter": "计算机基础",
+    "type": "judge",
+    "q": "RAM是只读存储器的英文缩写。",
+    "options": [],
+    "answer": false,
+    "explain": "RAM是随机存取存储器(Random Access Memory)的缩写，ROM才是只读存储器(Read Only Memory)的缩写。"
+  },
+  {
+    "id": 128,
+    "subject": "综合能力",
+    "chapter": "计算机基础",
+    "type": "single",
+    "q": "在计算机中，1GB等于多少MB？",
+    "options": [
+      "100MB",
+      "512MB",
+      "1000MB",
+      "1024MB"
+    ],
+    "answer": 3,
+    "explain": "计算机存储单位采用二进制换算，1GB = 1024MB，1MB = 1024KB，1KB = 1024Byte。"
+  },
+  {
+    "id": 129,
+    "subject": "综合能力",
+    "chapter": "互联网",
+    "type": "single",
+    "q": "Internet的中文译名是？",
+    "options": [
+      "局域网",
+      "城域网",
+      "因特网",
+      "广域网"
+    ],
+    "answer": 2,
+    "explain": "Internet的标准中文译名为因特网，又称互联网，是全球最大的计算机网络。"
+  },
+  {
+    "id": 130,
+    "subject": "综合能力",
+    "chapter": "互联网",
+    "type": "single",
+    "q": "IP地址由多少位二进制数组成？",
+    "options": [
+      "16位",
+      "32位",
+      "64位",
+      "128位"
+    ],
+    "answer": 1,
+    "explain": "IPv4地址由32位二进制数组成，通常表示为4个十进制数，每个数范围0-255。IPv6地址为128位。"
+  },
+  {
+    "id": 131,
+    "subject": "综合能力",
+    "chapter": "互联网",
+    "type": "single",
+    "q": "TCP/IP协议中，TCP工作在哪一层？",
+    "options": [
+      "网络层",
+      "传输层",
+      "应用层",
+      "数据链路层"
+    ],
+    "answer": 1,
+    "explain": "TCP(传输控制协议)工作在传输层，提供可靠的面向连接的数据传输服务。"
+  },
+  {
+    "id": 132,
+    "subject": "综合能力",
+    "chapter": "互联网",
+    "type": "single",
+    "q": "DNS的主要功能是？",
+    "options": [
+      "数据加密",
+      "域名解析",
+      "文件传输",
+      "邮件发送"
+    ],
+    "answer": 1,
+    "explain": "DNS(域名系统)的主要功能是将域名解析为对应的IP地址，实现域名到IP地址的转换。"
+  },
+  {
+    "id": 133,
+    "subject": "综合能力",
+    "chapter": "互联网",
+    "type": "single",
+    "q": "下列不属于Internet应用的是？",
+    "options": [
+      "电子邮件",
+      "文件传输",
+      "程控交换",
+      "万维网"
+    ],
+    "answer": 2,
+    "explain": "程控交换是电话网的技术，不属于Internet应用。电子邮件(E-mail)、文件传输(FTP)、万维网(WWW)都是Internet的典型应用。"
+  },
+  {
+    "id": 134,
+    "subject": "综合能力",
+    "chapter": "互联网",
+    "type": "judge",
+    "q": "HTTP是一种用于传输超文本的协议。",
+    "options": [],
+    "answer": true,
+    "explain": "HTTP(超文本传输协议)是用于从WWW服务器传输超文本到本地浏览器的传输协议。"
+  },
+  {
+    "id": 135,
+    "subject": "综合能力",
+    "chapter": "互联网",
+    "type": "single",
+    "q": "IPv4地址中，C类地址的默认子网掩码是？",
+    "options": [
+      "255.0.0.0",
+      "255.255.0.0",
+      "255.255.255.0",
+      "255.255.255.255"
+    ],
+    "answer": 2,
+    "explain": "C类IP地址的默认子网掩码是255.255.255.0，A类是255.0.0.0，B类是255.255.0.0。"
+  },
+  {
+    "id": 136,
+    "subject": "综合能力",
+    "chapter": "通信安全",
+    "type": "single",
+    "q": "信息安全的基本属性不包括？",
+    "options": [
+      "保密性",
+      "完整性",
+      "可用性",
+      "可移植性"
+    ],
+    "answer": 3,
+    "explain": "信息安全的基本属性包括保密性、完整性、可用性、不可否认性、可控性等，可移植性是软件的属性。"
+  },
+  {
+    "id": 137,
+    "subject": "综合能力",
+    "chapter": "通信安全",
+    "type": "single",
+    "q": "下列属于对称加密算法的是？",
+    "options": [
+      "RSA",
+      "DES",
+      "ECC",
+      "DSA"
+    ],
+    "answer": 1,
+    "explain": "DES是对称加密算法，加密和解密使用相同的密钥。RSA、ECC、DSA都是非对称加密算法。"
+  },
+  {
+    "id": 138,
+    "subject": "综合能力",
+    "chapter": "通信安全",
+    "type": "single",
+    "q": "防火墙的主要作用是？",
+    "options": [
+      "防止火灾",
+      "网络安全防护",
+      "加速网络",
+      "存储数据"
+    ],
+    "answer": 1,
+    "explain": "防火墙是一种网络安全设备，通过监控和控制网络流量来保护内部网络免受外部攻击。"
+  },
+  {
+    "id": 139,
+    "subject": "综合能力",
+    "chapter": "通信安全",
+    "type": "single",
+    "q": "数字签名的主要作用是？",
+    "options": [
+      "加密数据",
+      "认证身份和防抵赖",
+      "压缩数据",
+      "传输数据"
+    ],
+    "answer": 1,
+    "explain": "数字签名用于验证数据的完整性和发送者的身份，防止抵赖，类似于手写签名的作用。"
+  },
+  {
+    "id": 140,
+    "subject": "综合能力",
+    "chapter": "通信安全",
+    "type": "judge",
+    "q": "病毒防护软件可以完全防止所有病毒。",
+    "options": [],
+    "answer": false,
+    "explain": "病毒防护软件不能完全防止所有病毒，因为新病毒不断出现，病毒库需要及时更新，且防护软件存在滞后性。"
+  },
+  {
+    "id": 141,
+    "subject": "综合能力",
+    "chapter": "通信业务",
+    "type": "single",
+    "q": "下列不属于增值电信业务的是？",
+    "options": [
+      "语音信箱",
+      "电子数据交换",
+      "固定电话",
+      "互联网接入服务"
+    ],
+    "answer": 2,
+    "explain": "固定电话属于基础电信业务，语音信箱、电子数据交换、互联网接入服务属于增值电信业务。"
+  },
+  {
+    "id": 142,
+    "subject": "综合能力",
+    "chapter": "通信业务",
+    "type": "single",
+    "q": "VoIP是指？",
+    "options": [
+      "视频点播",
+      "网络电话",
+      "虚拟专用网",
+      "数字数据网"
+    ],
+    "answer": 1,
+    "explain": "VoIP(Voice over IP)是指基于IP网络的语音传输，又称网络电话。"
+  },
+  {
+    "id": 143,
+    "subject": "综合能力",
+    "chapter": "通信业务",
+    "type": "single",
+    "q": "ISDN的中文名称是？",
+    "options": [
+      "综合业务数字网",
+      "数字数据网",
+      "分组交换网",
+      "异步传输模式"
+    ],
+    "answer": 0,
+    "explain": "ISDN(Integrated Services Digital Network)即综合业务数字网，是以电话综合数字网为基础发展而成的通信网。"
+  },
+  {
+    "id": 144,
+    "subject": "综合能力",
+    "chapter": "通信业务",
+    "type": "judge",
+    "q": "400电话是主被叫分摊付费业务。",
+    "options": [],
+    "answer": true,
+    "explain": "400电话是主被叫分摊付费业务，主叫付市话费，被叫付长途费。800电话是被叫集中付费业务。"
+  },
+  {
+    "id": 145,
+    "subject": "综合能力",
+    "chapter": "项目管理",
+    "type": "single",
+    "q": "项目的特征不包括？",
+    "options": [
+      "一次性",
+      "独特性",
+      "重复性",
+      "目标明确性"
+    ],
+    "answer": 2,
+    "explain": "项目具有一次性、独特性、目标明确性、临时性等特征，重复性是运营的特征而不是项目的特征。"
+  },
+  {
+    "id": 146,
+    "subject": "综合能力",
+    "chapter": "项目管理",
+    "type": "single",
+    "q": "项目管理的三大目标通常是指？",
+    "options": [
+      "范围、时间、成本",
+      "质量、安全、进度",
+      "计划、执行、监控",
+      "启动、规划、收尾"
+    ],
+    "answer": 0,
+    "explain": "项目管理的三大目标(铁三角)是范围、时间、成本，也常表述为质量、进度、成本。"
+  },
+  {
+    "id": 147,
+    "subject": "综合能力",
+    "chapter": "项目管理",
+    "type": "single",
+    "q": "项目生命周期的第一个阶段是？",
+    "options": [
+      "规划阶段",
+      "启动阶段",
+      "执行阶段",
+      "收尾阶段"
+    ],
+    "answer": 1,
+    "explain": "项目生命周期通常包括启动、规划、执行、监控、收尾五个阶段，第一个阶段是启动阶段。"
+  },
+  {
+    "id": 148,
+    "subject": "综合能力",
+    "chapter": "专业外语",
+    "type": "single",
+    "q": "\"bandwidth\" 的中文意思是？",
+    "options": [
+      "基带",
+      "带宽",
+      "频段",
+      "宽带"
+    ],
+    "answer": 1,
+    "explain": "bandwidth 译为带宽，是指信号所占用的频带宽度或信道传输数据的能力。"
+  },
+  {
+    "id": 149,
+    "subject": "综合能力",
+    "chapter": "专业外语",
+    "type": "single",
+    "q": "\"fiber optic cable\" 是指？",
+    "options": [
+      "同轴电缆",
+      "双绞线",
+      "光缆",
+      "电力线"
+    ],
+    "answer": 2,
+    "explain": "fiber optic cable 译为光缆，是利用光在玻璃或塑料制成的纤维中的全反射原理达成的光传导工具。"
+  },
+  {
+    "id": 150,
+    "subject": "综合能力",
+    "chapter": "专业外语",
+    "type": "single",
+    "q": "\"bit error rate\" 的中文意思是？",
+    "options": [
+      "比特率",
+      "误码率",
+      "波特率",
+      "信噪比"
+    ],
+    "answer": 1,
+    "explain": "bit error rate (BER) 译为误码率，是指在一定时间内，传输中发生差错的比特数与总传输比特数之比。"
+  },
+  {
+    "id": 151,
+    "subject": "综合能力",
+    "chapter": "专业外语",
+    "type": "single",
+    "q": "\"throughput\" 是指？",
+    "options": [
+      "吞吐量",
+      "吞吐量",
+      "延迟",
+      "抖动"
+    ],
+    "answer": 0,
+    "explain": "throughput 译为吞吐量，是指单位时间内通过某个网络、接口或系统的数据量。"
+  },
+  {
+    "id": 152,
+    "subject": "综合能力",
+    "chapter": "专业外语",
+    "type": "judge",
+    "q": "\"LTE\" 是 Long Term Evolution 的缩写。",
+    "options": [],
+    "answer": true,
+    "explain": "LTE(Long Term Evolution)即长期演进，是3GPP组织制定的第四代移动通信技术标准。"
+  },
+  {
+    "id": 153,
+    "subject": "综合能力",
+    "chapter": "通信职业道德",
+    "type": "single",
+    "q": "通信科技人员职业道德的基本原则是？",
+    "options": [
+      "社会主义集体主义",
+      "个人主义",
+      "自由主义",
+      "功利主义"
+    ],
+    "answer": 0,
+    "explain": "社会主义集体主义是通信科技人员职业道德的基本原则，强调集体利益高于个人利益。"
+  },
+  {
+    "id": 154,
+    "subject": "综合能力",
+    "chapter": "通信法规",
+    "type": "single",
+    "q": "《电信条例》属于？",
+    "options": [
+      "法律",
+      "行政法规",
+      "部门规章",
+      "地方性法规"
+    ],
+    "answer": 1,
+    "explain": "《中华人民共和国电信条例》是国务院制定的行政法规，在电信法律体系中占有重要地位。"
+  },
+  {
+    "id": 155,
+    "subject": "综合能力",
+    "chapter": "通信法规",
+    "type": "single",
+    "q": "电信业务经营者应当在迟延交纳电信费用的电信用户补足电信费用后的多少小时内，恢复暂停的电信服务？",
+    "options": [
+      "12小时",
+      "24小时",
+      "48小时",
+      "72小时"
+    ],
+    "answer": 2,
+    "explain": "根据《电信条例》，电信业务经营者应当在迟延交纳电信费用的电信用户补足电信费用后的48小时内，恢复暂停的电信服务。"
+  },
+  {
+    "id": 156,
+    "subject": "综合能力",
+    "chapter": "现代通信网",
+    "type": "single",
+    "q": "通信网的核心要素不包括？",
+    "options": [
+      "终端设备",
+      "传输链路",
+      "交换设备",
+      "电源设备"
+    ],
+    "answer": 3,
+    "explain": "通信网的核心要素包括终端设备、传输链路和交换设备，电源设备是辅助设施。"
+  },
+  {
+    "id": 157,
+    "subject": "综合能力",
+    "chapter": "交换技术",
+    "type": "single",
+    "q": "程控交换机的核心是？",
+    "options": [
+      "接线器",
+      "处理机",
+      "存储器",
+      "时钟"
+    ],
+    "answer": 1,
+    "explain": "程控交换机的核心是处理机(CPU)，通过执行程序来控制交换接续。"
+  },
+  {
+    "id": 158,
+    "subject": "综合能力",
+    "chapter": "光传输技术",
+    "type": "single",
+    "q": "EDFA的中文名称是？",
+    "options": [
+      "半导体光放大器",
+      "掺铒光纤放大器",
+      "拉曼放大器",
+      "光隔离器"
+    ],
+    "answer": 1,
+    "explain": "EDFA(Erbium Doped Fiber Amplifier)即掺铒光纤放大器，是目前应用最广泛的光放大器。"
+  },
+  {
+    "id": 159,
+    "subject": "综合能力",
+    "chapter": "移动通信",
+    "type": "single",
+    "q": "GSM系统采用的多址方式是？",
+    "options": [
+      "FDMA",
+      "TDMA",
+      "CDMA",
+      "OFDMA"
+    ],
+    "answer": 1,
+    "explain": "GSM采用TDMA(时分多址)方式，每个载波分为8个时隙，每个用户占用一个时隙。"
+  },
+  {
+    "id": 160,
+    "subject": "综合能力",
+    "chapter": "接入网",
+    "type": "single",
+    "q": "ADSL的最大特点是？",
+    "options": [
+      "上下行速率对称",
+      "上下行速率不对称",
+      "只能传输数据",
+      "传输距离无限"
+    ],
+    "answer": 1,
+    "explain": "ADSL(非对称数字用户线)的最大特点是上下行速率不对称，下行速率高，上行速率低，适合普通用户上网需求。"
+  },
+  {
+    "id": 161,
+    "subject": "传输有线",
+    "chapter": "光纤光缆",
+    "type": "single",
+    "q": "G.652光纤是什么类型的光纤？",
+    "options": [
+      "色散位移光纤",
+      "非色散位移光纤",
+      "截止波长位移光纤",
+      "非零色散位移光纤"
+    ],
+    "answer": 1,
+    "explain": "G.652是非色散位移光纤(标准单模光纤)，是目前应用最广泛的光纤，零色散点在1310nm窗口。"
+  },
+  {
+    "id": 162,
+    "subject": "传输有线",
+    "chapter": "光纤光缆",
+    "type": "single",
+    "q": "光纤的损耗主要来源不包括？",
+    "options": [
+      "吸收损耗",
+      "散射损耗",
+      "辐射损耗",
+      "放大损耗"
+    ],
+    "answer": 3,
+    "explain": "光纤损耗主要来源包括吸收损耗、散射损耗和辐射损耗，没有放大损耗这一说法。"
+  },
+  {
+    "id": 163,
+    "subject": "传输有线",
+    "chapter": "SDH/MSTP",
+    "type": "single",
+    "q": "SDH中STM-1的速率是多少？",
+    "options": [
+      "155.520Mbit/s",
+      "622.080Mbit/s",
+      "2488.320Mbit/s",
+      "9953.280Mbit/s"
+    ],
+    "answer": 0,
+    "explain": "STM-1的速率是155.520Mbit/s，STM-4是622.080Mbit/s，STM-16是2488.320Mbit/s，STM-64是9953.280Mbit/s。"
+  },
+  {
+    "id": 164,
+    "subject": "传输有线",
+    "chapter": "DWDM/OTN",
+    "type": "single",
+    "q": "DWDM系统的核心是？",
+    "options": [
+      "光放大器",
+      "波分复用器",
+      "光交换机",
+      "光接收器"
+    ],
+    "answer": 1,
+    "explain": "波分复用器是DWDM系统的核心，实现多个光波长的合波和分波。"
+  },
+  {
+    "id": 165,
+    "subject": "传输有线",
+    "chapter": "ASON",
+    "type": "single",
+    "q": "ASON的控制平面核心协议是？",
+    "options": [
+      "TCP/IP",
+      "GMPLS",
+      "BGP",
+      "OSPF"
+    ],
+    "answer": 1,
+    "explain": "GMPLS(通用多协议标签交换)是ASON控制平面的核心协议，实现智能光网络的自动连接控制。"
+  },
+  {
+    "id": 166,
+    "subject": "传输有线",
+    "chapter": "PTN/IPRAN",
+    "type": "single",
+    "q": "PTN是指？",
+    "options": [
+      "光传送网",
+      "分组传送网",
+      "综合业务数字网",
+      "同步数字体系"
+    ],
+    "answer": 1,
+    "explain": "PTN(Packet Transport Network)即分组传送网，是面向分组业务的新一代传送技术。"
+  },
+  {
+    "id": 167,
+    "subject": "传输有线",
+    "chapter": "有线接入网",
+    "type": "single",
+    "q": "GPON的下行速率可以达到？",
+    "options": [
+      "1.25Gbit/s",
+      "2.5Gbit/s",
+      "10Gbit/s",
+      "100Mbit/s"
+    ],
+    "answer": 1,
+    "explain": "GPON下行速率为2.5Gbit/s，上行速率为1.25Gbit/s，采用点对多点的无源光网络结构。"
+  },
+  {
+    "id": 168,
+    "subject": "综合能力",
+    "chapter": "通信安全",
+    "type": "single",
+    "q": "公钥密码体制中，用于加密的是？",
+    "options": [
+      "公钥",
+      "私钥",
+      "公钥和私钥",
+      "对称密钥"
+    ],
+    "answer": 0,
+    "explain": "公钥密码体制中，公钥用于加密，私钥用于解密；私钥用于签名，公钥用于验证签名。"
+  },
+  {
+    "id": 169,
+    "subject": "综合能力",
+    "chapter": "互联网",
+    "type": "single",
+    "q": "OSI七层模型中，最高层是？",
+    "options": [
+      "网络层",
+      "传输层",
+      "会话层",
+      "应用层"
+    ],
+    "answer": 3,
+    "explain": "OSI七层模型从下到上依次是：物理层、数据链路层、网络层、传输层、会话层、表示层、应用层，最高层是应用层。"
+  },
+  {
+    "id": 170,
+    "subject": "综合能力",
+    "chapter": "计算机基础",
+    "type": "single",
+    "q": "数据库系统的核心是？",
+    "options": [
+      "数据",
+      "数据库管理系统",
+      "用户",
+      "应用程序"
+    ],
+    "answer": 1,
+    "explain": "数据库管理系统(DBMS)是数据库系统的核心，负责数据的组织、存储、管理和维护。"
+  },
+  {
+    "id": 171,
+    "subject": "综合能力",
+    "chapter": "通信业务",
+    "type": "single",
+    "q": "VPN的中文名称是？",
+    "options": [
+      "广域网",
+      "局域网",
+      "虚拟专用网",
+      "城域网"
+    ],
+    "answer": 2,
+    "explain": "VPN(Virtual Private Network)即虚拟专用网，是在公用网络上建立专用网络的技术。"
+  },
+  {
+    "id": 172,
+    "subject": "综合能力",
+    "chapter": "项目管理",
+    "type": "single",
+    "q": "WBS是指？",
+    "options": [
+      "工作分解结构",
+      "工作时间安排",
+      "质量保证体系",
+      "风险管理计划"
+    ],
+    "answer": 0,
+    "explain": "WBS(Work Breakdown Structure)即工作分解结构，是将项目可交付成果和项目工作分解成较小的、更易于管理的组成部分的过程。"
+  },
+  {
+    "id": 173,
+    "subject": "传输有线",
+    "chapter": "光纤光缆",
+    "type": "single",
+    "q": "单模光纤与多模光纤相比，其特点是？",
+    "options": [
+      "传输距离近、容量大",
+      "传输距离远、容量大",
+      "传输距离近、容量小",
+      "传输距离远、容量小"
+    ],
+    "answer": 1,
+    "explain": "单模光纤芯径小，只传输一种模式，色散小，传输距离远、容量大，适合长距离大容量传输。"
+  },
+  {
+    "id": 174,
+    "subject": "传输有线",
+    "chapter": "SDH/MSTP",
+    "type": "single",
+    "q": "SDH帧结构中，段开销分为？",
+    "options": [
+      "再生段开销和复用段开销",
+      "高阶开销和低阶开销",
+      "通道开销和段开销",
+      "管理单元和支路单元"
+    ],
+    "answer": 0,
+    "explain": "SDH帧结构中，段开销分为再生段开销(RSOH)和复用段开销(MSOH)，分别用于再生段和复用段的监控管理。"
+  },
+  {
+    "id": 175,
+    "subject": "传输有线",
+    "chapter": "DWDM/OTN",
+    "type": "single",
+    "q": "OTN的中文名称是？",
+    "options": [
+      "光传送网",
+      "光传输网",
+      "光分插复用",
+      "光交叉连接"
+    ],
+    "answer": 0,
+    "explain": "OTN(Optical Transport Network)即光传送网，是以波分复用技术为基础、在光层组织网络的传送网。"
+  },
+  {
+    "id": 176,
+    "subject": "传输有线",
+    "chapter": "ASON",
+    "type": "single",
+    "q": "ASON的三个平面不包括？",
+    "options": [
+      "传输平面",
+      "控制平面",
+      "管理平面",
+      "数据平面"
+    ],
+    "answer": 3,
+    "explain": "ASON由三个平面组成：传输平面、控制平面和管理平面，没有数据平面。"
+  },
+  {
+    "id": 177,
+    "subject": "传输有线",
+    "chapter": "PTN/IPRAN",
+    "type": "single",
+    "q": "IPRAN是指？",
+    "options": [
+      "IP无线接入网",
+      "IP承载网",
+      "IP化无线接入网",
+      "IP路由网"
+    ],
+    "answer": 2,
+    "explain": "IPRAN(IP Radio Access Network)即IP化无线接入网，是基于IP/MPLS技术的移动回传承载方案。"
+  },
+  {
+    "id": 178,
+    "subject": "传输有线",
+    "chapter": "有线接入网",
+    "type": "single",
+    "q": "EPON采用的技术是？",
+    "options": [
+      "ATM技术",
+      "以太网技术",
+      "SDH技术",
+      "PDH技术"
+    ],
+    "answer": 1,
+    "explain": "EPON(Ethernet Passive Optical Network)即以太网无源光网络，采用以太网技术，是PON技术的一种。"
+  },
+  {
+    "id": 179,
+    "subject": "综合能力",
+    "chapter": "通信安全",
+    "type": "judge",
+    "q": "防火墙可以防止内部网络的攻击。",
+    "options": [],
+    "answer": false,
+    "explain": "防火墙主要用于防止外部网络对内部网络的攻击，对来自内部网络的攻击防护能力有限。"
+  },
+  {
+    "id": 180,
+    "subject": "综合能力",
+    "chapter": "专业外语",
+    "type": "single",
+    "q": "\"Quality of Service\" 的中文意思是？",
+    "options": [
+      "服务质量",
+      "质量控制",
+      "服务等级",
+      "质量保证"
+    ],
+    "answer": 0,
+    "explain": "Quality of Service (QoS) 译为服务质量，是指网络在传输数据流时所承诺的服务水平。"
   }
 ];
 
@@ -5536,6 +6464,9 @@ function showResults() {
 
 function backToQuizHome() {
   document.getElementById('quizResults').classList.remove('show');
+  document.getElementById('quizPlayer').classList.remove('show');
+  document.getElementById('quizChapterPage').style.display = 'none';
+  document.getElementById('quizChapterPage').classList.remove('active');
   document.getElementById('page-quiz').classList.add('active');
   // Update bottom nav
   var tabs = document.querySelectorAll('.tab-item');
@@ -5635,9 +6566,96 @@ renderQuestion = function() {
   }
 }
 
+// ===== Chapter Practice Functions =====
+var currentChapterSubject = '综合能力';
+
+function showChapterPage() {
+  document.getElementById('page-quiz').classList.remove('active');
+  document.getElementById('quizChapterPage').style.display = 'block';
+  document.getElementById('quizChapterPage').classList.add('active');
+  currentChapterSubject = quizState.subject || '综合能力';
+  // Update subject tabs
+  var tabs = document.querySelectorAll('#chapterSubjectTabs .quiz-subject-tab');
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+  if (currentChapterSubject === '综合能力' && tabs[0]) tabs[0].classList.add('active');
+  if (currentChapterSubject === '传输有线' && tabs[1]) tabs[1].classList.add('active');
+  renderChapterList(currentChapterSubject);
+}
+
+function switchChapterSubject(subject) {
+  currentChapterSubject = subject;
+  var tabs = document.querySelectorAll('#chapterSubjectTabs .quiz-subject-tab');
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+  if (subject === '综合能力' && tabs[0]) tabs[0].classList.add('active');
+  if (subject === '传输有线' && tabs[1]) tabs[1].classList.add('active');
+  renderChapterList(subject);
+}
+
+function renderChapterList(subject) {
+  var qs = QUESTIONS.filter(function(q){ return q.subject === subject; });
+  var chapters = {};
+  for (var i = 0; i < qs.length; i++) {
+    var ch = qs[i].chapter;
+    if (!chapters[ch]) chapters[ch] = { total: 0, done: 0, wrong: 0 };
+    chapters[ch].total++;
+  }
+  
+  var doneIds = quizStoreGet('quizDoneIds', []);
+  var wrongIds = quizStoreGet('quizWrongIds', []);
+  for (var j = 0; j < doneIds.length; j++) {
+    var q = QUESTIONS.find(function(x){ return x.id === doneIds[j]; });
+    if (q && q.subject === subject && chapters[q.chapter]) chapters[q.chapter].done++;
+  }
+  for (var k = 0; k < wrongIds.length; k++) {
+    var q2 = QUESTIONS.find(function(x){ return x.id === wrongIds[k]; });
+    if (q2 && q2.subject === subject && chapters[q2.chapter]) chapters[q2.chapter].wrong++;
+  }
+  
+  var html = '';
+  var chNames = Object.keys(chapters);
+  for (var m = 0; m < chNames.length; m++) {
+    var chName = chNames[m];
+    var c = chapters[chName];
+    var pct = c.total > 0 ? Math.round(c.done / c.total * 100) : 0;
+    html += '<div class="quiz-chapter-item" onclick="startChapterQuiz(\'' + chName.replace(/'/g, "\\'") + '\')">';
+    html += '<div class="quiz-chapter-icon">📖</div>';
+    html += '<div class="quiz-chapter-info">';
+    html += '<div class="quiz-chapter-name">' + chName + '</div>';
+    html += '<div class="quiz-chapter-progress"><div class="quiz-chapter-progress-fill" style="width:' + pct + '%"></div></div>';
+    html += '<div class="quiz-chapter-stats">';
+    html += '<span style="color:var(--gray-500);font-size:11px;">共' + c.total + '题</span>';
+    html += '<span style="color:var(--success);font-size:11px;">已做' + c.done + '题</span>';
+    html += '<span style="color:var(--danger);font-size:11px;">错题' + c.wrong + '题</span>';
+    html += '</div></div></div>';
+    html += '<div class="quiz-chapter-arrow">›</div>';
+    html += '</div>';
+  }
+  
+  document.getElementById('chapterList').innerHTML = html;
+}
+
+function startChapterQuiz(chapter) {
+  var qs = QUESTIONS.filter(function(q){ return q.chapter === chapter; });
+  if (qs.length === 0) {
+    alert('该章节暂无题目');
+    return;
+  }
+  quizState.mode = 'sequential';
+  quizState.subject = currentChapterSubject;
+  document.getElementById('quizChapterPage').style.display = 'none';
+  document.getElementById('quizChapterPage').classList.remove('active');
+  startQuizWithQuestions(qs);
+  // Update title
+  var title = document.getElementById('quizPlayerTitle');
+  if (title) title.textContent = chapter;
+}
+
 window.exitQuiz = exitQuiz;
 window.switchQuizSubject = switchQuizSubject;
 window.clearAllStats = clearAllStats;
+window.showChapterPage = showChapterPage;
+window.switchChapterSubject = switchChapterSubject;
+window.startChapterQuiz = startChapterQuiz;
 
 
   if (document.readyState === 'loading') {
