@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#1e3a5f">
-<title>通信中级考试 · 冲刺笔记 V8.2</title>
+<title>通信中级考试 · 冲刺笔记 V9</title>
 <style>
 /* ===== Reset & Base ===== */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -1358,118 +1358,208 @@ body.font-xl h2 { font-size: 28px; }
 }
 
 
-/* ===== V8: Quiz System ===== */
-#page-quiz { padding-top: 8px !important; }
-.quiz-home {
-  padding: 8px 0 80px;
-}
-.quiz-hero {
-  background: linear-gradient(135deg, #1e40af, #3b82f6);
-  border-radius: 20px;
-  padding: 24px 20px;
-  color: white;
-  margin-bottom: 16px;
-  text-align: center;
-}
-.quiz-hero h2 { font-size: 22px; margin-bottom: 6px; }
-.quiz-hero p { font-size: 13px; opacity: 0.85; }
-.quiz-stats {
-  display: flex;
-  gap: 8px;
-  margin-top: 16px;
-}
-.quiz-stat {
-  flex: 1;
-  background: rgba(255,255,255,0.15);
-  border-radius: 12px;
-  padding: 10px 6px;
-  text-align: center;
-}
-.quiz-stat-num { font-size: 20px; font-weight: 700; }
-.quiz-stat-label { font-size: 10px; opacity: 0.8; margin-top: 2px; }
+/* ===== V8: Quiz System (考试宝风格) ===== */
+#page-quiz { padding: 0 !important; }
+.quiz-home { padding: 0 0 80px; }
 
-.quiz-section-title {
-  font-size: 15px;
+/* Subject Tabs */
+.quiz-subject-tabs {
+  display: flex;
+  background: white;
+  border-bottom: 1px solid #f1f5f9;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.quiz-subject-tab {
+  flex: 1;
+  padding: 12px 0;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #94a3b8;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.quiz-subject-tab.active {
+  color: #3b82f6;
+  border-bottom-color: #3b82f6;
+}
+
+/* Stats Bar */
+.quiz-stats-bar {
+  display: flex;
+  background: white;
+  padding: 12px 16px;
+  gap: 0;
+  border-bottom: 6px solid #f8fafc;
+}
+.quiz-stat-item {
+  flex: 1;
+  text-align: center;
+  position: relative;
+}
+.quiz-stat-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 4px; bottom: 4px;
+  width: 1px;
+  background: #f1f5f9;
+}
+.quiz-stat-num {
+  font-size: 22px;
   font-weight: 700;
   color: #1e293b;
-  margin: 16px 0 10px;
 }
-.quiz-cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 16px;
+.quiz-stat-num.blue { color: #3b82f6; }
+.quiz-stat-num.red { color: #ef4444; }
+.quiz-stat-num.green { color: #22c55e; }
+.quiz-stat-label {
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 2px;
 }
-.quiz-card {
-  background: white;
-  border-radius: 14px;
-  padding: 16px 12px;
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.15s;
-  border: 2px solid transparent;
-}
-.quiz-card:active { transform: scale(0.96); }
-.quiz-card.s1 { border-color: #dbeafe; }
-.quiz-card.s2 { border-color: #dcfce7; }
-.quiz-card-icon { font-size: 28px; margin-bottom: 8px; }
-.quiz-card-title { font-size: 14px; font-weight: 600; color: #1e293b; }
-.quiz-card-info { font-size: 11px; color: #64748b; margin-top: 4px; }
 
-.quiz-modes {
+/* Feature Grid */
+.quiz-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  padding: 16px 12px;
+  background: white;
+}
+.quiz-grid-item {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 16px;
-}
-.quiz-mode {
-  display: flex;
   align-items: center;
-  gap: 12px;
-  background: white;
-  border-radius: 14px;
-  padding: 14px 16px;
+  padding: 14px 8px;
   cursor: pointer;
   transition: transform 0.15s;
 }
-.quiz-mode:active { transform: scale(0.98); }
-.quiz-mode-icon {
-  width: 44px; height: 44px;
-  border-radius: 12px;
+.quiz-grid-item:active { transform: scale(0.93); }
+.quiz-grid-icon {
+  width: 48px; height: 48px;
+  border-radius: 14px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 22px; flex-shrink: 0;
+  font-size: 26px;
+  margin-bottom: 6px;
 }
-.quiz-mode-info { flex: 1; }
-.quiz-mode-title { font-size: 15px; font-weight: 600; color: #1e293b; }
-.quiz-mode-desc { font-size: 12px; color: #64748b; margin-top: 2px; }
-.quiz-mode-arrow { color: #cbd5e1; font-size: 18px; }
+.quiz-grid-label {
+  font-size: 12px;
+  color: #475569;
+  text-align: center;
+  font-weight: 500;
+}
+.quiz-grid-sub {
+  font-size: 10px;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+
+/* Featured Cards (顺序练习 + 模拟考试) */
+.quiz-featured {
+  display: flex;
+  gap: 10px;
+  padding: 0 12px 16px;
+  background: white;
+}
+.quiz-featured-card {
+  flex: 1;
+  border-radius: 16px;
+  padding: 16px;
+  cursor: pointer;
+  transition: transform 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+.quiz-featured-card:active { transform: scale(0.97); }
+.quiz-featured-card.green {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+.quiz-featured-card.blue {
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
+}
+.quiz-featured-icon { font-size: 32px; margin-bottom: 8px; }
+.quiz-featured-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+}
+.quiz-featured-sub {
+  font-size: 12px;
+  color: rgba(255,255,255,0.85);
+  margin-top: 4px;
+}
+.quiz-featured-badge {
+  position: absolute;
+  top: 8px; right: 8px;
+  background: rgba(255,255,255,0.25);
+  color: white;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+/* Quiz Player Header */
+.quiz-player-header {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  background: white;
+  border-bottom: 1px solid #f1f5f9;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+.quiz-back-btn {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border: none;
+  background: #f1f5f9;
+  border-radius: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  color: #475569;
+  flex-shrink: 0;
+}
+.quiz-player-title {
+  flex: 1;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e293b;
+}
+.quiz-player-counter {
+  font-size: 13px;
+  color: #94a3b8;
+  flex-shrink: 0;
+  min-width: 32px;
+  text-align: right;
+}
 
 /* Quiz Player */
 .quiz-player {
-  padding: 12px 16px 80px;
+  padding: 0 0 80px;
   display: none;
 }
 .quiz-player.show { display: block; }
+
 .quiz-progress-bar {
-  height: 4px;
-  background: #e2e8f0;
-  border-radius: 2px;
-  margin-bottom: 16px;
+  height: 3px;
+  background: #f1f5f9;
   overflow: hidden;
 }
 .quiz-progress-fill {
   height: 100%;
   background: #3b82f6;
-  border-radius: 2px;
   transition: width 0.3s;
 }
-.quiz-progress-text {
-  font-size: 12px;
-  color: #64748b;
-  margin-bottom: 16px;
-  display: flex;
-  justify-content: space-between;
+
+.quiz-question-area {
+  padding: 16px;
 }
+
 .quiz-question-card {
   background: white;
   border-radius: 16px;
@@ -1487,7 +1577,7 @@ body.font-xl h2 { font-size: 28px; }
 .quiz-q-tag.single { background: #dbeafe; color: #1e40af; }
 .quiz-q-tag.judge { background: #fef3c7; color: #92400e; }
 .quiz-q-text {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
   color: #1e293b;
   line-height: 1.6;
@@ -1524,7 +1614,7 @@ body.font-xl h2 { font-size: 28px; }
 }
 .quiz-option.correct .quiz-option-letter { background: #22c55e; color: white; }
 .quiz-option.wrong .quiz-option-letter { background: #ef4444; color: white; }
-.quiz-option-text { font-size: 14px; color: #1e293b; flex: 1; }
+.quiz-option-text { font-size: 15px; color: #1e293b; flex: 1; }
 
 .quiz-explain {
   display: none;
@@ -1561,12 +1651,12 @@ body.font-xl h2 { font-size: 28px; }
 /* Quiz Results */
 .quiz-results {
   display: none;
-  padding: 20px 16px;
+  padding: 40px 16px 80px;
   text-align: center;
 }
 .quiz-results.show { display: block; }
 .quiz-result-score {
-  font-size: 48px;
+  font-size: 56px;
   font-weight: 800;
   color: #3b82f6;
   margin: 10px 0;
@@ -1581,9 +1671,9 @@ body.font-xl h2 { font-size: 28px; }
   flex: 1;
   background: white;
   border-radius: 12px;
-  padding: 12px 8px;
+  padding: 14px 8px;
 }
-.quiz-result-stat-num { font-size: 22px; font-weight: 700; }
+.quiz-result-stat-num { font-size: 24px; font-weight: 700; }
 .quiz-result-stat-num.ok { color: #22c55e; }
 .quiz-result-stat-num.bad { color: #ef4444; }
 .quiz-result-stat-label { font-size: 11px; color: #64748b; }
@@ -1594,37 +1684,15 @@ body.font-xl h2 { font-size: 28px; }
 }
 .quiz-result-btn {
   flex: 1;
-  padding: 12px;
+  padding: 14px;
   border-radius: 12px;
   border: none;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
 }
 .quiz-result-btn.primary { background: #3b82f6; color: white; }
 .quiz-result-btn.secondary { background: #f1f5f9; color: #475569; }
-
-/* Wrong notebook */
-.wrong-list {
-  padding: 12px 16px 80px;
-  display: none;
-}
-.wrong-list.show { display: block; }
-.wrong-empty {
-  text-align: center;
-  padding: 60px 20px;
-  color: #94a3b8;
-}
-.wrong-empty-icon { font-size: 48px; margin-bottom: 12px; }
-.wrong-item {
-  background: white;
-  border-radius: 14px;
-  padding: 16px;
-  margin-bottom: 10px;
-}
-.wrong-item-q { font-size: 14px; font-weight: 600; color: #1e293b; margin-bottom: 8px; }
-.wrong-item-a { font-size: 13px; color: #22c55e; }
-.wrong-item-e { font-size: 12px; color: #64748b; margin-top: 6px; }
 
 </style>
 </head>
@@ -2495,87 +2563,96 @@ body.font-xl h2 { font-size: 28px; }
 <!-- ========== QUIZ HOME PAGE ========== -->
 <div id="page-quiz" class="content">
   <div class="quiz-home">
-    <div class="quiz-hero">
-      <h2>📝 刷题练习</h2>
-      <p>近5年真题 · 模拟考试 · 错题本</p>
-      <div class="quiz-stats">
-        <div class="quiz-stat">
-          <div class="quiz-stat-num" id="quizTotal">0</div>
-          <div class="quiz-stat-label">总题数</div>
-        </div>
-        <div class="quiz-stat">
-          <div class="quiz-stat-num" id="quizDone">0</div>
-          <div class="quiz-stat-label">已做</div>
-        </div>
-        <div class="quiz-stat">
-          <div class="quiz-stat-num" id="quizCorrect">0%</div>
-          <div class="quiz-stat-label">正确率</div>
-        </div>
-        <div class="quiz-stat">
-          <div class="quiz-stat-num" id="quizWrong">0</div>
-          <div class="quiz-stat-label">错题</div>
-        </div>
+    <!-- Subject Tabs -->
+    <div class="quiz-subject-tabs">
+      <div class="quiz-subject-tab active" onclick="switchQuizSubject('all')" id="qtab-all">全部</div>
+      <div class="quiz-subject-tab" onclick="switchQuizSubject('综合能力')" id="qtab-s1">综合能力</div>
+      <div class="quiz-subject-tab" onclick="switchQuizSubject('传输有线')" id="qtab-s2">传输有线</div>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="quiz-stats-bar">
+      <div class="quiz-stat-item" onclick="startQuizMode('wrong')">
+        <div class="quiz-stat-num red" id="qsWrong">0</div>
+        <div class="quiz-stat-label">错题</div>
+      </div>
+      <div class="quiz-stat-item" onclick="startQuizMode('sequential')">
+        <div class="quiz-stat-num blue" id="qsDone">0</div>
+        <div class="quiz-stat-label">已做</div>
+      </div>
+      <div class="quiz-stat-item">
+        <div class="quiz-stat-num green" id="qsAcc">0%</div>
+        <div class="quiz-stat-label">正确率</div>
+      </div>
+      <div class="quiz-stat-item">
+        <div class="quiz-stat-num" id="qsTotal">0</div>
+        <div class="quiz-stat-label">总题数</div>
       </div>
     </div>
 
-    <div class="quiz-section-title">选择科目</div>
-    <div class="quiz-cards">
-      <div class="quiz-card s1" onclick="startQuiz('综合能力')">
-        <div class="quiz-card-icon">📘</div>
-        <div class="quiz-card-title">综合能力</div>
-        <div class="quiz-card-info" id="quizCountS1">0题</div>
+    <!-- Featured Cards -->
+    <div class="quiz-featured">
+      <div class="quiz-featured-card green" onclick="startQuizMode('sequential')">
+        <div class="quiz-featured-badge" id="qfSeqBadge">0/0</div>
+        <div class="quiz-featured-icon">📋</div>
+        <div class="quiz-featured-title">顺序练习</div>
+        <div class="quiz-featured-sub">逐题练习，覆盖全部考点</div>
       </div>
-      <div class="quiz-card s2" onclick="startQuiz('传输有线')">
-        <div class="quiz-card-icon">📗</div>
-        <div class="quiz-card-title">传输有线</div>
-        <div class="quiz-card-info" id="quizCountS2">0题</div>
-      </div>
-    </div>
-
-    <div class="quiz-section-title">练习模式</div>
-    <div class="quiz-modes">
-      <div class="quiz-mode" onclick="startQuizMode('sequential')">
-        <div class="quiz-mode-icon" style="background:#dbeafe">📋</div>
-        <div class="quiz-mode-info">
-          <div class="quiz-mode-title">顺序练习</div>
-          <div class="quiz-mode-desc">按顺序做题，逐步覆盖全部考点</div>
-        </div>
-        <div class="quiz-mode-arrow">→</div>
-      </div>
-      <div class="quiz-mode" onclick="startQuizMode('random')">
-        <div class="quiz-mode-icon" style="background:#fef3c7">🎲</div>
-        <div class="quiz-mode-info">
-          <div class="quiz-mode-title">随机练习</div>
-          <div class="quiz-mode-desc">随机出题，检验综合掌握程度</div>
-        </div>
-        <div class="quiz-mode-arrow">→</div>
-      </div>
-      <div class="quiz-mode" onclick="startQuizMode('wrong')">
-        <div class="quiz-mode-icon" style="background:#fee2e2">❌</div>
-        <div class="quiz-mode-info">
-          <div class="quiz-mode-title">错题复习</div>
-          <div class="quiz-mode-desc">只做做错的题，针对性提升</div>
-        </div>
-        <div class="quiz-mode-arrow">→</div>
+      <div class="quiz-featured-card blue" onclick="startQuizMode('random')">
+        <div class="quiz-featured-icon">🎯</div>
+        <div class="quiz-featured-title">随机抽题</div>
+        <div class="quiz-featured-sub">随机出题，检验水平</div>
       </div>
     </div>
 
-    <div class="quiz-section-title">错题本</div>
-    <div id="wrongNotebook"></div>
+    <!-- Feature Grid -->
+    <div class="quiz-grid">
+      <div class="quiz-grid-item" onclick="startQuizMode('wrong')">
+        <div class="quiz-grid-icon" style="background:#fef2f2">❌</div>
+        <div class="quiz-grid-label">错题本</div>
+        <div class="quiz-grid-sub" id="qgWrong">0题</div>
+      </div>
+      <div class="quiz-grid-item" onclick="startQuizSubject('综合能力')">
+        <div class="quiz-grid-icon" style="background:#dbeafe">📘</div>
+        <div class="quiz-grid-label">综合能力</div>
+        <div class="quiz-grid-sub" id="qgS1">0题</div>
+      </div>
+      <div class="quiz-grid-item" onclick="startQuizSubject('传输有线')">
+        <div class="quiz-grid-icon" style="background:#dcfce7">📗</div>
+        <div class="quiz-grid-label">传输有线</div>
+        <div class="quiz-grid-sub" id="qgS2">0题</div>
+      </div>
+      <div class="quiz-grid-item" onclick="startQuizMode('random')">
+        <div class="quiz-grid-icon" style="background:#fef3c7">🎲</div>
+        <div class="quiz-grid-label">随机练习</div>
+        <div class="quiz-grid-sub">随机出题</div>
+      </div>
+      <div class="quiz-grid-item" onclick="startQuizMode('sequential')">
+        <div class="quiz-grid-icon" style="background:#e0e7ff">📝</div>
+        <div class="quiz-grid-label">全部练习</div>
+        <div class="quiz-grid-sub" id="qgTotal">0题</div>
+      </div>
+      <div class="quiz-grid-item" onclick="clearAllStats()">
+        <div class="quiz-grid-icon" style="background:#f1f5f9">🔄</div>
+        <div class="quiz-grid-label">重置进度</div>
+        <div class="quiz-grid-sub">清空记录</div>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- ========== QUIZ PLAYER ========== -->
 <div id="quizPlayer" class="quiz-player">
-  <div class="quiz-progress-text">
-    <span id="quizProgText">第 1 题 / 共 10 题</span>
-    <span id="quizScoreText">得分: 0</span>
+  <div class="quiz-player-header">
+    <button class="quiz-back-btn" onclick="exitQuiz()">←</button>
+    <div class="quiz-player-title" id="quizPlayerTitle">顺序练习</div>
+    <div class="quiz-player-counter" id="quizPlayerCounter">1/10</div>
   </div>
   <div class="quiz-progress-bar">
     <div class="quiz-progress-fill" id="quizProgFill" style="width:10%"></div>
   </div>
-  <div id="quizQuestionArea"></div>
-  <div class="quiz-nav">
+  <div class="quiz-question-area" id="quizQuestionArea"></div>
+  <div class="quiz-nav" style="padding:0 16px;">
     <button class="quiz-nav-btn prev" id="quizPrevBtn" onclick="prevQuestion()">上一题</button>
     <button class="quiz-nav-btn next" id="quizNextBtn" onclick="nextQuestion()">下一题</button>
   </div>
@@ -2583,8 +2660,8 @@ body.font-xl h2 { font-size: 28px; }
 
 <!-- ========== QUIZ RESULTS ========== -->
 <div id="quizResults" class="quiz-results">
-  <div style="font-size:48px;margin-bottom:8px;" id="quizResultEmoji">🎉</div>
-  <div style="font-size:18px;font-weight:700;color:#1e293b;">练习完成!</div>
+  <div style="font-size:56px;margin-bottom:8px;" id="quizResultEmoji">🎉</div>
+  <div style="font-size:20px;font-weight:700;color:#1e293b;">练习完成!</div>
   <div class="quiz-result-score" id="quizResultScore">0</div>
   <div class="quiz-result-label" id="quizResultLabel">共0题</div>
   <div class="quiz-result-stats">
@@ -2602,31 +2679,10 @@ body.font-xl h2 { font-size: 28px; }
     </div>
   </div>
   <div class="quiz-result-actions">
-    <button class="quiz-result-btn secondary" onclick="backToQuizHome()">返回</button>
+    <button class="quiz-result-btn secondary" onclick="exitQuiz()">返回</button>
     <button class="quiz-result-btn primary" onclick="retryQuiz()">再做一次</button>
   </div>
-</div>
-
-
-<!-- ===== Bottom Tab Bar ===== -->
-<div class="tab-bar">
-  <button class="tab-item active" onclick="switchTab('home')">
-    <span class="tab-icon">🏠</span>
-    <span>首页</span>
-  </button>
-  <button class="tab-item" onclick="switchTab('subject1')">
-    <span class="tab-icon">📘</span>
-    <span>综合能力</span>
-  </button>
-  <button class="tab-item" onclick="switchTab('subject2')">
-    <span class="tab-icon">📗</span>
-    <span>传输有线</span>
-  </button>
-  <button class="tab-item" onclick="switchTab('quiz')">
-    <span class="tab-icon">📝</span>
-    <span>刷题</span>
-  </button>
-</div>
+</div></div>
 
 <!-- Back to top button -->
 <button class="back-top" id="backTop" onclick="scrollToTop()">↑</button>
@@ -3943,6 +3999,86 @@ window.prevQuestion = prevQuestion;
 window.backToQuizHome = backToQuizHome;
 window.retryQuiz = retryQuiz;
 window.initQuiz = initQuiz;
+
+function exitQuiz() {
+  document.getElementById('quizPlayer').classList.remove('show');
+  document.getElementById('quizResults').classList.remove('show');
+  document.getElementById('page-quiz').classList.add('active');
+  var tabs = document.querySelectorAll('.tab-item');
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+  if (tabs[3]) tabs[3].classList.add('active');
+  initQuiz();
+}
+
+function switchQuizSubject(subject) {
+  quizState.subject = subject;
+  var tabs = document.querySelectorAll('.quiz-subject-tab');
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+  if (subject === 'all' && tabs[0]) tabs[0].classList.add('active');
+  else if (subject === '综合能力' && tabs[1]) tabs[1].classList.add('active');
+  else if (subject === '传输有线' && tabs[2]) tabs[2].classList.add('active');
+  
+  if (subject === 'all') {
+    startQuizMode('sequential');
+  } else {
+    startQuiz(subject);
+  }
+}
+
+function clearAllStats() {
+  if (!confirm('确定清空所有做题记录和错题？')) return;
+  localStorage.removeItem('quizStats');
+  localStorage.removeItem('quizDoneIds');
+  localStorage.removeItem('quizWrongIds');
+  initQuiz();
+  alert('已清空所有记录');
+}
+
+// Override initQuiz to update new UI elements
+var origInitQuiz = initQuiz;
+initQuiz = function() {
+  origInitQuiz();
+  var qs = QUESTIONS;
+  var s1 = qs.filter(function(q){return q.subject==='综合能力'}).length;
+  var s2 = qs.filter(function(q){return q.subject==='传输有线'}).length;
+  
+  var wrongIds = quizStoreGet('quizWrongIds', []);
+  var doneIds = quizStoreGet('quizDoneIds', []);
+  var stats = quizStoreGet('quizStats', {done:0, correct:0, total:0});
+  var acc = stats.total > 0 ? Math.round(stats.correct / stats.total * 100) : 0;
+  
+  var el = function(id) { return document.getElementById(id); };
+  
+  if (el('qsTotal')) el('qsTotal').textContent = qs.length;
+  if (el('qsDone')) el('qsDone').textContent = doneIds.length;
+  if (el('qsWrong')) el('qsWrong').textContent = wrongIds.length;
+  if (el('qsAcc')) el('qsAcc').textContent = acc + '%';
+  
+  if (el('qgTotal')) el('qgTotal').textContent = qs.length + '题';
+  if (el('qgS1')) el('qgS1').textContent = s1 + '题';
+  if (el('qgS2')) el('qgS2').textContent = s2 + '题';
+  if (el('qgWrong')) el('qgWrong').textContent = wrongIds.length + '题';
+  if (el('qfSeqBadge')) el('qfSeqBadge').textContent = doneIds.length + '/' + qs.length;
+}
+
+// Override renderQuestion to update new header
+var origRenderQuestion = renderQuestion;
+renderQuestion = function() {
+  origRenderQuestion();
+  var total = quizState.questions.length;
+  var cur = quizState.currentIdx + 1;
+  var counter = document.getElementById('quizPlayerCounter');
+  if (counter) counter.textContent = cur + '/' + total;
+  var title = document.getElementById('quizPlayerTitle');
+  if (title) {
+    var titles = {sequential: '顺序练习', random: '随机抽题', wrong: '错题复习'};
+    title.textContent = titles[quizState.mode] || '练习';
+  }
+}
+
+window.exitQuiz = exitQuiz;
+window.switchQuizSubject = switchQuizSubject;
+window.clearAllStats = clearAllStats;
 
 
   if (document.readyState === 'loading') {
