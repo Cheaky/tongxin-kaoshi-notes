@@ -7623,17 +7623,18 @@ function showMockExamPlayer() {
   
   player.classList.add('show');
   player.style.display = 'flex';
+  player.style.flexDirection = 'column';
   
-  var header = '<div class="quiz-player-header" style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;padding:12px 16px;border-radius:12px;margin-bottom:12px;display:flex;align-items:center;gap:8px;">';
+  var header = '<div style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;padding:12px 16px;border-radius:12px;margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-shrink:0;">';
   header += '<button onclick="submitMockExam()" style="background:rgba(255,255,255,0.2);color:#fff;border:none;padding:6px 12px;border-radius:6px;font-size:13px;cursor:pointer;font-weight:600;">交卷</button>';
   header += '<div style="flex:1;text-align:center;font-size:15px;font-weight:600;">模拟考试</div>';
-  header += '<div id="mockTimer" style="font-size:14px;font-weight:700;tabular-nums:1;">60:00</div>';
+  header += '<div id="mockTimer" style="font-size:14px;font-weight:700;min-width:50px;text-align:right;">60:00</div>';
   header += '</div>';
   
-  var body = '<div id="mockExamContent"></div>';
+  var body = '<div id="mockExamContent" style="flex:1;overflow-y:auto;"></div>';
   
   // Question number grid
-  var gridHtml = '<div id="mockQuestionGrid" style="position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e5e7eb;padding:8px 12px;z-index:200;max-height:120px;overflow-y:auto;"></div>';
+  var gridHtml = '<div id="mockQuestionGrid" style="background:#fff;border-top:1px solid #e5e7eb;padding:8px 12px;z-index:200;max-height:120px;overflow-y:auto;flex-shrink:0;"></div>';
   
   player.innerHTML = header + body + gridHtml;
   
@@ -7749,7 +7750,8 @@ function mockPrev() {
     mockExamState.currentIdx--;
     renderMockQuestion();
     renderMockQuestionGrid();
-    document.getElementById('quizPlayer').scrollTop = 0;
+    var content = document.getElementById('mockExamContent');
+    if (content) content.scrollTop = 0;
   }
 }
 
@@ -7758,7 +7760,8 @@ function mockNext() {
     mockExamState.currentIdx++;
     renderMockQuestion();
     renderMockQuestionGrid();
-    document.getElementById('quizPlayer').scrollTop = 0;
+    var content = document.getElementById('mockExamContent');
+    if (content) content.scrollTop = 0;
   } else {
     submitMockExam();
   }
@@ -7784,7 +7787,8 @@ function mockJumpTo(idx) {
   mockExamState.currentIdx = idx;
   renderMockQuestion();
   renderMockQuestionGrid();
-  document.getElementById('quizPlayer').scrollTop = 0;
+  var content = document.getElementById('mockExamContent');
+  if (content) content.scrollTop = 0;
 }
 
 function submitMockExam(isAuto) {
@@ -7868,7 +7872,9 @@ function submitMockExam(isAuto) {
   
   // Show results
   var player = document.getElementById('quizPlayer');
-  player.innerHTML = '<div style="padding:20px;text-align:center;">' +
+  player.style.display = 'flex';
+  player.style.flexDirection = 'column';
+  player.innerHTML = '<div style="padding:20px;text-align:center;overflow-y:auto;flex:1;">' +
     '<div style="font-size:48px;margin-bottom:12px;">' + (passed ? '🎉' : '💪') + '</div>' +
     '<div style="font-size:28px;font-weight:700;color:' + (passed ? '#10b981' : '#ef4444') + ';margin-bottom:4px;">' + score + '分</div>' +
     '<div style="font-size:14px;color:#94a3b8;margin-bottom:16px;">' + (passed ? '恭喜通过！' : '继续努力，下次一定能过！') + '</div>' +
@@ -7888,11 +7894,15 @@ function submitMockExam(isAuto) {
     '<button onclick="backToQuizHome()" style="width:100%;padding:12px;border-radius:8px;border:none;background:#f59e0b;color:#fff;font-size:14px;cursor:pointer;font-weight:600;">返回首页</button>' +
     '</div>';
   player.scrollTop = 0;
+  var content = document.getElementById('mockExamContent');
+  if (content) content.scrollTop = 0;
 }
 
 function reviewMockExam() {
   var player = document.getElementById('quizPlayer');
-  var html = '<div style="padding:0 0 80px;">';
+  player.style.display = 'flex';
+  player.style.flexDirection = 'column';
+  var html = '<div style="overflow-y:auto;flex:1;padding-bottom:80px;">';
   html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;padding:12px;background:#fff7ed;border-radius:12px;">';
   html += '<button onclick="backToQuizHome()" style="background:#fff;border:1px solid #e5e7eb;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;">←</button>';
   html += '<div style="flex:1;text-align:center;font-size:16px;font-weight:600;color:#d97706;">考试错题解析</div>';
@@ -7967,7 +7977,7 @@ function reviewMockExam() {
   }
   
   html += '</div>';
-  html += '<button onclick="backToQuizHome()" style="position:fixed;bottom:16px;left:16px;right:16px;padding:14px;border-radius:12px;border:none;background:#f59e0b;color:#fff;font-size:15px;cursor:pointer;font-weight:600;z-index:300;box-shadow:0 4px 12px rgba(245,158,11,0.4);">返回首页</button>';
+  html += '<button onclick="backToQuizHome()" style="padding:14px;border-radius:12px;border:none;background:#f59e0b;color:#fff;font-size:15px;cursor:pointer;font-weight:600;flex-shrink:0;box-shadow:0 -2px 8px rgba(245,158,11,0.2);">返回首页</button>';
   
   player.innerHTML = html;
   player.scrollTop = 0;
