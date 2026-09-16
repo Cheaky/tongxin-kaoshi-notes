@@ -7806,16 +7806,20 @@ function submitMockExam(isAuto) {
   var answered = Object.keys(mockExamState.answers).length;
   var unanswered = total - answered;
   
+  // If not auto-submit and has unanswered questions, show confirmation
   if (!isAuto && unanswered > 0) {
-    if (!confirm('还有 ' + unanswered + ' 题未作答，确定交卷吗？')) {
+    var confirmed = false;
+    try { confirmed = confirm('还有 ' + unanswered + ' 题未作答，确定交卷吗？'); } catch(e) { confirmed = true; }
+    if (!confirmed) {
+      // Resume timer
       mockExamState.timerInterval = setInterval(function() {
         var elapsed = Math.floor((Date.now() - mockExamState.startTime) / 1000);
         var remaining = 3600 - elapsed;
         if (remaining <= 0) { submitMockExam(true); return; }
-        var min = Math.floor(remaining / 60);
-        var sec = remaining % 60;
+        var min2 = Math.floor(remaining / 60);
+        var sec2 = remaining % 60;
         var t = document.getElementById('mockTimer');
-        if (t) t.textContent = (min<10?'0':'') + min + ':' + (sec<10?'0':'') + sec;
+        if (t) t.textContent = (min2<10?'0':'') + min2 + ':' + (sec2<10?'0':'') + sec2;
       }, 1000);
       return;
     }
@@ -7908,32 +7912,20 @@ function submitMockExam(isAuto) {
     '</div>' +
     '<div style="font-size:12px;color:#94a3b8;margin-top:4px;">正确率 ' + pct + '%</div>' +
     '</div>' +
-    '<button id="mockReviewBtn" style="width:100%;padding:14px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;color:#475569;font-size:15px;margin-bottom:10px;font-weight:600;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">查看错题解析</button>' +
-    '<button id="mockBackHomeBtn" style="width:100%;padding:14px;border-radius:10px;border:none;background:#f59e0b;color:#fff;font-size:15px;font-weight:600;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">返回首页</button>' +
+    '<button onclick="window._doReviewMock()" ontouchend="window._doReviewMock();return false;" style="width:100%;padding:14px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;color:#475569;font-size:15px;margin-bottom:10px;font-weight:600;-webkit-tap-highlight-color:transparent;touch-action:manipulation;cursor:pointer;">查看错题解析</button>' +
+    '<button onclick="window._doBackHome()" ontouchend="window._doBackHome();return false;" style="width:100%;padding:14px;border-radius:10px;border:none;background:#f59e0b;color:#fff;font-size:15px;font-weight:600;-webkit-tap-highlight-color:transparent;touch-action:manipulation;cursor:pointer;">返回首页</button>' +
     '</div>';
   overlay.scrollTop = 0;
-  
-  // Use touchend + click for maximum mobile compatibility
-  function handleBtn(btn, fn) {
-    var triggered = false;
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      if (!triggered) { triggered = true; fn(); setTimeout(function(){triggered=false;}, 300); }
-    });
-    btn.addEventListener('touchend', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      if (!triggered) { triggered = true; fn(); setTimeout(function(){triggered=false;}, 300); }
-    });
-  }
-  
-  var reviewBtn = document.getElementById('mockReviewBtn');
-  if (reviewBtn) handleBtn(reviewBtn, reviewMockExam);
-  
-  var backBtn = document.getElementById('mockBackHomeBtn');
-  if (backBtn) handleBtn(backBtn, backToQuizHome);
 }
+
+// Global handlers for mock exam result buttons
+window._doReviewMock = function() {
+  // Use setTimeout to break out of any event chain
+  setTimeout(function() { reviewMockExam(); }, 0);
+};
+window._doBackHome = function() {
+  setTimeout(function() { backToQuizHome(); }, 0);
+};
 
 function reviewMockExam() {
   // Hide results overlay
@@ -7952,7 +7944,7 @@ function reviewMockExam() {
   
   var html = '<div style="padding:16px 16px 80px;">';
   html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;padding:12px;background:#fff7ed;border-radius:12px;">';
-  html += '<button id="reviewBackBtnTop" style="background:#fff;border:1px solid #e5e7eb;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">←</button>';
+  html += '<button onclick="window._doBackHome()" ontouchend="window._doBackHome();return false;" style="background:#fff;border:1px solid #e5e7eb;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">←</button>';
   html += '<div style="flex:1;text-align:center;font-size:16px;font-weight:600;color:#d97706;">考试错题解析</div>';
   html += '<div style="width:36px;"></div>';
   html += '</div>';
@@ -8025,31 +8017,11 @@ function reviewMockExam() {
   }
   
   html += '</div>';
-  html += '<button id="reviewBackBtnBottom" style="width:100%;padding:14px;border-radius:10px;border:none;background:#f59e0b;color:#fff;font-size:15px;cursor:pointer;font-weight:600;margin-top:16px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">返回首页</button>';
+  html += '<button onclick="window._doBackHome()" ontouchend="window._doBackHome();return false;" style="width:100%;padding:14px;border-radius:10px;border:none;background:#f59e0b;color:#fff;font-size:15px;font-weight:600;margin-top:16px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;cursor:pointer;">返回首页</button>';
   html += '</div>';
   
   overlay.innerHTML = html;
   overlay.scrollTop = 0;
-  
-  function handleReviewBtn(btn, fn) {
-    var triggered = false;
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      if (!triggered) { triggered = true; fn(); setTimeout(function(){triggered=false;}, 300); }
-    });
-    btn.addEventListener('touchend', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      if (!triggered) { triggered = true; fn(); setTimeout(function(){triggered=false;}, 300); }
-    });
-  }
-  
-  var topBtn = document.getElementById('reviewBackBtnTop');
-  if (topBtn) handleReviewBtn(topBtn, backToQuizHome);
-  
-  var bottomBtn = document.getElementById('reviewBackBtnBottom');
-  if (bottomBtn) handleReviewBtn(bottomBtn, backToQuizHome);
 }
 
 function renderMockExamHistory() {
