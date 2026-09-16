@@ -2687,6 +2687,26 @@ body.font-xl h2 { font-size: 28px; }
   </div>
 </div></div>
 
+<!-- Bottom Navigation Bar -->
+<nav class="tab-bar" id="tabBar">
+  <div class="tab-item active" data-tab="home" onclick="switchTab('home')">
+    <span class="tab-icon">🏠</span>
+    <span class="tab-label">首页</span>
+  </div>
+  <div class="tab-item" data-tab="subject1" onclick="switchTab('subject1')">
+    <span class="tab-icon">📘</span>
+    <span class="tab-label">综合能力</span>
+  </div>
+  <div class="tab-item" data-tab="subject2" onclick="switchTab('subject2')">
+    <span class="tab-icon">📗</span>
+    <span class="tab-label">传输有线</span>
+  </div>
+  <div class="tab-item" data-tab="quiz" onclick="switchTab('quiz')">
+    <span class="tab-icon">📝</span>
+    <span class="tab-label">刷题</span>
+  </div>
+</nav>
+
 <!-- Back to top button -->
 <button class="back-top" id="backTop" onclick="scrollToTop()">↑</button>
 
