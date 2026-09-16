@@ -1525,6 +1525,89 @@ body.font-xl h2 { font-size: 28px; }
   font-weight: 300;
 }
 
+/* Wrong Question List */
+.wrong-list-item {
+  background: white;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  cursor: pointer;
+}
+.wrong-list-item:active {
+  transform: scale(0.98);
+}
+.wrong-list-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.wrong-list-tag {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-right: 8px;
+  font-weight: 500;
+}
+.wrong-list-tag.single {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+.wrong-list-tag.judge {
+  background: #fef3c7;
+  color: #b45309;
+}
+.wrong-list-tag.multi {
+  background: #f3e8ff;
+  color: #7c3aed;
+}
+.wrong-list-chapter {
+  font-size: 11px;
+  color: #94a3b8;
+}
+.wrong-list-question {
+  font-size: 13px;
+  color: #1e293b;
+  line-height: 1.5;
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.wrong-list-answer {
+  font-size: 12px;
+  color: #059669;
+  font-weight: 500;
+}
+.wrong-list-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #94a3b8;
+  font-size: 14px;
+}
+.wrong-list-empty-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+.wrong-list-start-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 12px;
+  text-align: center;
+}
+.wrong-list-start-btn:active {
+  opacity: 0.9;
+}
+
 /* Featured Cards (顺序练习 + 模拟考试) */
 .quiz-featured {
   display: flex;
@@ -1644,6 +1727,31 @@ body.font-xl h2 { font-size: 28px; }
 }
 .quiz-q-tag.single { background: #dbeafe; color: #1e40af; }
 .quiz-q-tag.judge { background: #fef3c7; color: #92400e; }
+.quiz-q-tag.multi { background: #f3e8ff; color: #7c3aed; }
+.quiz-option.multi-option.selected {
+  border-color: #7c3aed;
+  background: #faf5ff;
+}
+.quiz-option.multi-option.selected .quiz-option-letter {
+  background: #7c3aed;
+  color: white;
+}
+.quiz-multi-confirm {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+.quiz-multi-confirm:active {
+  opacity: 0.8;
+}
 .quiz-q-text {
   font-size: 17px;
   font-weight: 600;
@@ -2638,7 +2746,7 @@ body.font-xl h2 { font-size: 28px; }
 
     <!-- Stats Bar -->
     <div class="quiz-stats-bar">
-      <div class="quiz-stat-item" onclick="startQuizMode('wrong')">
+      <div class="quiz-stat-item" onclick="showWrongListPage()">
         <div class="quiz-stat-num red" id="qsWrong">0</div>
         <div class="quiz-stat-label">错题</div>
       </div>
@@ -2673,7 +2781,7 @@ body.font-xl h2 { font-size: 28px; }
 
     <!-- Feature Grid -->
     <div class="quiz-grid">
-      <div class="quiz-grid-item" onclick="startQuizMode('wrong')">
+      <div class="quiz-grid-item" onclick="showWrongListPage()">
         <div class="quiz-grid-icon" style="background:#fef2f2">❌</div>
         <div class="quiz-grid-label">错题本</div>
         <div class="quiz-grid-sub" id="qgWrong">0题</div>
@@ -2730,6 +2838,20 @@ body.font-xl h2 { font-size: 28px; }
     <div id="chapterList" style="margin-top:12px;">
       <!-- Chapters will be rendered by JS -->
     </div>
+  </div>
+</div>
+
+<!-- ========== WRONG QUESTION LIST PAGE ========== -->
+<div id="quizWrongListPage" class="content" style="display:none;">
+  <div class="quiz-home">
+    <div class="quiz-player-header" style="background:linear-gradient(135deg, #ef4444 0%, #dc2626 100%);color:#fff;padding:16px;border-radius:12px;margin-bottom:16px;">
+      <button class="quiz-back-btn" onclick="backToQuizHome()" style="background:rgba(255,255,255,0.2);color:#fff;border:none;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;">←</button>
+      <div class="quiz-player-title" style="flex:1;text-align:center;font-size:17px;font-weight:600;">错题本</div>
+      <div style="width:36px;"></div>
+    </div>
+    
+    <div id="wrongListStats" style="margin-bottom:12px;"></div>
+    <div id="wrongListContent"></div>
   </div>
 </div>
 
@@ -6162,6 +6284,156 @@ var QUESTIONS = [
     ],
     "answer": 0,
     "explain": "Quality of Service (QoS) 译为服务质量，是指网络在传输数据流时所承诺的服务水平。"
+  },
+  {
+    "id": 181,
+    "subject": "综合能力",
+    "chapter": "现代通信网",
+    "type": "multi",
+    "q": "通信网的基本组成要素包括？",
+    "options": [
+      "终端设备",
+      "传输链路",
+      "交换设备",
+      "电源设备"
+    ],
+    "answer": [0, 1, 2],
+    "explain": "通信网的基本组成要素包括终端设备、传输链路和交换设备，电源设备属于辅助设施。"
+  },
+  {
+    "id": 182,
+    "subject": "综合能力",
+    "chapter": "光传输技术",
+    "type": "multi",
+    "q": "光纤损耗的主要来源有？",
+    "options": [
+      "吸收损耗",
+      "散射损耗",
+      "辐射损耗",
+      "放大损耗"
+    ],
+    "answer": [0, 1, 2],
+    "explain": "光纤损耗主要来源于吸收损耗、散射损耗和辐射损耗，没有放大损耗这一说法。"
+  },
+  {
+    "id": 183,
+    "subject": "综合能力",
+    "chapter": "通信安全",
+    "type": "multi",
+    "q": "信息安全的基本属性包括？",
+    "options": [
+      "保密性",
+      "完整性",
+      "可用性",
+      "不可否认性"
+    ],
+    "answer": [0, 1, 2, 3],
+    "explain": "信息安全的基本属性包括保密性、完整性、可用性、不可否认性、可控性等。"
+  },
+  {
+    "id": 184,
+    "subject": "传输有线",
+    "chapter": "SDH/MSTP",
+    "type": "multi",
+    "q": "SDH的特点包括？",
+    "options": [
+      "标准的光接口",
+      "同步复用",
+      "强大的网管能力",
+      "帧周期125μs"
+    ],
+    "answer": [0, 1, 2, 3],
+    "explain": "SDH具有标准光接口、同步复用、强大网管能力、帧周期125μs等特点。"
+  },
+  {
+    "id": 185,
+    "subject": "传输有线",
+    "chapter": "光纤光缆",
+    "type": "multi",
+    "q": "单模光纤的特点有？",
+    "options": [
+      "芯径小",
+      "传输距离远",
+      "容量大",
+      "色散大"
+    ],
+    "answer": [0, 1, 2],
+    "explain": "单模光纤芯径小，只传输一种模式，色散小，传输距离远、容量大。"
+  },
+  {
+    "id": 186,
+    "subject": "综合能力",
+    "chapter": "交换技术",
+    "type": "multi",
+    "q": "分组交换的特点包括？",
+    "options": [
+      "存储转发",
+      "统计复用",
+      "面向连接",
+      "差错控制"
+    ],
+    "answer": [0, 1, 3],
+    "explain": "分组交换采用存储转发方式，支持统计复用，具有差错控制能力。分组交换可以是面向连接或无连接的。"
+  },
+  {
+    "id": 187,
+    "subject": "综合能力",
+    "chapter": "互联网",
+    "type": "multi",
+    "q": "TCP/IP协议族中，属于应用层的协议有？",
+    "options": [
+      "HTTP",
+      "FTP",
+      "TCP",
+      "DNS"
+    ],
+    "answer": [0, 1, 3],
+    "explain": "HTTP、FTP、DNS都属于应用层协议，TCP属于传输层协议。"
+  },
+  {
+    "id": 188,
+    "subject": "传输有线",
+    "chapter": "DWDM/OTN",
+    "type": "multi",
+    "q": "DWDM系统的关键技术包括？",
+    "options": [
+      "光复用技术",
+      "光放大技术",
+      "光交换技术",
+      "光监控技术"
+    ],
+    "answer": [0, 1, 3],
+    "explain": "DWDM系统的关键技术包括光复用技术（波分复用器）、光放大技术（EDFA等）和光监控技术。"
+  },
+  {
+    "id": 189,
+    "subject": "综合能力",
+    "chapter": "移动通信",
+    "type": "multi",
+    "q": "移动通信系统的组成包括？",
+    "options": [
+      "移动台",
+      "基站",
+      "移动交换中心",
+      "传输设备"
+    ],
+    "answer": [0, 1, 2, 3],
+    "explain": "移动通信系统主要由移动台(MS)、基站(BTS)、移动交换中心(MSC)和传输设备等组成。"
+  },
+  {
+    "id": 190,
+    "subject": "传输有线",
+    "chapter": "ASON",
+    "type": "multi",
+    "q": "ASON的三个平面是？",
+    "options": [
+      "传输平面",
+      "控制平面",
+      "管理平面",
+      "数据平面"
+    ],
+    "answer": [0, 1, 2],
+    "explain": "ASON由三个平面组成：传输平面、控制平面和管理平面。"
   }
 ];
 
@@ -6278,6 +6550,7 @@ function renderQuestion() {
   if (!q) return;
   
   quizState.answered = false;
+  quizState.selectedOptions = []; // For multi-select
   
   // Update progress
   var total = quizState.questions.length;
@@ -6295,12 +6568,17 @@ function renderQuestion() {
   if (progFill) progFill.style.width = (cur / total * 100) + '%';
   
   // Build question HTML
-  var tagClass = q.type === 'judge' ? 'judge' : 'single';
-  var tagText = q.type === 'judge' ? '判断题' : '单选题';
+  var tagClass = q.type === 'judge' ? 'judge' : (q.type === 'multi' ? 'multi' : 'single');
+  var tagText = q.type === 'judge' ? '判断题' : (q.type === 'multi' ? '多选题' : '单选题');
   var chapterTag = '<span style="font-size:10px;color:#94a3b8;margin-left:6px;">' + q.chapter + '</span>';
+  
+  var letters = ['A','B','C','D','E'];
   
   var html = '<div class="quiz-question-card">';
   html += '<span class="quiz-q-tag ' + tagClass + '">' + tagText + '</span>' + chapterTag;
+  if (q.type === 'multi') {
+    html += '<span style="font-size:10px;color:#7c3aed;margin-left:6px;background:#f3e8ff;padding:2px 6px;border-radius:4px;">请选择所有正确答案</span>';
+  }
   html += '<div class="quiz-q-text">' + q.q + '</div>';
   
   html += '<div class="quiz-options" id="quizOptions">';
@@ -6311,8 +6589,13 @@ function renderQuestion() {
     html += '<div class="quiz-option" onclick="selectAnswer(false)" data-val="false">';
     html += '<div class="quiz-option-letter">F</div>';
     html += '<div class="quiz-option-text">错误</div></div>';
+  } else if (q.type === 'multi') {
+    for (var i = 0; i < q.options.length; i++) {
+      html += '<div class="quiz-option multi-option" onclick="toggleMultiOption(' + i + ')" data-val="' + i + '" id="multiOpt' + i + '">';
+      html += '<div class="quiz-option-letter">' + letters[i] + '</div>';
+      html += '<div class="quiz-option-text">' + q.options[i] + '</div></div>';
+    }
   } else {
-    var letters = ['A','B','C','D','E'];
     for (var i = 0; i < q.options.length; i++) {
       html += '<div class="quiz-option" onclick="selectAnswer(' + i + ')" data-val="' + i + '">';
       html += '<div class="quiz-option-letter">' + letters[i] + '</div>';
@@ -6321,10 +6604,29 @@ function renderQuestion() {
   }
   html += '</div>';
   
+  // Confirm button for multi-select
+  if (q.type === 'multi') {
+    html += '<div style="padding:12px 0 0;">';
+    html += '<button id="multiConfirmBtn" class="quiz-multi-confirm" onclick="confirmMultiAnswer()">确认答案</button>';
+    html += '</div>';
+  }
+  
   // Explanation (hidden until answered)
   html += '<div class="quiz-explain" id="quizExplain">';
   html += '<div class="quiz-explain-title">💡 答案解析</div>';
-  var ansText = q.type === 'judge' ? (q.answer ? '正确' : '错误') : (letters[q.answer] + '. ' + q.options[q.answer]);
+  var ansText = '';
+  if (q.type === 'judge') {
+    ansText = q.answer ? '正确' : '错误';
+  } else if (q.type === 'multi') {
+    ansText = '';
+    for (var j = 0; j < q.answer.length; j++) {
+      ansText += letters[q.answer[j]];
+      if (j < q.answer.length - 1) ansText += '、';
+    }
+    ansText += '（共' + q.answer.length + '个正确答案）';
+  } else {
+    ansText = letters[q.answer] + '. ' + q.options[q.answer];
+  }
   html += '<div class="quiz-explain-text"><strong>正确答案：' + ansText + '</strong><br>' + q.explain + '</div>';
   html += '</div>';
   
@@ -6399,6 +6701,116 @@ function selectAnswer(val) {
   }
 }
 
+// ===== Multi-select functions =====
+function toggleMultiOption(idx) {
+  if (quizState.answered) return;
+  if (!quizState.selectedOptions) quizState.selectedOptions = [];
+  
+  var pos = quizState.selectedOptions.indexOf(idx);
+  var optEl = document.getElementById('multiOpt' + idx);
+  
+  if (pos >= 0) {
+    quizState.selectedOptions.splice(pos, 1);
+    if (optEl) optEl.classList.remove('selected');
+  } else {
+    quizState.selectedOptions.push(idx);
+    if (optEl) optEl.classList.add('selected');
+  }
+  
+  // Update confirm button state
+  var btn = document.getElementById('multiConfirmBtn');
+  if (btn) {
+    if (quizState.selectedOptions.length > 0) {
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    } else {
+      btn.disabled = true;
+      btn.style.opacity = '0.5';
+    }
+  }
+}
+
+function confirmMultiAnswer() {
+  if (quizState.answered) return;
+  if (!quizState.selectedOptions || quizState.selectedOptions.length === 0) {
+    alert('请至少选择一个答案');
+    return;
+  }
+  quizState.answered = true;
+  
+  var q = quizState.questions[quizState.currentIdx];
+  var correctAnswers = q.answer.slice().sort(function(a,b){ return a-b; });
+  var selected = quizState.selectedOptions.slice().sort(function(a,b){ return a-b; });
+  
+  // Check if all correct answers are selected and no wrong ones
+  var isCorrect = correctAnswers.length === selected.length;
+  if (isCorrect) {
+    for (var i = 0; i < correctAnswers.length; i++) {
+      if (selected.indexOf(correctAnswers[i]) < 0) {
+        isCorrect = false;
+        break;
+      }
+    }
+  }
+  
+  // Record answer
+  quizState.answers[q.id] = isCorrect;
+  
+  // Update stats
+  var stats = quizStoreGet('quizStats', {done:0, correct:0, total:0});
+  stats.total++;
+  if (isCorrect) stats.correct++;
+  quizStoreSet('quizStats', stats);
+  
+  // Update done IDs
+  var doneIds = quizStoreGet('quizDoneIds', []);
+  if (doneIds.indexOf(q.id) < 0) {
+    doneIds.push(q.id);
+    quizStoreSet('quizDoneIds', doneIds);
+  }
+  
+  // Update wrong IDs
+  var wrongIds = quizStoreGet('quizWrongIds', []);
+  if (!isCorrect) {
+    if (wrongIds.indexOf(q.id) < 0) wrongIds.push(q.id);
+  } else {
+    var widx = wrongIds.indexOf(q.id);
+    if (widx >= 0) wrongIds.splice(widx, 1);
+  }
+  quizStoreSet('quizWrongIds', wrongIds);
+  
+  // Show result - mark all correct options as correct, wrong selections as wrong
+  var options = document.querySelectorAll('.quiz-option');
+  for (var j = 0; j < options.length; j++) {
+    var optionVal = parseInt(options[j].getAttribute('data-val'));
+    var isCorrectOpt = correctAnswers.indexOf(optionVal) >= 0;
+    var isSelected = selected.indexOf(optionVal) >= 0;
+    
+    if (isCorrectOpt) {
+      options[j].classList.add('correct');
+    } else if (isSelected) {
+      options[j].classList.add('wrong');
+    }
+    options[j].style.pointerEvents = 'none';
+  }
+  
+  // Hide confirm button
+  var cfmBtn = document.getElementById('multiConfirmBtn');
+  if (cfmBtn) cfmBtn.style.display = 'none';
+  
+  // Show explanation
+  var explain = document.getElementById('quizExplain');
+  if (explain) explain.classList.add('show');
+  
+  // Vibrate
+  if (navigator.vibrate) {
+    try { navigator.vibrate(isCorrect ? 10 : 30); } catch(e) {}
+  }
+}
+
+window.toggleMultiOption = toggleMultiOption;
+window.confirmMultiAnswer = confirmMultiAnswer;
+
 function nextQuestion() {
   if (!quizState.answered) {
     alert('请先选择答案');
@@ -6467,6 +6879,8 @@ function backToQuizHome() {
   document.getElementById('quizPlayer').classList.remove('show');
   document.getElementById('quizChapterPage').style.display = 'none';
   document.getElementById('quizChapterPage').classList.remove('active');
+  document.getElementById('quizWrongListPage').style.display = 'none';
+  document.getElementById('quizWrongListPage').classList.remove('active');
   document.getElementById('page-quiz').classList.add('active');
   // Update bottom nav
   var tabs = document.querySelectorAll('.tab-item');
@@ -6656,6 +7070,93 @@ window.clearAllStats = clearAllStats;
 window.showChapterPage = showChapterPage;
 window.switchChapterSubject = switchChapterSubject;
 window.startChapterQuiz = startChapterQuiz;
+
+// ===== Wrong Question List Functions =====
+function showWrongListPage() {
+  var wrongIds = quizStoreGet('quizWrongIds', []);
+  if (wrongIds.length === 0) {
+    alert('暂无错题，先去做题吧！');
+    return;
+  }
+  document.getElementById('page-quiz').classList.remove('active');
+  document.getElementById('quizChapterPage').style.display = 'none';
+  document.getElementById('quizChapterPage').classList.remove('active');
+  document.getElementById('quizWrongListPage').style.display = 'block';
+  document.getElementById('quizWrongListPage').classList.add('active');
+  renderWrongList();
+}
+
+function renderWrongList() {
+  var wrongIds = quizStoreGet('quizWrongIds', []);
+  var wrongQuestions = QUESTIONS.filter(function(q){ return wrongIds.indexOf(q.id) >= 0; });
+  
+  // Stats
+  var statsHtml = '<div class="wrong-list-start-btn" onclick="startQuizMode(\'wrong\')">开始错题练习 (' + wrongQuestions.length + '题)</div>';
+  document.getElementById('wrongListStats').innerHTML = statsHtml;
+  
+  // Question list
+  if (wrongQuestions.length === 0) {
+    document.getElementById('wrongListContent').innerHTML = '<div class="wrong-list-empty"><div class="wrong-list-empty-icon">🎉</div>暂无错题，继续保持！</div>';
+    return;
+  }
+  
+  var letters = ['A','B','C','D','E'];
+  var html = '';
+  for (var i = 0; i < wrongQuestions.length; i++) {
+    var q = wrongQuestions[i];
+    var tagClass = q.type === 'judge' ? 'judge' : (q.type === 'multi' ? 'multi' : 'single');
+    var tagText = q.type === 'judge' ? '判断题' : (q.type === 'multi' ? '多选题' : '单选题');
+    
+    var ansText = '';
+    if (q.type === 'judge') {
+      ansText = q.answer ? '正确' : '错误';
+    } else if (q.type === 'multi') {
+      ansText = '';
+      for (var j = 0; j < q.answer.length; j++) {
+        ansText += letters[q.answer[j]];
+        if (j < q.answer.length - 1) ansText += '、';
+      }
+    } else {
+      ansText = letters[q.answer];
+    }
+    
+    html += '<div class="wrong-list-item" onclick="viewWrongQuestion(' + q.id + ')">';
+    html += '<div class="wrong-list-header">';
+    html += '<span class="wrong-list-tag ' + tagClass + '">' + tagText + '</span>';
+    html += '<span class="wrong-list-chapter">' + q.chapter + '</span>';
+    html += '</div>';
+    html += '<div class="wrong-list-question">' + (i+1) + '. ' + q.q + '</div>';
+    html += '<div class="wrong-list-answer">正确答案：' + ansText + '</div>';
+    html += '</div>';
+  }
+  
+  document.getElementById('wrongListContent').innerHTML = html;
+}
+
+function viewWrongQuestion(id) {
+  var q = QUESTIONS.find(function(x){ return x.id === id; });
+  if (!q) return;
+  // Start quiz from this wrong question
+  var wrongIds = quizStoreGet('quizWrongIds', []);
+  var wrongQuestions = QUESTIONS.filter(function(x){ return wrongIds.indexOf(x.id) >= 0; });
+  var startIdx = wrongQuestions.findIndex(function(x){ return x.id === id; });
+  if (startIdx < 0) startIdx = 0;
+  
+  quizState.mode = 'wrong';
+  document.getElementById('quizWrongListPage').style.display = 'none';
+  document.getElementById('quizWrongListPage').classList.remove('active');
+  startQuizWithQuestions(wrongQuestions);
+  // Jump to the selected question
+  quizState.currentIdx = startIdx;
+  quizState.answered = false;
+  renderQuestion();
+  // Update title
+  var title = document.getElementById('quizPlayerTitle');
+  if (title) title.textContent = '错题复习';
+}
+
+window.showWrongListPage = showWrongListPage;
+window.viewWrongQuestion = viewWrongQuestion;
 
 
   if (document.readyState === 'loading') {
