@@ -7005,8 +7005,8 @@ function renderQuestion() {
   var html = '<div class="quiz-question-card">';
   html += '<div style="display:flex;align-items:center;justify-content:space-between;">';
   html += '<div><span class="quiz-q-tag ' + tagClass + '">' + tagText + '</span>' + chapterTag + '</div>';
-  var isFav = favStoreGet('quizFavIds', []).indexOf(q.id) >= 0;
-  html += '<span onclick="toggleFavorite(\'' + q.id + '\')" style="font-size:20px;cursor:pointer;color:' + (isFav ? '#eab308' : '#cbd5e1') + ';flex-shrink:0;padding:4px 8px;">' + (isFav ? '★' : '☆') + '</span>';
+  var isFav = favStoreGet('quizFavIds', []).indexOf(String(q.id)) >= 0;
+  html += '<span id="favStarBtn" onclick="toggleFavorite(\'' + q.id + '\')" style="font-size:22px;cursor:pointer;color:' + (isFav ? '#eab308' : '#cbd5e1') + ';flex-shrink:0;padding:4px 8px;-webkit-tap-highlight-color:transparent;transition:transform 0.2s;" ontouchstart="this.style.transform=\'scale(1.3)\'" ontouchend="this.style.transform=\'\'">' + (isFav ? '★' : '☆') + '</span>';
   html += '</div>';
   if (q.type === 'multi') {
     html += '<span style="font-size:10px;color:#7c3aed;margin-left:6px;background:#f3e8ff;padding:2px 6px;border-radius:4px;">请选择所有正确答案</span>';
@@ -8484,53 +8484,127 @@ function renderFavoritesList() {
   var favIds = favStoreGet('quizFavIds', []);
   var el = document.getElementById('favoritesList');
   if (!el) return;
-  
+
   if (favIds.length === 0) {
-    el.innerHTML = '<div style="text-align:center;padding:40px 20px;color:#94a3b8;"><div style="font-size:40px;margin-bottom:8px;">⭐</div>暂无收藏<br><span style="font-size:12px;">答题时点击星标可收藏题目</span></div>';
+    el.innerHTML = '' +
+      '<div style="text-align:center;padding:60px 20px;color:#94a3b8;">' +
+        '<div style="font-size:48px;margin-bottom:12px;">⭐</div>' +
+        '<div style="font-size:15px;font-weight:600;color:#64748b;margin-bottom:6px;">暂无收藏题目</div>' +
+        '<div style="font-size:12px;color:#94a3b8;line-height:1.6;">答题时点击右上角星标<br>可收藏重要题目到收藏夹</div>' +
+      '</div>';
     return;
   }
-  
-  var favQuestions = QUESTIONS.filter(function(q) { return favIds.indexOf(q.id) >= 0; });
-  
-  var html = '<div style="background:#fff7ed;border-radius:12px;padding:12px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;">';
-  html += '<span style="font-size:13px;color:#d97706;font-weight:600;">共收藏 ' + favIds.length + ' 题</span>';
-  html += '<button onclick="startFavQuiz()" style="padding:8px 16px;border-radius:8px;border:none;background:#eab308;color:#fff;font-size:13px;cursor:pointer;font-weight:600;">开始练习</button>';
+
+  var favQuestions = QUESTIONS.filter(function(q) { return favIds.indexOf(String(q.id)) >= 0; });
+  var s1Count = favQuestions.filter(function(q) { return q.subject === '综合能力'; }).length;
+  var s2Count = favQuestions.filter(function(q) { return q.subject === '传输有线'; }).length;
+
+  var html = '';
+
+  // Summary bar
+  html += '<div style="background:linear-gradient(135deg,#fef3c7,#fff7ed);border-radius:12px;padding:16px;margin-bottom:12px;">';
+  html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">';
+  html += '<div style="font-size:15px;font-weight:700;color:#d97706;">⭐ 收藏夹</div>';
+  html += '<div style="font-size:20px;font-weight:700;color:#eab308;">' + favIds.length + '</div>';
   html += '</div>';
-  
+  html += '<div style="display:flex;gap:12px;font-size:12px;color:#94a3b8;margin-bottom:12px;">';
+  html += '<span>📘 综合能力 ' + s1Count + '题</span>';
+  html += '<span>📗 传输有线 ' + s2Count + '题</span>';
+  html += '</div>';
+  html += '<div style="display:flex;gap:8px;">';
+  html += '<button onclick="startFavQuiz()" style="flex:1;padding:10px;border-radius:8px;border:none;background:#eab308;color:#fff;font-size:13px;cursor:pointer;font-weight:600;-webkit-tap-highlight-color:transparent;">📋 顺序练习</button>';
+  html += '<button onclick="startFavQuizRandom()" style="flex:1;padding:10px;border-radius:8px;border:none;background:#fff;color:#eab308;font-size:13px;cursor:pointer;font-weight:600;border:1px solid #eab308;-webkit-tap-highlight-color:transparent;">🎲 随机练习</button>';
+  html += '</div>';
+  html += '</div>';
+
+  // Action bar
+  html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:0 4px;margin-bottom:8px;">';
+  html += '<span style="font-size:13px;color:#64748b;font-weight:600;">题目列表</span>';
+  html += '<button onclick="clearAllFavorites()" style="font-size:12px;color:#ef4444;background:none;border:none;cursor:pointer;padding:4px 8px;-webkit-tap-highlight-color:transparent;">清空收藏</button>';
+  html += '</div>';
+
   for (var i = 0; i < favQuestions.length; i++) {
     var q = favQuestions[i];
-    html += '<div style="background:#fff;border-radius:12px;padding:14px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,0.04);">';
+    var typeLabel = q.type === 'multi' ? '多选' : (q.type === 'judge' ? '判断' : '单选');
+    var typeColor = q.type === 'multi' ? '#7c3aed' : (q.type === 'judge' ? '#0891b2' : '#2563eb');
+    var typeBg = q.type === 'multi' ? '#f3e8ff' : (q.type === 'judge' ? '#cffafe' : '#dbeafe');
+
+    html += '<div style="background:#fff;border-radius:12px;padding:14px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,0.04);border-left:3px solid #eab308;" onclick="startFavQuizSingle(\'' + q.id + '\')">';
     html += '<div style="display:flex;align-items:start;justify-content:space-between;">';
     html += '<div style="flex:1;">';
-    html += '<div style="display:flex;gap:6px;align-items:center;margin-bottom:6px;">';
-    html += '<span style="font-size:10px;color:#94a3b8;background:#f1f5f9;padding:1px 6px;border-radius:3px;">' + q.subject + '</span>';
-    html += '<span style="font-size:10px;color:#94a3b8;background:#f1f5f9;padding:1px 6px;border-radius:3px;">' + (q.chapter || '') + '</span>';
+    html += '<div style="display:flex;gap:4px;align-items:center;margin-bottom:6px;flex-wrap:wrap;">';
+    html += '<span style="font-size:10px;color:' + typeColor + ';background:' + typeBg + ';padding:1px 6px;border-radius:4px;font-weight:600;">' + typeLabel + '</span>';
+    html += '<span style="font-size:10px;color:#64748b;background:#f1f5f9;padding:1px 6px;border-radius:4px;">' + q.subject + '</span>';
+    if (q.chapter) html += '<span style="font-size:10px;color:#94a3b8;background:#f8fafc;padding:1px 6px;border-radius:4px;">' + q.chapter + '</span>';
     html += '</div>';
-    html += '<div style="font-size:13px;line-height:1.5;color:#334155;">' + q.q.substring(0, 80) + (q.q.length > 80 ? '...' : '') + '</div>';
+    html += '<div style="font-size:13px;line-height:1.5;color:#334155;">' + q.q.substring(0, 100) + (q.q.length > 100 ? '...' : '') + '</div>';
     html += '</div>';
-    html += '<span onclick="removeFav(\'' + q.id + '\')" style="font-size:18px;cursor:pointer;color:#eab308;flex-shrink:0;padding:4px;">★</span>';
+    html += '<span onclick="event.stopPropagation();removeFav(\'' + q.id + '\')" style="font-size:18px;cursor:pointer;color:#eab308;flex-shrink:0;padding:4px 8px;-webkit-tap-highlight-color:transparent;">★</span>';
     html += '</div></div>';
   }
-  
+
   el.innerHTML = html;
 }
 
 function toggleFavorite(qId) {
   var favIds = favStoreGet('quizFavIds', []);
-  var pos = favIds.indexOf(qId);
+  var idStr = String(qId);
+  var pos = favIds.indexOf(idStr);
   if (pos >= 0) favIds.splice(pos, 1);
-  else favIds.push(qId);
+  else favIds.push(idStr);
   favStoreSet('quizFavIds', favIds);
   updateFavCount();
+  renderQuestionFavIcon(qId);
+}
+
+function renderQuestionFavIcon(qId) {
+  var favIds = favStoreGet('quizFavIds', []);
+  var isFav = favIds.indexOf(String(qId)) >= 0;
+  var favBtn = document.getElementById('favStarBtn');
+  if (favBtn) {
+    favBtn.textContent = isFav ? '★' : '☆';
+    favBtn.style.color = isFav ? '#eab308' : '#cbd5e1';
+  }
 }
 
 function removeFav(qId) {
   var favIds = favStoreGet('quizFavIds', []);
-  var pos = favIds.indexOf(qId);
+  var pos = favIds.indexOf(String(qId));
   if (pos >= 0) favIds.splice(pos, 1);
   favStoreSet('quizFavIds', favIds);
   renderFavoritesList();
   updateFavCount();
+}
+
+function clearAllFavorites() {
+  if (!confirm('确定清空所有收藏题目？')) return;
+  favStoreSet('quizFavIds', []);
+  renderFavoritesList();
+  updateFavCount();
+  alert('已清空收藏');
+}
+
+function startFavQuizRandom() {
+  var favIds = favStoreGet('quizFavIds', []);
+  if (favIds.length === 0) {
+    alert('暂无收藏题目');
+    return;
+  }
+  var favQuestions = QUESTIONS.filter(function(q) { return favIds.indexOf(String(q.id)) >= 0; });
+  favQuestions.sort(function() { return Math.random() - 0.5; });
+  document.getElementById('quizFavoritesPage').style.display = 'none';
+  document.getElementById('quizFavoritesPage').classList.remove('active');
+  quizState.mode = 'random';
+  startQuizWithQuestions(favQuestions);
+}
+
+function startFavQuizSingle(qId) {
+  var q = QUESTIONS.filter(function(item) { return String(item.id) === String(qId); });
+  if (q.length === 0) return;
+  document.getElementById('quizFavoritesPage').style.display = 'none';
+  document.getElementById('quizFavoritesPage').classList.remove('active');
+  quizState.mode = 'sequential';
+  startQuizWithQuestions(q);
 }
 
 function updateFavCount() {
@@ -8542,7 +8616,7 @@ function updateFavCount() {
 function startFavQuiz() {
   var favIds = favStoreGet('quizFavIds', []);
   if (favIds.length === 0) return;
-  var favQuestions = QUESTIONS.filter(function(q) { return favIds.indexOf(q.id) >= 0; });
+  var favQuestions = QUESTIONS.filter(function(q) { return favIds.indexOf(String(q.id)) >= 0; });
   document.getElementById('quizFavoritesPage').style.display = 'none';
   document.getElementById('quizFavoritesPage').classList.remove('active');
   quizState.mode = 'sequential';
@@ -8711,6 +8785,10 @@ window.showFavoritesPage = showFavoritesPage;
 window.toggleFavorite = toggleFavorite;
 window.removeFav = removeFav;
 window.startFavQuiz = startFavQuiz;
+window.startFavQuizRandom = startFavQuizRandom;
+window.startFavQuizSingle = startFavQuizSingle;
+window.clearAllFavorites = clearAllFavorites;
+window.renderQuestionFavIcon = renderQuestionFavIcon;
 window.showStatsPage = showStatsPage;
 window.hideAllQuizSubPages = hideAllQuizSubPages;
 window.backToQuizHome = backToQuizHome;
