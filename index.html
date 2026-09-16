@@ -7541,12 +7541,16 @@ var originalBackToQuizHome = backToQuizHome;
 backToQuizHome = function() {
   if (mockExamState.timerInterval) { clearInterval(mockExamState.timerInterval); mockExamState.timerInterval = null; }
   mockExamState.active = false;
+  // Hide mock result overlay
+  var overlay = document.getElementById('mockResultOverlay');
+  if (overlay) overlay.style.display = 'none';
   document.getElementById('quizResults').classList.remove('show');
   var player = document.getElementById('quizPlayer');
   player.classList.remove('show');
   player.style.display = 'none';
   player.style.overflow = '';
   player.style.flexDirection = '';
+  player.style.padding = '';
   hideAllQuizSubPages();
   document.getElementById('page-quiz').classList.add('active');
   var tabs = document.querySelectorAll('.tab-item');
@@ -7874,17 +7878,25 @@ function submitMockExam(isAuto) {
   
   mockExamState.active = false;
   
-  // Show results
+  // Show results - use a separate overlay div instead of quizPlayer
   var player = document.getElementById('quizPlayer');
-  player.style.display = 'flex';
-  player.style.flexDirection = 'column';
-  player.style.overflow = 'visible';
-  player.style.padding = '0';
-  player.innerHTML = '<div id="mockResultContent" style="padding:20px;text-align:center;overflow-y:auto;flex:1;min-height:100vh;">' +
+  player.classList.remove('show');
+  player.style.display = 'none';
+  
+  // Create or get mock results overlay
+  var overlay = document.getElementById('mockResultOverlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'mockResultOverlay';
+    overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:#f8fafc;z-index:9999;overflow-y:auto;-webkit-overflow-scrolling:touch;';
+    document.body.appendChild(overlay);
+  }
+  overlay.style.display = 'block';
+  overlay.innerHTML = '<div style="padding:20px;text-align:center;min-height:100vh;display:flex;flex-direction:column;justify-content:center;">' +
     '<div style="font-size:48px;margin-bottom:12px;">' + (passed ? '🎉' : '💪') + '</div>' +
     '<div style="font-size:28px;font-weight:700;color:' + (passed ? '#10b981' : '#ef4444') + ';margin-bottom:4px;">' + score + '分</div>' +
     '<div style="font-size:14px;color:#94a3b8;margin-bottom:16px;">' + (passed ? '恭喜通过！' : '继续努力，下次一定能过！') + '</div>' +
-    '<div style="background:#f8fafc;border-radius:12px;padding:16px;margin-bottom:16px;">' +
+    '<div style="background:#fff;border-radius:12px;padding:16px;margin-bottom:16px;">' +
     '<div style="display:flex;justify-content:space-around;margin-bottom:12px;">' +
     '<div><div style="font-size:20px;font-weight:700;color:#10b981;">' + correct + '</div><div style="font-size:11px;color:#94a3b8;">答对</div></div>' +
     '<div><div style="font-size:20px;font-weight:700;color:#ef4444;">' + (total - correct) + '</div><div style="font-size:11px;color:#94a3b8;">答错</div></div>' +
@@ -7896,38 +7908,51 @@ function submitMockExam(isAuto) {
     '</div>' +
     '<div style="font-size:12px;color:#94a3b8;margin-top:4px;">正确率 ' + pct + '%</div>' +
     '</div>' +
-    '<button id="mockReviewBtn" style="width:100%;padding:12px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;color:#475569;font-size:14px;cursor:pointer;margin-bottom:8px;font-weight:600;-webkit-tap-highlight-color:transparent;">查看错题解析</button>' +
-    '<button id="mockBackHomeBtn" style="width:100%;padding:12px;border-radius:8px;border:none;background:#f59e0b;color:#fff;font-size:14px;cursor:pointer;font-weight:600;-webkit-tap-highlight-color:transparent;">返回首页</button>' +
+    '<button id="mockReviewBtn" style="width:100%;padding:14px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;color:#475569;font-size:15px;margin-bottom:10px;font-weight:600;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">查看错题解析</button>' +
+    '<button id="mockBackHomeBtn" style="width:100%;padding:14px;border-radius:10px;border:none;background:#f59e0b;color:#fff;font-size:15px;font-weight:600;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">返回首页</button>' +
     '</div>';
-  player.scrollTop = 0;
-  var content = document.getElementById('mockExamContent');
-  if (content) content.scrollTop = 0;
+  overlay.scrollTop = 0;
   
-  // Attach event listeners (more reliable than inline onclick on mobile)
+  // Use touchend + click for maximum mobile compatibility
+  function handleBtn(btn, fn) {
+    var triggered = false;
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!triggered) { triggered = true; fn(); setTimeout(function(){triggered=false;}, 300); }
+    });
+    btn.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!triggered) { triggered = true; fn(); setTimeout(function(){triggered=false;}, 300); }
+    });
+  }
+  
   var reviewBtn = document.getElementById('mockReviewBtn');
-  if (reviewBtn) {
-    reviewBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      reviewMockExam();
-    });
-  }
+  if (reviewBtn) handleBtn(reviewBtn, reviewMockExam);
+  
   var backBtn = document.getElementById('mockBackHomeBtn');
-  if (backBtn) {
-    backBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      backToQuizHome();
-    });
-  }
+  if (backBtn) handleBtn(backBtn, backToQuizHome);
 }
 
 function reviewMockExam() {
-  var player = document.getElementById('quizPlayer');
-  player.style.display = 'flex';
-  player.style.flexDirection = 'column';
-  player.style.overflow = 'visible';
-  var html = '<div style="overflow-y:auto;flex:1;padding-bottom:80px;">';
+  // Hide results overlay
+  var resultOverlay = document.getElementById('mockResultOverlay');
+  if (resultOverlay) resultOverlay.style.display = 'none';
+  
+  // Use the same overlay for review content
+  var overlay = document.getElementById('mockResultOverlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'mockResultOverlay';
+    overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:#f8fafc;z-index:9999;overflow-y:auto;-webkit-overflow-scrolling:touch;';
+    document.body.appendChild(overlay);
+  }
+  overlay.style.display = 'block';
+  
+  var html = '<div style="padding:16px 16px 80px;">';
   html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;padding:12px;background:#fff7ed;border-radius:12px;">';
-  html += '<button id="reviewTopBackBtn" style="background:#fff;border:1px solid #e5e7eb;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;-webkit-tap-highlight-color:transparent;">←</button>';
+  html += '<button id="reviewBackBtnTop" style="background:#fff;border:1px solid #e5e7eb;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">←</button>';
   html += '<div style="flex:1;text-align:center;font-size:16px;font-weight:600;color:#d97706;">考试错题解析</div>';
   html += '<div style="width:36px;"></div>';
   html += '</div>';
@@ -8000,25 +8025,31 @@ function reviewMockExam() {
   }
   
   html += '</div>';
-  html += '<button id="reviewBackHomeBtn" style="padding:14px;border-radius:12px;border:none;background:#f59e0b;color:#fff;font-size:15px;cursor:pointer;font-weight:600;flex-shrink:0;box-shadow:0 -2px 8px rgba(245,158,11,0.2);-webkit-tap-highlight-color:transparent;">返回首页</button>';
+  html += '<button id="reviewBackBtnBottom" style="width:100%;padding:14px;border-radius:10px;border:none;background:#f59e0b;color:#fff;font-size:15px;cursor:pointer;font-weight:600;margin-top:16px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">返回首页</button>';
+  html += '</div>';
   
-  player.innerHTML = html;
-  player.scrollTop = 0;
+  overlay.innerHTML = html;
+  overlay.scrollTop = 0;
   
-  var rBackBtn = document.getElementById('reviewBackHomeBtn');
-  if (rBackBtn) {
-    rBackBtn.addEventListener('click', function(e) {
+  function handleReviewBtn(btn, fn) {
+    var triggered = false;
+    btn.addEventListener('click', function(e) {
       e.preventDefault();
-      backToQuizHome();
+      e.stopPropagation();
+      if (!triggered) { triggered = true; fn(); setTimeout(function(){triggered=false;}, 300); }
+    });
+    btn.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!triggered) { triggered = true; fn(); setTimeout(function(){triggered=false;}, 300); }
     });
   }
-  var rTopBtn = document.getElementById('reviewTopBackBtn');
-  if (rTopBtn) {
-    rTopBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      backToQuizHome();
-    });
-  }
+  
+  var topBtn = document.getElementById('reviewBackBtnTop');
+  if (topBtn) handleReviewBtn(topBtn, backToQuizHome);
+  
+  var bottomBtn = document.getElementById('reviewBackBtnBottom');
+  if (bottomBtn) handleReviewBtn(bottomBtn, backToQuizHome);
 }
 
 function renderMockExamHistory() {
