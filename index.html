@@ -1363,6 +1363,26 @@ body.font-xl h2 { font-size: 28px; }
 
 <div class="app">
 
+<!-- ===== Progress Bar ===== -->
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<!-- ===== Search Bar (sticky, on all pages) ===== -->
+<div class="search-bar">
+  <div class="search-bar-inner">
+    <div class="search-input-wrap">
+      <span class="search-icon-left">🔍</span>
+      <input type="text" id="searchInput" class="search-input" placeholder="搜索知识点... 按回车全文高亮" autocomplete="off">
+      <div class="search-nav" id="searchNav">
+        <button class="search-nav-btn" id="searchPrev" type="button">↑</button>
+        <span class="search-count" id="searchCount">0/0</span>
+        <button class="search-nav-btn" id="searchNext" type="button">↓</button>
+      </div>
+      <button class="search-clear-btn" id="searchClear" type="button">×</button>
+    </div>
+    <div class="search-dropdown" id="searchDropdown"></div>
+  </div>
+</div>
+
 <!-- ========== HOME PAGE ========== -->
 <div id="page-home" class="content active">
   <div class="hero-card">
@@ -1372,6 +1392,22 @@ body.font-xl h2 { font-size: 28px; }
       <span>📹 7个精讲视频</span>
       <span>⏱️ 11.8小时</span>
       <span>🎯 双科全覆盖</span>
+    </div>
+    <div class="font-panel">
+      <div class="font-panel-title">
+        <span>🔤 字体大小</span>
+        <span class="font-size-value" id="fontSizeDisplay">15px</span>
+      </div>
+      <div class="font-slider-wrap">
+        <input type="range" id="fontSlider" class="font-slider" min="11" max="23" value="15" step="1" oninput="setFontSize(parseInt(this.value))">
+      </div>
+      <div class="font-presets">
+        <button class="font-preset-btn" data-size="11" onclick="setFontSize(11)">特小</button>
+        <button class="font-preset-btn" data-size="13" onclick="setFontSize(13)">小</button>
+        <button class="font-preset-btn" data-size="15" onclick="setFontSize(15)">默认</button>
+        <button class="font-preset-btn" data-size="18" onclick="setFontSize(18)">大</button>
+        <button class="font-preset-btn" data-size="21" onclick="setFontSize(21)">特大</button>
+      </div>
     </div>
   </div>
 
