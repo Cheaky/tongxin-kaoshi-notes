@@ -2961,14 +2961,41 @@ body.font-xl h2 { font-size: 28px; }
   }
 
   function scrollToHighlight(el) {
-    var rect = el.getBoundingClientRect();
-    var searchBarH = document.querySelector('.search-bar') ? 
-      document.querySelector('.search-bar').offsetHeight : 60;
+    if (!el) return;
     
-    if (rect.top < searchBarH + 20 || rect.bottom > window.innerHeight - 20) {
+    // First, find which page contains this element and switch to it
+    var page = el.closest('.content');
+    if (page && !page.classList.contains('active')) {
+      var pageId = page.id;
+      var tabMap = { 'page-home': 'home', 'page-subject1': 'subject1', 'page-subject2': 'subject2' };
+      var tab = tabMap[pageId];
+      if (tab) {
+        // Switch tab without clearing highlights
+        var contents = document.querySelectorAll('.content');
+        for (var i = 0; i < contents.length; i++) {
+          contents[i].classList.remove('active');
+        }
+        page.classList.add('active');
+        var tabs = document.querySelectorAll('.tab-item');
+        for (var i = 0; i < tabs.length; i++) {
+          tabs[i].classList.remove('active');
+        }
+        var tabNames = ['home', 'subject1', 'subject2', 'search'];
+        var idx = tabNames.indexOf(tab);
+        if (idx >= 0 && tabs[idx]) tabs[idx].classList.add('active');
+        state.currentTab = tab;
+      }
+    }
+    
+    // Wait for page to become visible before scrolling
+    setTimeout(function() {
+      var rect = el.getBoundingClientRect();
+      var searchBarH = document.querySelector('.search-bar') ? 
+        document.querySelector('.search-bar').offsetHeight : 60;
+      
       var top = window.pageYOffset + rect.top - searchBarH - 40;
       window.scrollTo({top: Math.max(0, top), behavior: 'smooth'});
-    }
+    }, 50);
   }
 
   // Click outside
