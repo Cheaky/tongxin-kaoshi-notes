@@ -3551,275 +3551,1688 @@ body.font-xl h2 { font-size: 28px; }
   window.hideSearchDropdown = hideSearchDropdown;
 
 // ===== V8: Quiz System =====
-var QUESTIONS = [{"id": 1, "subject": "综合能力", "chapter": "通信职业道德", "type": "single", "q": "通信科技人员职业道德的核心是？", "options": ["造福人民、振兴祖国", "热爱专业、忠于职责", "勇于探索、敢于创新", "实事求是、追求真理"], "answer": 0, "explain": "造福人民、振兴祖国是通信科技人员职业道德的核心，也是出发点和归宿。"}, {"id": 2, "subject": "综合能力", "chapter": "通信职业道德", "type": "single", "q": "通信科技人员最突出的特点是？", "options": ["勇于探索、敢于创新", "不畏艰险、献身科学", "热爱专业、忠于职责", "同心同德、团结协作"], "answer": 0, "explain": "勇于探索、敢于创新是通信科技人员最突出的特点。"}, {"id": 3, "subject": "综合能力", "chapter": "通信职业道德", "type": "single", "q": "通信科技人员的基本道德要求是？", "options": ["热爱专业、忠于职责", "造福人民、振兴祖国", "勤奋求知、严谨治学", "谦虚谨慎、尊重他人"], "answer": 0, "explain": "热爱专业、忠于职责是通信科技人员的基本道德要求。"}, {"id": 4, "subject": "综合能力", "chapter": "通信职业道德", "type": "judge", "q": "通信职业道德的特点包括形式多样性、适用性和较强稳定性。", "answer": true, "explain": "通信职业道德三大特点：形式多样性适用性、较强稳定性连续性、很强专业性具体性。"}, {"id": 5, "subject": "综合能力", "chapter": "通信职业道德", "type": "single", "q": "通信科技的\"六化\"不包括以下哪项？", "options": ["数字化", "综合化", "标准化", "模拟化"], "answer": 3, "explain": "通信科技\"六化\"：数字化、综合化、智能化、宽带化、个人化、标准化。不包括模拟化。"}, {"id": 6, "subject": "综合能力", "chapter": "通信法规", "type": "single", "q": "《电信条例》规定电信业务分为？", "options": ["基础电信业务和增值电信业务", "固定电信业务和移动电信业务", "国内电信业务和国际电信业务", "语音业务和数据业务"], "answer": 0, "explain": "《电信条例》将电信业务分为基础电信业务和增值电信业务两大类。"}, {"id": 7, "subject": "综合能力", "chapter": "通信法规", "type": "single", "q": "电信用户申告服务障碍的，电信企业应在多少小时内修复？", "options": ["24小时", "48小时", "72小时", "12小时"], "answer": 0, "explain": "电信用户申告服务障碍，电信企业应自接到申告之日起24小时内修复或调通。"}, {"id": 8, "subject": "综合能力", "chapter": "通信法规", "type": "judge", "q": "电信业务经营者有权为用户擅自开通收费项目。", "answer": false, "explain": "电信业务经营者不得擅自为用户开通收费项目，必须经用户确认。"}, {"id": 9, "subject": "综合能力", "chapter": "通信法规", "type": "single", "q": "电信网码号资源属于？", "options": ["国家所有", "企业所有", "运营商所有", "集体所有"], "answer": 0, "explain": "电信网码号资源属于国家所有，由国家统一规划、分配和管理。"}, {"id": 10, "subject": "综合能力", "chapter": "现代通信网", "type": "single", "q": "通信网的基本结构不包括？", "options": ["星型网", "环型网", "树型网", "平行型网"], "answer": 3, "explain": "通信网基本结构：星型、环型、树型、网型、总线型。不包括平行型。"}, {"id": 11, "subject": "综合能力", "chapter": "现代通信网", "type": "single", "q": "OSI参考模型共有几层？", "options": ["5层", "6层", "7层", "8层"], "answer": 2, "explain": "OSI参考模型共7层：物理层、数据链路层、网络层、传输层、会话层、表示层、应用层。"}, {"id": 12, "subject": "综合能力", "chapter": "现代通信网", "type": "single", "q": "TCP/IP协议模型分为几层？", "options": ["3层", "4层", "5层", "7层"], "answer": 1, "explain": "TCP/IP模型分4层：网络接口层、网络层、传输层、应用层。"}, {"id": 13, "subject": "综合能力", "chapter": "现代通信网", "type": "judge", "q": "TCP协议是面向连接的可靠传输协议。", "answer": true, "explain": "TCP是面向连接的、可靠的传输层协议；UDP是无连接的、不可靠的传输协议。"}, {"id": 14, "subject": "综合能力", "chapter": "现代通信网", "type": "single", "q": "以下哪个不是网络拓扑结构？", "options": ["总线型", "星型", "蜂窝型", "环型"], "answer": 2, "explain": "基本网络拓扑结构包括总线型、星型、环型、树型、网型。蜂窝型不属于基本拓扑结构。"}, {"id": 15, "subject": "综合能力", "chapter": "交换技术", "type": "single", "q": "电路交换的三个阶段不包括？", "options": ["建立连接", "数据传输", "释放连接", "差错控制"], "answer": 3, "explain": "电路交换三阶段：建立连接、数据传输、释放连接。不需要差错控制。"}, {"id": 16, "subject": "综合能力", "chapter": "交换技术", "type": "single", "q": "分组交换的特点是？", "options": ["独占带宽", "资源共享", "延迟固定", "无延迟"], "answer": 1, "explain": "分组交换采用存储转发方式，实现资源共享，延迟不固定。"}, {"id": 17, "subject": "综合能力", "chapter": "交换技术", "type": "single", "q": "ATM交换的信元长度固定为多少字节？", "options": ["48字节", "53字节", "64字节", "128字节"], "answer": 1, "explain": "ATM信元固定为53字节，其中信头5字节，净荷48字节。"}, {"id": 18, "subject": "综合能力", "chapter": "交换技术", "type": "judge", "q": "MPLS是一种多协议标签交换技术。", "answer": true, "explain": "MPLS(Multi-Protocol Label Switching)是多协议标签交换，介于二层和三层之间。"}, {"id": 19, "subject": "综合能力", "chapter": "光传输技术", "type": "single", "q": "SDH的基本传输速率为？", "options": ["STM-1为155.520Mb/s", "STM-1为622Mb/s", "STM-1为2.5Gb/s", "STM-1为10Gb/s"], "answer": 0, "explain": "STM-1是SDH的基本传输速率，速率为155.520Mb/s。STM-4=622Mb/s, STM-16=2.5Gb/s, STM-64=10Gb/s。"}, {"id": 20, "subject": "综合能力", "chapter": "光传输技术", "type": "single", "q": "SDH的帧结构是多少字节？", "options": ["270×9", "270×10", "256×9", "512×9"], "answer": 0, "explain": "SDH帧结构为270列×9行，帧周期125μs。"}, {"id": 21, "subject": "综合能力", "chapter": "光传输技术", "type": "single", "q": "光纤通信的工作窗口中，1310nm窗口的损耗大约为？", "options": ["0.35dB/km", "0.2dB/km", "0.5dB/km", "1.0dB/km"], "answer": 0, "explain": "1310nm窗口损耗约0.35dB/km，1550nm窗口损耗约0.2dB/km。"}, {"id": 22, "subject": "综合能力", "chapter": "光传输技术", "type": "judge", "q": "DWDM是密集波分复用技术，可以在一根光纤上传输多个波长。", "answer": true, "explain": "DWDM(Dense Wavelength Division Multiplexing)密集波分复用，在一根光纤上传输多个不同波长的光信号。"}, {"id": 23, "subject": "综合能力", "chapter": "光传输技术", "type": "single", "q": "OTN的中文名称是？", "options": ["光传送网", "光传输网络", "光通道网络", "光波分网络"], "answer": 0, "explain": "OTN(Optical Transport Network)光传送网，是下一代骨干光传送网络技术。"}, {"id": 24, "subject": "综合能力", "chapter": "移动通信", "type": "single", "q": "5G的主要特点不包括？", "options": ["增强移动宽带", "超高可靠低延迟", "海量机器通信", "固定带宽接入"], "answer": 3, "explain": "5G三大场景：eMBB增强移动宽带、URLLC超高可靠低延迟、mMTC海量机器通信。"}, {"id": 25, "subject": "综合能力", "chapter": "移动通信", "type": "single", "q": "4G LTE使用的多址技术是？", "options": ["OFDMA", "TDMA", "CDMA", "FDMA"], "answer": 0, "explain": "4G LTE采用OFDMA(正交频分多址)技术。"}, {"id": 26, "subject": "综合能力", "chapter": "移动通信", "type": "single", "q": "GSM系统使用的多址方式是？", "options": ["FDMA/TDMA", "CDMA", "OFDMA", "SDMA"], "answer": 0, "explain": "GSM采用FDMA/TDMA(频分多址/时分多址)组合方式。"}, {"id": 27, "subject": "综合能力", "chapter": "移动通信", "type": "judge", "q": "5G的Sub-6GHz频段是指6GHz以下的频率。", "answer": true, "explain": "5G使用Sub-6GHz(6GHz以下)和毫米波(24GHz以上)两个频段范围。"}, {"id": 28, "subject": "综合能力", "chapter": "接入网", "type": "single", "q": "PON的无源是指什么？", "options": ["不需要电源", "不需要光分路器", "不需要光纤", "不需要OLT"], "answer": 0, "explain": "PON(Passive Optical Network)无源光网络，\"无源\"指光分配网络(ODN)中不需要有源设备，使用无源光分路器。"}, {"id": 29, "subject": "综合能力", "chapter": "接入网", "type": "single", "q": "EPON的线路速率是？", "options": ["上下行均为1.25Gb/s", "上行1.25Gb/s下行2.5Gb/s", "上下行均为2.5Gb/s", "上行1Gb/s下行10Gb/s"], "answer": 0, "explain": "EPON上下行均为1.25Gb/s，GPON下行2.5Gb/s上行1.25Gb/s。"}, {"id": 30, "subject": "综合能力", "chapter": "接入网", "type": "single", "q": "GPON相比EPON的优势是？", "options": ["带宽分配灵活、QoS有保障", "价格更便宜", "安装更简单", "技术更简单"], "answer": 0, "explain": "GPON相比EPON：带宽更大、分配灵活、QoS有保障、保护机制完善、安全性高，但技术复杂成本较高。"}, {"id": 31, "subject": "传输有线", "chapter": "光纤光缆", "type": "single", "q": "光纤损耗计算公式中，1550nm窗口的损耗系数约为？", "options": ["0.2dB/km", "0.35dB/km", "0.5dB/km", "1.0dB/km"], "answer": 0, "explain": "1550nm窗口损耗系数约0.2dB/km，1310nm窗口约0.35dB/km。考试常考计算题。"}, {"id": 32, "subject": "传输有线", "chapter": "光纤光缆", "type": "single", "q": "单模光纤的芯径一般为？", "options": ["8-10μm", "50μm", "62.5μm", "125μm"], "answer": 0, "explain": "单模光纤芯径8-10μm，多模光纤芯径50μm或62.5μm。"}, {"id": 33, "subject": "传输有线", "chapter": "光纤光缆", "type": "single", "q": "光纤色散主要包括？", "options": ["模式色散、色度色散、偏振模色散", "频率色散、时间色散", "相位色散、幅度色散", "线性色散、非线性色散"], "answer": 0, "explain": "光纤色散包括模式色散（多模光纤）、色度色散（材料+波导）、偏振模色散。"}, {"id": 34, "subject": "传输有线", "chapter": "光纤光缆", "type": "judge", "q": "G.652光纤是常规单模光纤，又称为非色散位移光纤。", "answer": true, "explain": "G.652是常规单模光纤(Non-Dispersion-Shifted Fiber)，零色散波长在1310nm附近。"}, {"id": 35, "subject": "传输有线", "chapter": "光纤光缆", "type": "single", "q": "光缆线路维护中，光纤接头损耗一般要求小于？", "options": ["0.1dB", "0.5dB", "1dB", "2dB"], "answer": 0, "explain": "光纤接头损耗一般要求小于0.1dB，单模光纤热熔接头损耗更小。"}, {"id": 36, "subject": "传输有线", "chapter": "SDH/MSTP", "type": "single", "q": "SDH复用映射过程中，容器C-4的速率为？", "options": ["139.264Mb/s", "155.520Mb/s", "622.080Mb/s", "2.048Mb/s"], "answer": 0, "explain": "C-4速率为139.264Mb/s，映射到AU-4后加上开销为155.520Mb/s(STM-1)。"}, {"id": 37, "subject": "传输有线", "chapter": "SDH/MSTP", "type": "single", "q": "SDH中段开销RSOH在STM-N帧中的位置是？", "options": ["前9行×N列", "第1-3行×9列", "第4-5行×9列", "第6-9行×9列"], "answer": 1, "explain": "SDH帧结构中，RSOH位于第1-3行，MSOH位于第5-9行，第4行为AU指针。"}, {"id": 38, "subject": "传输有线", "chapter": "SDH/MSTP", "type": "single", "q": "MSTP在SDH基础上增加了什么功能？", "options": ["以太网和ATM等多业务接入接口", "光放大功能", "色散补偿功能", "光交叉连接功能"], "answer": 0, "explain": "MSTP(Multi-Service Transport Platform)在SDH基础上增加了以太网、ATM等多业务接入处理功能。"}, {"id": 39, "subject": "传输有线", "chapter": "SDH/MSTP", "type": "judge", "q": "SDH采用同步复用方式，各等级速率精确为155.520Mb/s的整数倍。", "answer": true, "explain": "SDH同步复用，STM-1=155.520Mb/s，STM-4=622.080Mb/s，STM-16=2488.320Mb/s，STM-64=9953.280Mb/s。"}, {"id": 40, "subject": "传输有线", "chapter": "SDH/MSTP", "type": "single", "q": "SDH自愈环保护中，二纤单向通道倒换环使用什么原理？", "options": ["1+1保护", "1:1保护", "1:N保护", "恢复式保护"], "answer": 0, "explain": "二纤单向通道倒换环采用1+1保护，发送端桥接，接收端倒换。"}, {"id": 41, "subject": "传输有线", "chapter": "DWDM/OTN", "type": "single", "q": "DWDM系统中的关键设备OTU的功能是？", "options": ["光波长转换", "光放大", "光分插复用", "光监控"], "answer": 0, "explain": "OTU(Optical Transponder Unit)光波长转换/转发单元，将客户侧非标准波长转换为DWDM标准波长。"}, {"id": 42, "subject": "传输有线", "chapter": "DWDM/OTN", "type": "single", "q": "EDFA的工作窗口是？", "options": ["1550nm", "1310nm", "850nm", "1625nm"], "answer": 0, "explain": "EDFA(Erbium-Doped Fiber Amplifier)掺铒光纤放大器，工作在1550nm波段，增益高、噪声低。"}, {"id": 43, "subject": "传输有线", "chapter": "DWDM/OTN", "type": "single", "q": "OTN的层次结构中，OCh是指？", "options": ["光通道层", "光复用段层", "光传输段层", "电通道层"], "answer": 0, "explain": "OTN分层：OCh光通道层、OMS光复用段层、OTS光传输段层。"}, {"id": 44, "subject": "传输有线", "chapter": "DWDM/OTN", "type": "judge", "q": "OTN可以看作是\"数字封包的DWDM\"。", "answer": true, "explain": "OTN在DWDM基础上增加了数字包封开销(FEC)，提供更强大的OAM和前向纠错能力。"}, {"id": 45, "subject": "传输有线", "chapter": "DWDM/OTN", "type": "single", "q": "DWDM系统中32波系统，通道间隔一般为？", "options": ["100GHz", "50GHz", "200GHz", "25GHz"], "answer": 0, "explain": "DWDM 32波系统通道间隔一般为100GHz，16波为200GHz，40/80波可为50GHz。"}, {"id": 46, "subject": "传输有线", "chapter": "ASON", "type": "single", "q": "ASON是指？", "options": ["自动交换光网络", "智能交换网络", "自动同步网络", "光交换网络"], "answer": 0, "explain": "ASON(Automatically Switched Optical Network)自动交换光网络，在SDH/OTN基础上增加控制平面。"}, {"id": 47, "subject": "传输有线", "chapter": "ASON", "type": "single", "q": "ASON的三个平面不包括？", "options": ["传输平面", "控制平面", "管理平面", "用户平面"], "answer": 3, "explain": "ASON三平面：传送平面(数据面)、控制平面(信令路由)、管理平面(网管)。"}, {"id": 48, "subject": "传输有线", "chapter": "ASON", "type": "single", "q": "ASON支持的保护恢复类型中，硬性保护恢复是指？", "options": ["预先配置路由，无信令参与", "需要控制平面信令参与", "动态计算路由", "可被高优先级业务抢占"], "answer": 0, "explain": "硬性保护恢复由管理平面配置，不需要控制平面信令参与；软性保护恢复需要控制平面参与。"}, {"id": 49, "subject": "传输有线", "chapter": "ASON", "type": "judge", "q": "ASON是在传统光网络基础上增加了独立的控制平面。", "answer": true, "explain": "ASON=传统传送网+独立控制平面，实现智能选路、自动发现、自动保护恢复等功能。"}, {"id": 50, "subject": "传输有线", "chapter": "PTN/IPRAN", "type": "single", "q": "PTN是指？", "options": ["分组传送网", "光传送网", "同步传送网", "弹性传送网"], "answer": 0, "explain": "PTN(Packet Transport Network)分组传送网，面向分组的传送技术，支持OAM和QoS。"}, {"id": 51, "subject": "传输有线", "chapter": "PTN/IPRAN", "type": "single", "q": "PTN技术的核心特点是？", "options": ["面向连接的分组传送", "面向无连接的传送", "电路交换传送", "信元交换传送"], "answer": 0, "explain": "PTN是面向连接的分组传送技术，融合了SDH的OAM/QoS和以太网的灵活性。"}, {"id": 52, "subject": "传输有线", "chapter": "PTN/IPRAN", "type": "single", "q": "IPRAN相比PTN的特点是？", "options": ["三层功能完善，灵活性好", "二层功能更强", "更简单", "成本更低"], "answer": 0, "explain": "IPRAN基于IP/MPLS，三层功能完善，灵活性更好但运维复杂；PTN侧重二层，运维更简单。"}, {"id": 53, "subject": "传输有线", "chapter": "PTN/IPRAN", "type": "judge", "q": "PTN适合作为城域网接入汇聚层，IPRAN适合作为城域核心层。", "answer": true, "explain": "PTN侧重二层，适合城域接入汇聚；IPRAN三层功能强，适合城域核心和骨干。"}, {"id": 54, "subject": "传输有线", "chapter": "有线接入网", "type": "single", "q": "FTTH是指？", "options": ["光纤到户", "光纤到楼", "光纤到路边", "光纤到办公室"], "answer": 0, "explain": "FTTH(Fiber To The Home)光纤到户，FTTB到楼，FTTC到路边，FTTO到办公室。"}, {"id": 55, "subject": "传输有线", "chapter": "有线接入网", "type": "single", "q": "GPON的传输速率和分光比是？", "options": ["下行2.5Gb/s上行1.25Gb/s，分光比1:64或1:128", "上下行均1.25Gb/s，分光比1:32", "下行10Gb/s上行2.5Gb/s，分光比1:256", "上下行均2.5Gb/s，分光比1:128"], "answer": 0, "explain": "GPON下行2.5Gb/s上行1.25Gb/s，分光比可达1:64或1:128。EPON分光比1:32或1:64。"}, {"id": 56, "subject": "传输有线", "chapter": "有线接入网", "type": "single", "q": "PON系统中的OLT是指？", "options": ["光线路终端", "光网络终端", "光分配网络", "光分路器"], "answer": 0, "explain": "OLT(Optical Line Terminal)光线路终端(局端)，ONT/ONU是用户端，ODN是光分配网络。"}, {"id": 57, "subject": "传输有线", "chapter": "有线接入网", "type": "judge", "q": "PON中采用测距技术是为了避免上行数据碰撞。", "answer": true, "explain": "PON上行采用TDMA，各ONU到OLT距离不同，通过测距控制发送时间避免碰撞。"}, {"id": 58, "subject": "传输有线", "chapter": "有线接入网", "type": "single", "q": "EPON采用的线路编码是？", "options": ["8B/10B", "NRZ", "曼彻斯特编码", "4B/5B"], "answer": 0, "explain": "EPON采用8B/10B线路编码，GPON采用扰频NRZ编码。"}, {"id": 59, "subject": "传输有线", "chapter": "光纤光缆", "type": "single", "q": "一条光纤链路长80km，使用1550nm窗口，接头损耗共2dB，系统余量3dB，则总损耗约为？", "options": ["21dB", "18dB", "16dB", "24dB"], "answer": 0, "explain": "总损耗=光纤损耗+接头损耗+余量=80×0.2+2+3=16+2+3=21dB。"}, {"id": 60, "subject": "传输有线", "chapter": "SDH/MSTP", "type": "single", "q": "STM-64的传输速率约为？", "options": ["10Gb/s", "2.5Gb/s", "622Mb/s", "155Mb/s"], "answer": 0, "explain": "STM-1=155.520Mb/s，STM-4=622Mb/s，STM-16=2.5Gb/s，STM-64≈10Gb/s。"}, {"id": 61, "subject": "综合能力", "chapter": "光传输技术", "type": "single", "q": "SDH STM-1帧的传输周期是？", "options": ["125μs", "125ms", "250μs", "1ms"], "answer": 0, "explain": "SDH所有等级的帧传输周期都是125μs(8000帧/秒)。"}, {"id": 62, "subject": "综合能力", "chapter": "现代通信网", "type": "single", "q": "光纤通信中，1310nm和1550nm两个低损耗窗口之间的损耗差约为？", "options": ["0.15dB/km", "0.5dB/km", "0.3dB/km", "0.1dB/km"], "answer": 0, "explain": "1310nm损耗约0.35dB/km，1550nm损耗约0.2dB/km，差值约0.15dB/km。"},
-  {"id":63,"subject":"综合能力","chapter":"通信职业道德","type":"single","q":"以下哪项不属于通信科技人员的职业素质？","options":["系统掌握通信科技基础理论","熟练掌握通信技术标准","精通外语口语交流","具备工程实践能力"],"answer":2,"explain":"通信科技人员职业素质包括：系统掌握基础理论、掌握技术标准、工程实践能力、严谨治学精神。外语口语不是必须要求。"},
-  {"id":64,"subject":"综合能力","chapter":"通信职业道德","type":"judge","q":"通信科技人员的根本目的是造福人民、振兴祖国。","answer":true,"explain":"造福人民、振兴祖国是通信科技人员职业道德的核心和根本目的。"},
-  {"id":65,"subject":"综合能力","chapter":"通信法规","type":"single","q":"《网络安全法》规定网络运营者收集使用个人信息应遵循什么原则？","options":["知意同意原则","强制收集原则","随意使用原则","无偿共享原则"],"answer":0,"explain":"《网络安全法》要求收集使用个人信息应遵循知意同意原则，需明示目的并取得用户同意。"},
-  {"id":66,"subject":"综合能力","chapter":"通信法规","type":"single","q":"电信用户超过约定交费日后多少天不交费可暂停服务？","options":["10天","30天","60天","90天"],"answer":1,"explain":"电信用户超过约定交费日30天不交费，电信企业可暂停服务。暂停后60天仍不交费可终止服务。"},
-  {"id":67,"subject":"综合能力","chapter":"通信法规","type":"judge","q":"电信业务经营者在服务障碍期间仍可向用户收取费用。","answer":false,"explain":"服务障碍期间不得收取费用，修复后应补足服务时间或减收费用。"},
-  {"id":68,"subject":"综合能力","chapter":"现代通信网","type":"single","q":"以下哪个是传输层的协议？","options":["IP","TCP","HTTP","ARP"],"answer":1,"explain":"TCP和UDP是传输层协议，IP是网络层协议，HTTP是应用层协议。"},
-  {"id":69,"subject":"综合能力","chapter":"现代通信网","type":"single","q":"以下哪个不是TCP/IP模型中的层次？","options":["网络接口层","网络层","会话层","应用层"],"answer":2,"explain":"TCP/IP模型4层：网络接口层、网络层、传输层、应用层。会话层是OSI模型的第5层。"},
-  {"id":70,"subject":"综合能力","chapter":"现代通信网","type":"single","q":"DNS的主要功能是？","options":["分配IP地址","域名到IP地址的解析","网络流量控制","网络安全防护"],"answer":1,"explain":"DNS将域名解析为IP地址。DHCP负责分配IP地址。"},
-  {"id":71,"subject":"综合能力","chapter":"现代通信网","type":"judge","q":"HTTP协议是无状态协议。","answer":true,"explain":"HTTP是无状态协议，每次请求独立，不保留前次请求信息。Cookie/Session用于保持状态。"},
-  {"id":72,"subject":"综合能力","chapter":"现代通信网","type":"single","q":"以下哪个端口号对应HTTPS？","options":["80","443","21","22"],"answer":1,"explain":"HTTP端口80，HTTPS端口443，FTP端口21，SSH端口22。"},
-  {"id":73,"subject":"综合能力","chapter":"交换技术","type":"single","q":"分组交换相比电路交换的优势是？","options":["独占带宽延迟小","资源共享利用率高","实现简单","实时性好"],"answer":1,"explain":"分组交换采用存储转发，资源共享利用率高，但延迟不固定，实时性不如电路交换。"},
-  {"id":74,"subject":"综合能力","chapter":"交换技术","type":"single","q":"帧中继工作在OSI模型的哪一层？","options":["物理层","数据链路层","网络层","传输层"],"answer":1,"explain":"帧中继(Frame Relay)工作在数据链路层，是简化的X.25协议。"},
-  {"id":75,"subject":"综合能力","chapter":"交换技术","type":"judge","q":"ATM既可以使用电路交换也可以使用分组交换。","answer":false,"explain":"ATM(异步传输模式)采用固定长度信元的快速分组交换。"},
-  {"id":76,"subject":"综合能力","chapter":"交换技术","type":"single","q":"MPLS中标签的长度是多少位？","options":["16位","20位","32位","48位"],"answer":1,"explain":"MPLS标签共32位，其中标签值字段20位。"},
-  {"id":77,"subject":"综合能力","chapter":"光传输技术","type":"single","q":"SDH中AU-4指针的作用是？","options":["差错校验","码速调整和相位对准","路由选择","性能监测"],"answer":1,"explain":"AU-4指针用于码速调整和相位对准，使VC-4在AU-4中的位置灵活。"},
-  {"id":78,"subject":"综合能力","chapter":"光传输技术","type":"single","q":"SDH的复用方式是？","options":["异步复用","同步复用","准同步复用","非同步复用"],"answer":1,"explain":"SDH采用同步复用方式，各等级速率为STM-1的整数倍。"},
-  {"id":79,"subject":"综合能力","chapter":"光传输技术","type":"single","q":"OTN中FEC的功能是？","options":["前向纠错","流量控制","路由选择","加密"],"answer":0,"explain":"FEC前向纠错，OTN中采用FEC提高传输质量，降低误码率。"},
-  {"id":80,"subject":"综合能力","chapter":"光传输技术","type":"judge","q":"EDFA可以放大1310nm窗口的光信号。","answer":false,"explain":"EDFA工作在1550nm窗口，不能放大1310nm信号。"},
-  {"id":81,"subject":"综合能力","chapter":"移动通信","type":"single","q":"5G中eMBB场景的主要应用是？","options":["大规模物联网","自动驾驶","超高清视频/VR/AR","工业控制"],"answer":2,"explain":"eMBB增强移动宽带：4K/8K超高清视频、VR/AR、云游戏等大带宽应用。"},
-  {"id":82,"subject":"综合能力","chapter":"移动通信","type":"single","q":"5G中网络切片技术的主要目的是？","options":["增加带宽","在一张物理网络上虚拟出多个逻辑网络","降低延迟","减少天线数量"],"answer":1,"explain":"网络切片在一张物理网络上虚拟出多个端到端逻辑网络，满足不同业务QoS需求。"},
-  {"id":83,"subject":"综合能力","chapter":"移动通信","type":"single","q":"5G使用的主要多址技术是？","options":["OFDMA","CDMA","TDMA","FDMA"],"answer":0,"explain":"5G NR采用CP-OFDM波形，上下行均使用OFDMA。"},
-  {"id":84,"subject":"综合能力","chapter":"移动通信","type":"judge","q":"Massive MIMO是5G的关键技术之一。","answer":true,"explain":"Massive MIMO大规模天线阵列是5G关键技术。"},
-  {"id":85,"subject":"综合能力","chapter":"接入网","type":"single","q":"xDSL中的x代表什么？","options":["各种变体","传输速率","传输距离","传输介质"],"answer":0,"explain":"xDSL中x代表不同变体，如ADSL、VDSL、HDSL等。"},
-  {"id":86,"subject":"综合能力","chapter":"接入网","type":"single","q":"ADSL的上下行速率特点是？","options":["上下行对称","上行大于下行","下行大于上行","固定速率"],"answer":2,"explain":"ADSL非对称数字用户线，下行速率远大于上行速率。"},
-  {"id":87,"subject":"综合能力","chapter":"接入网","type":"judge","q":"GPON的传输距离可达20km以上。","answer":true,"explain":"GPON最大传输距离可达20km。"},
-  {"id":88,"subject":"综合能力","chapter":"接入网","type":"single","q":"以下哪个不是PON系统的组成部分？","options":["OLT","ODN","ONU","BAS"],"answer":3,"explain":"PON由OLT、ODN、ONU组成。BAS是宽带接入服务器，不属于PON。"},
-  {"id":89,"subject":"传输有线","chapter":"光纤光缆","type":"single","q":"光纤的数值孔径NA表示什么？","options":["光纤的损耗","光纤的集光能力","光纤的带宽","光纤的强度"],"answer":1,"explain":"数值孔径NA表示光纤的集光能力，NA越大集光能力越强。"},
-  {"id":90,"subject":"传输有线","chapter":"光纤光缆","type":"single","q":"G.655光纤的特点是？","options":["非零色散位移光纤","常规单模光纤","色散位移光纤","色散平坦光纤"],"answer":0,"explain":"G.655是非零色散位移光纤(NZDSF)，适合DWDM系统。"},
-  {"id":91,"subject":"传输有线","chapter":"光纤光缆","type":"single","q":"光纤通信系统中色散补偿的方法不包括？","options":["色散补偿光纤DCF","光纤光栅","啁啾光栅","增大光功率"],"answer":3,"explain":"增大光功率不能补偿色散。补偿方法包括DCF、光纤光栅等。"},
-  {"id":92,"subject":"传输有线","chapter":"光纤光缆","type":"judge","q":"多模光纤存在模式色散，因此不适合长距离传输。","answer":true,"explain":"多模光纤存在模式色散，限制带宽和传输距离，适合短距离。"},
-  {"id":93,"subject":"传输有线","chapter":"光纤光缆","type":"single","q":"光纤通信系统中，光接收机的核心部件是？","options":["激光器","光检测器(光电二极管)","光放大器","光分路器"],"answer":1,"explain":"光接收机核心是光检测器(PIN或APD)，将光信号转换为电信号。"},
-  {"id":94,"subject":"传输有线","chapter":"光纤光缆","type":"single","q":"光纤通信中光源主要使用哪两种器件？","options":["LED和LD(激光二极管)","LED和白炽灯","LD和荧光灯","LD和卤素灯"],"answer":0,"explain":"光纤通信光源主要使用LED(多模)和LD(单模)。"},
-  {"id":95,"subject":"传输有线","chapter":"SDH/MSTP","type":"single","q":"SDH复用结构中，2Mb/s信号映射到的是？","options":["C-12","C-3","C-4","C-2"],"answer":0,"explain":"2.048Mb/s(PDH E1)映射到容器C-12。"},
-  {"id":96,"subject":"传输有线","chapter":"SDH/MSTP","type":"single","q":"SDH帧结构中第4行1-9列的作用是？","options":["段开销RSOH","管理单元指针AU-PTR","复用段开销MSOH","净荷区"],"answer":1,"explain":"SDH帧第4行1-9列是AU指针(AU-PTR)。"},
-  {"id":97,"subject":"传输有线","chapter":"SDH/MSTP","type":"single","q":"SDH中B1字节用于检测什么？","options":["再生段误码","复用段误码","高阶通道误码","低阶通道误码"],"answer":0,"explain":"B1(BIP-8)用于再生段误码监测，B2用于复用段。"},
-  {"id":98,"subject":"传输有线","chapter":"SDH/MSTP","type":"single","q":"SDH中K1/K2字节的作用是？","options":["性能监测","自动保护倒换(APS)","同步状态消息","数据通信通道"],"answer":1,"explain":"K1/K2字节用于自动保护倒换(APS)信令。"},
-  {"id":99,"subject":"传输有线","chapter":"SDH/MSTP","type":"judge","q":"SDH中二纤双向复用段倒换环在故障时使用一半容量进行保护。","answer":true,"explain":"二纤双向复用段倒换环采用1:1保护，预留一半容量。"},
-  {"id":100,"subject":"传输有线","chapter":"SDH/MSTP","type":"single","q":"MSTP中封装以太网数据使用的协议是？","options":["GFP/LAPS","PPP","HDLC","FR"],"answer":0,"explain":"MSTP使用GFP或LAPS封装以太网数据到SDH帧中。"},
-  {"id":101,"subject":"传输有线","chapter":"DWDM/OTN","type":"single","q":"DWDM系统中OADM的作用是？","options":["放大光信号","上/下路特定波长","转换波长","监控光功率"],"answer":1,"explain":"OADM光分插复用器，上/下特定波长。"},
-  {"id":102,"subject":"传输有线","chapter":"DWDM/OTN","type":"single","q":"DWDM系统中拉曼放大器的优点是？","options":["增益高噪声低","分布式放大","价格便宜","不需要泵浦光"],"answer":1,"explain":"拉曼放大器利用光纤本身拉曼散射，实现分布式放大，噪声低。"},
-  {"id":103,"subject":"传输有线","chapter":"DWDM/OTN","type":"single","q":"OTN中OPUk的作用是?","options":["光通道净荷单元","光通道数据单元","光通道传输单元","光通道监控单元"],"answer":0,"explain":"OTN电层：OPUk(净荷单元)→ODUk(数据单元)→OUTk(传输单元)。"},
-  {"id":104,"subject":"传输有线","chapter":"DWDM/OTN","type":"judge","q":"OTN的ODUk支持三级串联监控。","answer":true,"explain":"ODUk支持PM和TCM三级串联连接监控。"},
-  {"id":105,"subject":"传输有线","chapter":"DWDM/OTN","type":"single","q":"DWDM系统中40波系统常用的通道间隔是？","options":["50GHz","100GHz","200GHz","25GHz"],"answer":0,"explain":"40波系统通常采用50GHz通道间隔。"},
-  {"id":106,"subject":"传输有线","chapter":"ASON","type":"single","q":"ASON中UNI接口是指？","options":["用户网络接口","网络网络接口","内部网络接口","外部网络接口"],"answer":0,"explain":"UNI(用户网络接口)连接用户和网络。"},
-  {"id":107,"subject":"传输有线","chapter":"ASON","type":"single","q":"ASON控制平面的核心功能不包括？","options":["自动发现","路由计算","信令建立连接","数据转发"],"answer":3,"explain":"数据转发是传送平面功能，不是控制平面。"},
-  {"id":108,"subject":"传输有线","chapter":"ASON","type":"single","q":"ASON中LMP的作用是？","options":["维护控制通道和链路相关性","分配IP地址","管理用户认证","数据加密"],"answer":0,"explain":"LMP维护控制通道连通性和链路属性关联。"},
-  {"id":109,"subject":"传输有线","chapter":"ASON","type":"judge","q":"ASON支持永久连接和交换连接两种基本连接类型。","answer":false,"explain":"ASON支持三种：PC永久连接、SPC软永久连接、SC交换连接。"},
-  {"id":110,"subject":"传输有线","chapter":"PTN/IPRAN","type":"single","q":"PTN中PWE3技术的作用是？","options":["伪线仿真封装TDM/ATM等业务","IP路由","光信号放大","波长转换"],"answer":0,"explain":"PWE3在分组网络上仿真TDM/ATM等传统业务。"},
-  {"id":111,"subject":"传输有线","chapter":"PTN/IPRAN","type":"single","q":"MPLS-TP中LSP是指？","options":["标签交换路径","链路状态协议","路由选择协议","链路安全保护"],"answer":0,"explain":"LSP(Label Switched Path)标签交换路径。"},
-  {"id":112,"subject":"传输有线","chapter":"PTN/IPRAN","type":"single","q":"IPRAN中使用的核心路由协议通常是？","options":["OSPF/IS-IS","RIP","静态路由","STP"],"answer":0,"explain":"IPRAN通常使用OSPF或IS-IS作为IGP。"},
-  {"id":113,"subject":"传输有线","chapter":"PTN/IPRAN","type":"judge","q":"PTN中线性保护倒换分为1+1和1:1两种方式。","answer":true,"explain":"MPLS-TP线性保护包括1+1和1:1两种方式。"},
-  {"id":114,"subject":"传输有线","chapter":"有线接入网","type":"single","q":"PON系统中测距的目的是？","options":["测量光纤长度","计算ONU到OLT的传输时延","测量光功率","测量带宽"],"answer":1,"explain":"PON测距计算传输时延，调整发送时间避免上行碰撞。"},
-  {"id":115,"subject":"传输有线","chapter":"有线接入网","type":"single","q":"GPON中DBA功能是指？","options":["动态带宽分配","数据缓冲区管理","数字比特分配","分布式带宽接入"],"answer":0,"explain":"DBA动态带宽分配，根据流量需求动态调整上行带宽。"},
-  {"id":116,"subject":"传输有线","chapter":"有线接入网","type":"single","q":"10G GPON的标准是？","options":["G.987系列","G.984系列","IEEE 802.3ah","G.983系列"],"answer":0,"explain":"10G GPON标准为ITU-T G.987系列(XG-PON)。"},
-  {"id":117,"subject":"传输有线","chapter":"有线接入网","type":"judge","q":"PON系统是点到多点(P2MP)结构。","answer":true,"explain":"PON是P2MP结构：一个OLT连接多个ONU。"},
-  {"id":118,"subject":"传输有线","chapter":"有线接入网","type":"single","q":"FTTH网络中，光分路器的典型分光比是？","options":["1:4 到 1:64","1:2 到 1:4","1:128 到 1:256","1:1"],"answer":0,"explain":"FTTH典型分光比1:4到1:64。"},
-  {"id":119,"subject":"综合能力","chapter":"现代通信网","type":"single","q":"某SDH系统传输STM-16，其传输速率为？","options":["155.520Mb/s","622.080Mb/s","2488.320Mb/s","9953.280Mb/s"],"answer":2,"explain":"STM-16=2488.320Mb/s(约2.5Gb/s)。"},
-  {"id":120,"subject":"传输有线","chapter":"光纤光缆","type":"single","q":"一条光纤链路长50km，1550nm窗口损耗0.2dB/km，接头1dB，余量3dB，总损耗为？","options":["14dB","10dB","16dB","18dB"],"answer":0,"explain":"总损耗=50×0.2+1+3=14dB。"},
-  {"id":121,"subject":"综合能力","chapter":"通信法规","type":"single","q":"《数据安全法》对数据分级分类管理，以下哪个不属于数据分类？","options":["一般数据","重要数据","核心数据","公开数据"],"answer":3,"explain":"数据安全法将数据分为一般数据、重要数据、核心数据三个等级。"},
-  {"id":122,"subject":"综合能力","chapter":"光传输技术","type":"single","q":"SDH STM-1帧的传输周期是？","options":["125μs","125ms","250μs","1ms"],"answer":0,"explain":"SDH所有等级帧周期都是125μs(8000帧/秒)。"}
-]
-var quizState = {
-  mode: 'sequential',
-  subject: 'all',
-  questions: [],
-  currentIdx: 0,
-  answers: {},
-  wrongIds: [],
-  answered: false
-};
-
-function quizStoreGet(key, def) {
-  try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : def; }
-  catch(e) { return def; }
-}
-function quizStoreSet(key, val) {
-  try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
-}
-
-function initQuiz() {
-  // Count questions per subject
-  var s1Count = QUESTIONS.filter(function(q){return q.subject==='综合能力'}).length;
-  var s2Count = QUESTIONS.filter(function(q){return q.subject==='传输有线'}).length;
-  document.getElementById('quizTotal').textContent = QUESTIONS.length;
-  document.getElementById('quizCountS1').textContent = s1Count + '题';
-  document.getElementById('quizCountS2').textContent = s2Count + '题';
-  
-  // Load stats
-  var stats = quizStoreGet('quizStats', {done:0, correct:0, total:0});
-  var doneIds = quizStoreGet('quizDoneIds', []);
-  var wrongIds = quizStoreGet('quizWrongIds', []);
-  
-  document.getElementById('quizDone').textContent = doneIds.length;
-  var acc = stats.total > 0 ? Math.round(stats.correct / stats.total * 100) : 0;
-  document.getElementById('quizCorrect').textContent = acc + '%';
-  document.getElementById('quizWrong').textContent = wrongIds.length;
-  
-  // Render wrong notebook
-  renderWrongNotebook();
-}
-
-function renderWrongNotebook() {
-  var wrongIds = quizStoreGet('quizWrongIds', []);
-  var container = document.getElementById('wrongNotebook');
-  if (!container) return;
-  
-  if (wrongIds.length === 0) {
-    container.innerHTML = '<div class="wrong-empty"><div class="wrong-empty-icon">✅</div><div>暂无错题</div><div style="font-size:12px;margin-top:4px;">做错题后会自动收录</div></div>';
-    return;
+var QUESTIONS = [
+  {
+    "id": 1,
+    "subject": "综合能力",
+    "chapter": "通信职业道德",
+    "type": "single",
+    "q": "通信科技人员职业道德的核心是？",
+    "options": [
+      "造福人民、振兴祖国",
+      "热爱专业、忠于职责",
+      "勇于探索、敢于创新",
+      "实事求是、追求真理"
+    ],
+    "answer": 0,
+    "explain": "造福人民、振兴祖国是通信科技人员职业道德的核心，也是出发点和归宿。"
+  },
+  {
+    "id": 2,
+    "subject": "综合能力",
+    "chapter": "通信职业道德",
+    "type": "single",
+    "q": "通信科技人员最突出的特点是？",
+    "options": [
+      "勇于探索、敢于创新",
+      "不畏艰险、献身科学",
+      "热爱专业、忠于职责",
+      "同心同德、团结协作"
+    ],
+    "answer": 0,
+    "explain": "勇于探索、敢于创新是通信科技人员最突出的特点。"
+  },
+  {
+    "id": 3,
+    "subject": "综合能力",
+    "chapter": "通信职业道德",
+    "type": "single",
+    "q": "通信科技人员的基本道德要求是？",
+    "options": [
+      "热爱专业、忠于职责",
+      "造福人民、振兴祖国",
+      "勤奋求知、严谨治学",
+      "谦虚谨慎、尊重他人"
+    ],
+    "answer": 0,
+    "explain": "热爱专业、忠于职责是通信科技人员的基本道德要求。"
+  },
+  {
+    "id": 4,
+    "subject": "综合能力",
+    "chapter": "通信职业道德",
+    "type": "judge",
+    "q": "通信职业道德的特点包括形式多样性、适用性和较强稳定性。",
+    "answer": true,
+    "explain": "通信职业道德三大特点：形式多样性适用性、较强稳定性连续性、很强专业性具体性。"
+  },
+  {
+    "id": 5,
+    "subject": "综合能力",
+    "chapter": "通信职业道德",
+    "type": "single",
+    "q": "通信科技的\"六化\"不包括以下哪项？",
+    "options": [
+      "数字化",
+      "综合化",
+      "标准化",
+      "模拟化"
+    ],
+    "answer": 3,
+    "explain": "通信科技\"六化\"：数字化、综合化、智能化、宽带化、个人化、标准化。不包括模拟化。"
+  },
+  {
+    "id": 6,
+    "subject": "综合能力",
+    "chapter": "通信法规",
+    "type": "single",
+    "q": "《电信条例》规定电信业务分为？",
+    "options": [
+      "基础电信业务和增值电信业务",
+      "固定电信业务和移动电信业务",
+      "国内电信业务和国际电信业务",
+      "语音业务和数据业务"
+    ],
+    "answer": 0,
+    "explain": "《电信条例》将电信业务分为基础电信业务和增值电信业务两大类。"
+  },
+  {
+    "id": 7,
+    "subject": "综合能力",
+    "chapter": "通信法规",
+    "type": "single",
+    "q": "电信用户申告服务障碍的，电信企业应在多少小时内修复？",
+    "options": [
+      "24小时",
+      "48小时",
+      "72小时",
+      "12小时"
+    ],
+    "answer": 0,
+    "explain": "电信用户申告服务障碍，电信企业应自接到申告之日起24小时内修复或调通。"
+  },
+  {
+    "id": 8,
+    "subject": "综合能力",
+    "chapter": "通信法规",
+    "type": "judge",
+    "q": "电信业务经营者有权为用户擅自开通收费项目。",
+    "answer": false,
+    "explain": "电信业务经营者不得擅自为用户开通收费项目，必须经用户确认。"
+  },
+  {
+    "id": 9,
+    "subject": "综合能力",
+    "chapter": "通信法规",
+    "type": "single",
+    "q": "电信网码号资源属于？",
+    "options": [
+      "国家所有",
+      "企业所有",
+      "运营商所有",
+      "集体所有"
+    ],
+    "answer": 0,
+    "explain": "电信网码号资源属于国家所有，由国家统一规划、分配和管理。"
+  },
+  {
+    "id": 10,
+    "subject": "综合能力",
+    "chapter": "现代通信网",
+    "type": "single",
+    "q": "通信网的基本结构不包括？",
+    "options": [
+      "星型网",
+      "环型网",
+      "树型网",
+      "平行型网"
+    ],
+    "answer": 3,
+    "explain": "通信网基本结构：星型、环型、树型、网型、总线型。不包括平行型。"
+  },
+  {
+    "id": 11,
+    "subject": "综合能力",
+    "chapter": "现代通信网",
+    "type": "single",
+    "q": "OSI参考模型共有几层？",
+    "options": [
+      "5层",
+      "6层",
+      "7层",
+      "8层"
+    ],
+    "answer": 2,
+    "explain": "OSI参考模型共7层：物理层、数据链路层、网络层、传输层、会话层、表示层、应用层。"
+  },
+  {
+    "id": 12,
+    "subject": "综合能力",
+    "chapter": "现代通信网",
+    "type": "single",
+    "q": "TCP/IP协议模型分为几层？",
+    "options": [
+      "3层",
+      "4层",
+      "5层",
+      "7层"
+    ],
+    "answer": 1,
+    "explain": "TCP/IP模型分4层：网络接口层、网络层、传输层、应用层。"
+  },
+  {
+    "id": 13,
+    "subject": "综合能力",
+    "chapter": "现代通信网",
+    "type": "judge",
+    "q": "TCP协议是面向连接的可靠传输协议。",
+    "answer": true,
+    "explain": "TCP是面向连接的、可靠的传输层协议；UDP是无连接的、不可靠的传输协议。"
+  },
+  {
+    "id": 14,
+    "subject": "综合能力",
+    "chapter": "现代通信网",
+    "type": "single",
+    "q": "以下哪个不是网络拓扑结构？",
+    "options": [
+      "总线型",
+      "星型",
+      "蜂窝型",
+      "环型"
+    ],
+    "answer": 2,
+    "explain": "基本网络拓扑结构包括总线型、星型、环型、树型、网型。蜂窝型不属于基本拓扑结构。"
+  },
+  {
+    "id": 15,
+    "subject": "综合能力",
+    "chapter": "交换技术",
+    "type": "single",
+    "q": "电路交换的三个阶段不包括？",
+    "options": [
+      "建立连接",
+      "数据传输",
+      "释放连接",
+      "差错控制"
+    ],
+    "answer": 3,
+    "explain": "电路交换三阶段：建立连接、数据传输、释放连接。不需要差错控制。"
+  },
+  {
+    "id": 16,
+    "subject": "综合能力",
+    "chapter": "交换技术",
+    "type": "single",
+    "q": "分组交换的特点是？",
+    "options": [
+      "独占带宽",
+      "资源共享",
+      "延迟固定",
+      "无延迟"
+    ],
+    "answer": 1,
+    "explain": "分组交换采用存储转发方式，实现资源共享，延迟不固定。"
+  },
+  {
+    "id": 17,
+    "subject": "综合能力",
+    "chapter": "交换技术",
+    "type": "single",
+    "q": "ATM交换的信元长度固定为多少字节？",
+    "options": [
+      "48字节",
+      "53字节",
+      "64字节",
+      "128字节"
+    ],
+    "answer": 1,
+    "explain": "ATM信元固定为53字节，其中信头5字节，净荷48字节。"
+  },
+  {
+    "id": 18,
+    "subject": "综合能力",
+    "chapter": "交换技术",
+    "type": "judge",
+    "q": "MPLS是一种多协议标签交换技术。",
+    "answer": true,
+    "explain": "MPLS(Multi-Protocol Label Switching)是多协议标签交换，介于二层和三层之间。"
+  },
+  {
+    "id": 19,
+    "subject": "综合能力",
+    "chapter": "光传输技术",
+    "type": "single",
+    "q": "SDH的基本传输速率为？",
+    "options": [
+      "STM-1为155.520Mb/s",
+      "STM-1为622Mb/s",
+      "STM-1为2.5Gb/s",
+      "STM-1为10Gb/s"
+    ],
+    "answer": 0,
+    "explain": "STM-1是SDH的基本传输速率，速率为155.520Mb/s。STM-4=622Mb/s, STM-16=2.5Gb/s, STM-64=10Gb/s。"
+  },
+  {
+    "id": 20,
+    "subject": "综合能力",
+    "chapter": "光传输技术",
+    "type": "single",
+    "q": "SDH的帧结构是多少字节？",
+    "options": [
+      "270×9",
+      "270×10",
+      "256×9",
+      "512×9"
+    ],
+    "answer": 0,
+    "explain": "SDH帧结构为270列×9行，帧周期125μs。"
+  },
+  {
+    "id": 21,
+    "subject": "综合能力",
+    "chapter": "光传输技术",
+    "type": "single",
+    "q": "光纤通信的工作窗口中，1310nm窗口的损耗大约为？",
+    "options": [
+      "0.35dB/km",
+      "0.2dB/km",
+      "0.5dB/km",
+      "1.0dB/km"
+    ],
+    "answer": 0,
+    "explain": "1310nm窗口损耗约0.35dB/km，1550nm窗口损耗约0.2dB/km。"
+  },
+  {
+    "id": 22,
+    "subject": "综合能力",
+    "chapter": "光传输技术",
+    "type": "judge",
+    "q": "DWDM是密集波分复用技术，可以在一根光纤上传输多个波长。",
+    "answer": true,
+    "explain": "DWDM(Dense Wavelength Division Multiplexing)密集波分复用，在一根光纤上传输多个不同波长的光信号。"
+  },
+  {
+    "id": 23,
+    "subject": "综合能力",
+    "chapter": "光传输技术",
+    "type": "single",
+    "q": "OTN的中文名称是？",
+    "options": [
+      "光传送网",
+      "光传输网络",
+      "光通道网络",
+      "光波分网络"
+    ],
+    "answer": 0,
+    "explain": "OTN(Optical Transport Network)光传送网，是下一代骨干光传送网络技术。"
+  },
+  {
+    "id": 24,
+    "subject": "综合能力",
+    "chapter": "移动通信",
+    "type": "single",
+    "q": "5G的主要特点不包括？",
+    "options": [
+      "增强移动宽带",
+      "超高可靠低延迟",
+      "海量机器通信",
+      "固定带宽接入"
+    ],
+    "answer": 3,
+    "explain": "5G三大场景：eMBB增强移动宽带、URLLC超高可靠低延迟、mMTC海量机器通信。"
+  },
+  {
+    "id": 25,
+    "subject": "综合能力",
+    "chapter": "移动通信",
+    "type": "single",
+    "q": "4G LTE使用的多址技术是？",
+    "options": [
+      "OFDMA",
+      "TDMA",
+      "CDMA",
+      "FDMA"
+    ],
+    "answer": 0,
+    "explain": "4G LTE采用OFDMA(正交频分多址)技术。"
+  },
+  {
+    "id": 26,
+    "subject": "综合能力",
+    "chapter": "移动通信",
+    "type": "single",
+    "q": "GSM系统使用的多址方式是？",
+    "options": [
+      "FDMA/TDMA",
+      "CDMA",
+      "OFDMA",
+      "SDMA"
+    ],
+    "answer": 0,
+    "explain": "GSM采用FDMA/TDMA(频分多址/时分多址)组合方式。"
+  },
+  {
+    "id": 27,
+    "subject": "综合能力",
+    "chapter": "移动通信",
+    "type": "judge",
+    "q": "5G的Sub-6GHz频段是指6GHz以下的频率。",
+    "answer": true,
+    "explain": "5G使用Sub-6GHz(6GHz以下)和毫米波(24GHz以上)两个频段范围。"
+  },
+  {
+    "id": 28,
+    "subject": "综合能力",
+    "chapter": "接入网",
+    "type": "single",
+    "q": "PON的无源是指什么？",
+    "options": [
+      "不需要电源",
+      "不需要光分路器",
+      "不需要光纤",
+      "不需要OLT"
+    ],
+    "answer": 0,
+    "explain": "PON(Passive Optical Network)无源光网络，\"无源\"指光分配网络(ODN)中不需要有源设备，使用无源光分路器。"
+  },
+  {
+    "id": 29,
+    "subject": "综合能力",
+    "chapter": "接入网",
+    "type": "single",
+    "q": "EPON的线路速率是？",
+    "options": [
+      "上下行均为1.25Gb/s",
+      "上行1.25Gb/s下行2.5Gb/s",
+      "上下行均为2.5Gb/s",
+      "上行1Gb/s下行10Gb/s"
+    ],
+    "answer": 0,
+    "explain": "EPON上下行均为1.25Gb/s，GPON下行2.5Gb/s上行1.25Gb/s。"
+  },
+  {
+    "id": 30,
+    "subject": "综合能力",
+    "chapter": "接入网",
+    "type": "single",
+    "q": "GPON相比EPON的优势是？",
+    "options": [
+      "带宽分配灵活、QoS有保障",
+      "价格更便宜",
+      "安装更简单",
+      "技术更简单"
+    ],
+    "answer": 0,
+    "explain": "GPON相比EPON：带宽更大、分配灵活、QoS有保障、保护机制完善、安全性高，但技术复杂成本较高。"
+  },
+  {
+    "id": 31,
+    "subject": "传输有线",
+    "chapter": "光纤光缆",
+    "type": "single",
+    "q": "光纤损耗计算公式中，1550nm窗口的损耗系数约为？",
+    "options": [
+      "0.2dB/km",
+      "0.35dB/km",
+      "0.5dB/km",
+      "1.0dB/km"
+    ],
+    "answer": 0,
+    "explain": "1550nm窗口损耗系数约0.2dB/km，1310nm窗口约0.35dB/km。考试常考计算题。"
+  },
+  {
+    "id": 32,
+    "subject": "传输有线",
+    "chapter": "光纤光缆",
+    "type": "single",
+    "q": "单模光纤的芯径一般为？",
+    "options": [
+      "8-10μm",
+      "50μm",
+      "62.5μm",
+      "125μm"
+    ],
+    "answer": 0,
+    "explain": "单模光纤芯径8-10μm，多模光纤芯径50μm或62.5μm。"
+  },
+  {
+    "id": 33,
+    "subject": "传输有线",
+    "chapter": "光纤光缆",
+    "type": "single",
+    "q": "光纤色散主要包括？",
+    "options": [
+      "模式色散、色度色散、偏振模色散",
+      "频率色散、时间色散",
+      "相位色散、幅度色散",
+      "线性色散、非线性色散"
+    ],
+    "answer": 0,
+    "explain": "光纤色散包括模式色散（多模光纤）、色度色散（材料+波导）、偏振模色散。"
+  },
+  {
+    "id": 34,
+    "subject": "传输有线",
+    "chapter": "光纤光缆",
+    "type": "judge",
+    "q": "G.652光纤是常规单模光纤，又称为非色散位移光纤。",
+    "answer": true,
+    "explain": "G.652是常规单模光纤(Non-Dispersion-Shifted Fiber)，零色散波长在1310nm附近。"
+  },
+  {
+    "id": 35,
+    "subject": "传输有线",
+    "chapter": "光纤光缆",
+    "type": "single",
+    "q": "光缆线路维护中，光纤接头损耗一般要求小于？",
+    "options": [
+      "0.1dB",
+      "0.5dB",
+      "1dB",
+      "2dB"
+    ],
+    "answer": 0,
+    "explain": "光纤接头损耗一般要求小于0.1dB，单模光纤热熔接头损耗更小。"
+  },
+  {
+    "id": 36,
+    "subject": "传输有线",
+    "chapter": "SDH/MSTP",
+    "type": "single",
+    "q": "SDH复用映射过程中，容器C-4的速率为？",
+    "options": [
+      "139.264Mb/s",
+      "155.520Mb/s",
+      "622.080Mb/s",
+      "2.048Mb/s"
+    ],
+    "answer": 0,
+    "explain": "C-4速率为139.264Mb/s，映射到AU-4后加上开销为155.520Mb/s(STM-1)。"
+  },
+  {
+    "id": 37,
+    "subject": "传输有线",
+    "chapter": "SDH/MSTP",
+    "type": "single",
+    "q": "SDH中段开销RSOH在STM-N帧中的位置是？",
+    "options": [
+      "前9行×N列",
+      "第1-3行×9列",
+      "第4-5行×9列",
+      "第6-9行×9列"
+    ],
+    "answer": 1,
+    "explain": "SDH帧结构中，RSOH位于第1-3行，MSOH位于第5-9行，第4行为AU指针。"
+  },
+  {
+    "id": 38,
+    "subject": "传输有线",
+    "chapter": "SDH/MSTP",
+    "type": "single",
+    "q": "MSTP在SDH基础上增加了什么功能？",
+    "options": [
+      "以太网和ATM等多业务接入接口",
+      "光放大功能",
+      "色散补偿功能",
+      "光交叉连接功能"
+    ],
+    "answer": 0,
+    "explain": "MSTP(Multi-Service Transport Platform)在SDH基础上增加了以太网、ATM等多业务接入处理功能。"
+  },
+  {
+    "id": 39,
+    "subject": "传输有线",
+    "chapter": "SDH/MSTP",
+    "type": "judge",
+    "q": "SDH采用同步复用方式，各等级速率精确为155.520Mb/s的整数倍。",
+    "answer": true,
+    "explain": "SDH同步复用，STM-1=155.520Mb/s，STM-4=622.080Mb/s，STM-16=2488.320Mb/s，STM-64=9953.280Mb/s。"
+  },
+  {
+    "id": 40,
+    "subject": "传输有线",
+    "chapter": "SDH/MSTP",
+    "type": "single",
+    "q": "SDH自愈环保护中，二纤单向通道倒换环使用什么原理？",
+    "options": [
+      "1+1保护",
+      "1:1保护",
+      "1:N保护",
+      "恢复式保护"
+    ],
+    "answer": 0,
+    "explain": "二纤单向通道倒换环采用1+1保护，发送端桥接，接收端倒换。"
+  },
+  {
+    "id": 41,
+    "subject": "传输有线",
+    "chapter": "DWDM/OTN",
+    "type": "single",
+    "q": "DWDM系统中的关键设备OTU的功能是？",
+    "options": [
+      "光波长转换",
+      "光放大",
+      "光分插复用",
+      "光监控"
+    ],
+    "answer": 0,
+    "explain": "OTU(Optical Transponder Unit)光波长转换/转发单元，将客户侧非标准波长转换为DWDM标准波长。"
+  },
+  {
+    "id": 42,
+    "subject": "传输有线",
+    "chapter": "DWDM/OTN",
+    "type": "single",
+    "q": "EDFA的工作窗口是？",
+    "options": [
+      "1550nm",
+      "1310nm",
+      "850nm",
+      "1625nm"
+    ],
+    "answer": 0,
+    "explain": "EDFA(Erbium-Doped Fiber Amplifier)掺铒光纤放大器，工作在1550nm波段，增益高、噪声低。"
+  },
+  {
+    "id": 43,
+    "subject": "传输有线",
+    "chapter": "DWDM/OTN",
+    "type": "single",
+    "q": "OTN的层次结构中，OCh是指？",
+    "options": [
+      "光通道层",
+      "光复用段层",
+      "光传输段层",
+      "电通道层"
+    ],
+    "answer": 0,
+    "explain": "OTN分层：OCh光通道层、OMS光复用段层、OTS光传输段层。"
+  },
+  {
+    "id": 44,
+    "subject": "传输有线",
+    "chapter": "DWDM/OTN",
+    "type": "judge",
+    "q": "OTN可以看作是\"数字封包的DWDM\"。",
+    "answer": true,
+    "explain": "OTN在DWDM基础上增加了数字包封开销(FEC)，提供更强大的OAM和前向纠错能力。"
+  },
+  {
+    "id": 45,
+    "subject": "传输有线",
+    "chapter": "DWDM/OTN",
+    "type": "single",
+    "q": "DWDM系统中32波系统，通道间隔一般为？",
+    "options": [
+      "100GHz",
+      "50GHz",
+      "200GHz",
+      "25GHz"
+    ],
+    "answer": 0,
+    "explain": "DWDM 32波系统通道间隔一般为100GHz，16波为200GHz，40/80波可为50GHz。"
+  },
+  {
+    "id": 46,
+    "subject": "传输有线",
+    "chapter": "ASON",
+    "type": "single",
+    "q": "ASON是指？",
+    "options": [
+      "自动交换光网络",
+      "智能交换网络",
+      "自动同步网络",
+      "光交换网络"
+    ],
+    "answer": 0,
+    "explain": "ASON(Automatically Switched Optical Network)自动交换光网络，在SDH/OTN基础上增加控制平面。"
+  },
+  {
+    "id": 47,
+    "subject": "传输有线",
+    "chapter": "ASON",
+    "type": "single",
+    "q": "ASON的三个平面不包括？",
+    "options": [
+      "传输平面",
+      "控制平面",
+      "管理平面",
+      "用户平面"
+    ],
+    "answer": 3,
+    "explain": "ASON三平面：传送平面(数据面)、控制平面(信令路由)、管理平面(网管)。"
+  },
+  {
+    "id": 48,
+    "subject": "传输有线",
+    "chapter": "ASON",
+    "type": "single",
+    "q": "ASON支持的保护恢复类型中，硬性保护恢复是指？",
+    "options": [
+      "预先配置路由，无信令参与",
+      "需要控制平面信令参与",
+      "动态计算路由",
+      "可被高优先级业务抢占"
+    ],
+    "answer": 0,
+    "explain": "硬性保护恢复由管理平面配置，不需要控制平面信令参与；软性保护恢复需要控制平面参与。"
+  },
+  {
+    "id": 49,
+    "subject": "传输有线",
+    "chapter": "ASON",
+    "type": "judge",
+    "q": "ASON是在传统光网络基础上增加了独立的控制平面。",
+    "answer": true,
+    "explain": "ASON=传统传送网+独立控制平面，实现智能选路、自动发现、自动保护恢复等功能。"
+  },
+  {
+    "id": 50,
+    "subject": "传输有线",
+    "chapter": "PTN/IPRAN",
+    "type": "single",
+    "q": "PTN是指？",
+    "options": [
+      "分组传送网",
+      "光传送网",
+      "同步传送网",
+      "弹性传送网"
+    ],
+    "answer": 0,
+    "explain": "PTN(Packet Transport Network)分组传送网，面向分组的传送技术，支持OAM和QoS。"
+  },
+  {
+    "id": 51,
+    "subject": "传输有线",
+    "chapter": "PTN/IPRAN",
+    "type": "single",
+    "q": "PTN技术的核心特点是？",
+    "options": [
+      "面向连接的分组传送",
+      "面向无连接的传送",
+      "电路交换传送",
+      "信元交换传送"
+    ],
+    "answer": 0,
+    "explain": "PTN是面向连接的分组传送技术，融合了SDH的OAM/QoS和以太网的灵活性。"
+  },
+  {
+    "id": 52,
+    "subject": "传输有线",
+    "chapter": "PTN/IPRAN",
+    "type": "single",
+    "q": "IPRAN相比PTN的特点是？",
+    "options": [
+      "三层功能完善，灵活性好",
+      "二层功能更强",
+      "更简单",
+      "成本更低"
+    ],
+    "answer": 0,
+    "explain": "IPRAN基于IP/MPLS，三层功能完善，灵活性更好但运维复杂；PTN侧重二层，运维更简单。"
+  },
+  {
+    "id": 53,
+    "subject": "传输有线",
+    "chapter": "PTN/IPRAN",
+    "type": "judge",
+    "q": "PTN适合作为城域网接入汇聚层，IPRAN适合作为城域核心层。",
+    "answer": true,
+    "explain": "PTN侧重二层，适合城域接入汇聚；IPRAN三层功能强，适合城域核心和骨干。"
+  },
+  {
+    "id": 54,
+    "subject": "传输有线",
+    "chapter": "有线接入网",
+    "type": "single",
+    "q": "FTTH是指？",
+    "options": [
+      "光纤到户",
+      "光纤到楼",
+      "光纤到路边",
+      "光纤到办公室"
+    ],
+    "answer": 0,
+    "explain": "FTTH(Fiber To The Home)光纤到户，FTTB到楼，FTTC到路边，FTTO到办公室。"
+  },
+  {
+    "id": 55,
+    "subject": "传输有线",
+    "chapter": "有线接入网",
+    "type": "single",
+    "q": "GPON的传输速率和分光比是？",
+    "options": [
+      "下行2.5Gb/s上行1.25Gb/s，分光比1:64或1:128",
+      "上下行均1.25Gb/s，分光比1:32",
+      "下行10Gb/s上行2.5Gb/s，分光比1:256",
+      "上下行均2.5Gb/s，分光比1:128"
+    ],
+    "answer": 0,
+    "explain": "GPON下行2.5Gb/s上行1.25Gb/s，分光比可达1:64或1:128。EPON分光比1:32或1:64。"
+  },
+  {
+    "id": 56,
+    "subject": "传输有线",
+    "chapter": "有线接入网",
+    "type": "single",
+    "q": "PON系统中的OLT是指？",
+    "options": [
+      "光线路终端",
+      "光网络终端",
+      "光分配网络",
+      "光分路器"
+    ],
+    "answer": 0,
+    "explain": "OLT(Optical Line Terminal)光线路终端(局端)，ONT/ONU是用户端，ODN是光分配网络。"
+  },
+  {
+    "id": 57,
+    "subject": "传输有线",
+    "chapter": "有线接入网",
+    "type": "judge",
+    "q": "PON中采用测距技术是为了避免上行数据碰撞。",
+    "answer": true,
+    "explain": "PON上行采用TDMA，各ONU到OLT距离不同，通过测距控制发送时间避免碰撞。"
+  },
+  {
+    "id": 58,
+    "subject": "传输有线",
+    "chapter": "有线接入网",
+    "type": "single",
+    "q": "EPON采用的线路编码是？",
+    "options": [
+      "8B/10B",
+      "NRZ",
+      "曼彻斯特编码",
+      "4B/5B"
+    ],
+    "answer": 0,
+    "explain": "EPON采用8B/10B线路编码，GPON采用扰频NRZ编码。"
+  },
+  {
+    "id": 59,
+    "subject": "传输有线",
+    "chapter": "光纤光缆",
+    "type": "single",
+    "q": "一条光纤链路长80km，使用1550nm窗口，接头损耗共2dB，系统余量3dB，则总损耗约为？",
+    "options": [
+      "21dB",
+      "18dB",
+      "16dB",
+      "24dB"
+    ],
+    "answer": 0,
+    "explain": "总损耗=光纤损耗+接头损耗+余量=80×0.2+2+3=16+2+3=21dB。"
+  },
+  {
+    "id": 60,
+    "subject": "传输有线",
+    "chapter": "SDH/MSTP",
+    "type": "single",
+    "q": "STM-64的传输速率约为？",
+    "options": [
+      "10Gb/s",
+      "2.5Gb/s",
+      "622Mb/s",
+      "155Mb/s"
+    ],
+    "answer": 0,
+    "explain": "STM-1=155.520Mb/s，STM-4=622Mb/s，STM-16=2.5Gb/s，STM-64≈10Gb/s。"
+  },
+  {
+    "id": 61,
+    "subject": "综合能力",
+    "chapter": "光传输技术",
+    "type": "single",
+    "q": "SDH STM-1帧的传输周期是？",
+    "options": [
+      "125μs",
+      "125ms",
+      "250μs",
+      "1ms"
+    ],
+    "answer": 0,
+    "explain": "SDH所有等级的帧传输周期都是125μs(8000帧/秒)。"
+  },
+  {
+    "id": 62,
+    "subject": "综合能力",
+    "chapter": "现代通信网",
+    "type": "single",
+    "q": "光纤通信中，1310nm和1550nm两个低损耗窗口之间的损耗差约为？",
+    "options": [
+      "0.15dB/km",
+      "0.5dB/km",
+      "0.3dB/km",
+      "0.1dB/km"
+    ],
+    "answer": 0,
+    "explain": "1310nm损耗约0.35dB/km，1550nm损耗约0.2dB/km，差值约0.15dB/km。"
+  },
+  {
+    "id": 63,
+    "subject": "综合能力",
+    "chapter": "通信职业道德",
+    "type": "single",
+    "q": "以下哪项不属于通信科技人员的职业素质？",
+    "options": [
+      "系统掌握通信科技基础理论",
+      "熟练掌握通信技术标准",
+      "精通外语口语交流",
+      "具备工程实践能力"
+    ],
+    "answer": 2,
+    "explain": "通信科技人员职业素质包括：系统掌握基础理论、掌握技术标准、工程实践能力、严谨治学精神。外语口语不是必须要求。"
+  },
+  {
+    "id": 64,
+    "subject": "综合能力",
+    "chapter": "通信职业道德",
+    "type": "judge",
+    "q": "通信科技人员的根本目的是造福人民、振兴祖国。",
+    "answer": true,
+    "explain": "造福人民、振兴祖国是通信科技人员职业道德的核心和根本目的。"
+  },
+  {
+    "id": 65,
+    "subject": "综合能力",
+    "chapter": "通信法规",
+    "type": "single",
+    "q": "《网络安全法》规定网络运营者收集使用个人信息应遵循什么原则？",
+    "options": [
+      "知意同意原则",
+      "强制收集原则",
+      "随意使用原则",
+      "无偿共享原则"
+    ],
+    "answer": 0,
+    "explain": "《网络安全法》要求收集使用个人信息应遵循知意同意原则，需明示目的并取得用户同意。"
+  },
+  {
+    "id": 66,
+    "subject": "综合能力",
+    "chapter": "通信法规",
+    "type": "single",
+    "q": "电信用户超过约定交费日后多少天不交费可暂停服务？",
+    "options": [
+      "10天",
+      "30天",
+      "60天",
+      "90天"
+    ],
+    "answer": 1,
+    "explain": "电信用户超过约定交费日30天不交费，电信企业可暂停服务。暂停后60天仍不交费可终止服务。"
+  },
+  {
+    "id": 67,
+    "subject": "综合能力",
+    "chapter": "通信法规",
+    "type": "judge",
+    "q": "电信业务经营者在服务障碍期间仍可向用户收取费用。",
+    "answer": false,
+    "explain": "服务障碍期间不得收取费用，修复后应补足服务时间或减收费用。"
+  },
+  {
+    "id": 68,
+    "subject": "综合能力",
+    "chapter": "现代通信网",
+    "type": "single",
+    "q": "以下哪个是传输层的协议？",
+    "options": [
+      "IP",
+      "TCP",
+      "HTTP",
+      "ARP"
+    ],
+    "answer": 1,
+    "explain": "TCP和UDP是传输层协议，IP是网络层协议，HTTP是应用层协议。"
+  },
+  {
+    "id": 69,
+    "subject": "综合能力",
+    "chapter": "现代通信网",
+    "type": "single",
+    "q": "以下哪个不是TCP/IP模型中的层次？",
+    "options": [
+      "网络接口层",
+      "网络层",
+      "会话层",
+      "应用层"
+    ],
+    "answer": 2,
+    "explain": "TCP/IP模型4层：网络接口层、网络层、传输层、应用层。会话层是OSI模型的第5层。"
+  },
+  {
+    "id": 70,
+    "subject": "综合能力",
+    "chapter": "现代通信网",
+    "type": "single",
+    "q": "DNS的主要功能是？",
+    "options": [
+      "分配IP地址",
+      "域名到IP地址的解析",
+      "网络流量控制",
+      "网络安全防护"
+    ],
+    "answer": 1,
+    "explain": "DNS将域名解析为IP地址。DHCP负责分配IP地址。"
+  },
+  {
+    "id": 71,
+    "subject": "综合能力",
+    "chapter": "现代通信网",
+    "type": "judge",
+    "q": "HTTP协议是无状态协议。",
+    "answer": true,
+    "explain": "HTTP是无状态协议，每次请求独立，不保留前次请求信息。Cookie/Session用于保持状态。"
+  },
+  {
+    "id": 72,
+    "subject": "综合能力",
+    "chapter": "现代通信网",
+    "type": "single",
+    "q": "以下哪个端口号对应HTTPS？",
+    "options": [
+      "80",
+      "443",
+      "21",
+      "22"
+    ],
+    "answer": 1,
+    "explain": "HTTP端口80，HTTPS端口443，FTP端口21，SSH端口22。"
+  },
+  {
+    "id": 73,
+    "subject": "综合能力",
+    "chapter": "交换技术",
+    "type": "single",
+    "q": "分组交换相比电路交换的优势是？",
+    "options": [
+      "独占带宽延迟小",
+      "资源共享利用率高",
+      "实现简单",
+      "实时性好"
+    ],
+    "answer": 1,
+    "explain": "分组交换采用存储转发，资源共享利用率高，但延迟不固定，实时性不如电路交换。"
+  },
+  {
+    "id": 74,
+    "subject": "综合能力",
+    "chapter": "交换技术",
+    "type": "single",
+    "q": "帧中继工作在OSI模型的哪一层？",
+    "options": [
+      "物理层",
+      "数据链路层",
+      "网络层",
+      "传输层"
+    ],
+    "answer": 1,
+    "explain": "帧中继(Frame Relay)工作在数据链路层，是简化的X.25协议。"
+  },
+  {
+    "id": 75,
+    "subject": "综合能力",
+    "chapter": "交换技术",
+    "type": "judge",
+    "q": "ATM既可以使用电路交换也可以使用分组交换。",
+    "answer": false,
+    "explain": "ATM(异步传输模式)采用固定长度信元的快速分组交换。"
+  },
+  {
+    "id": 76,
+    "subject": "综合能力",
+    "chapter": "交换技术",
+    "type": "single",
+    "q": "MPLS中标签的长度是多少位？",
+    "options": [
+      "16位",
+      "20位",
+      "32位",
+      "48位"
+    ],
+    "answer": 1,
+    "explain": "MPLS标签共32位，其中标签值字段20位。"
+  },
+  {
+    "id": 77,
+    "subject": "综合能力",
+    "chapter": "光传输技术",
+    "type": "single",
+    "q": "SDH中AU-4指针的作用是？",
+    "options": [
+      "差错校验",
+      "码速调整和相位对准",
+      "路由选择",
+      "性能监测"
+    ],
+    "answer": 1,
+    "explain": "AU-4指针用于码速调整和相位对准，使VC-4在AU-4中的位置灵活。"
+  },
+  {
+    "id": 78,
+    "subject": "综合能力",
+    "chapter": "光传输技术",
+    "type": "single",
+    "q": "SDH的复用方式是？",
+    "options": [
+      "异步复用",
+      "同步复用",
+      "准同步复用",
+      "非同步复用"
+    ],
+    "answer": 1,
+    "explain": "SDH采用同步复用方式，各等级速率为STM-1的整数倍。"
+  },
+  {
+    "id": 79,
+    "subject": "综合能力",
+    "chapter": "光传输技术",
+    "type": "single",
+    "q": "OTN中FEC的功能是？",
+    "options": [
+      "前向纠错",
+      "流量控制",
+      "路由选择",
+      "加密"
+    ],
+    "answer": 0,
+    "explain": "FEC前向纠错，OTN中采用FEC提高传输质量，降低误码率。"
+  },
+  {
+    "id": 80,
+    "subject": "综合能力",
+    "chapter": "光传输技术",
+    "type": "judge",
+    "q": "EDFA可以放大1310nm窗口的光信号。",
+    "answer": false,
+    "explain": "EDFA工作在1550nm窗口，不能放大1310nm信号。"
+  },
+  {
+    "id": 81,
+    "subject": "综合能力",
+    "chapter": "移动通信",
+    "type": "single",
+    "q": "5G中eMBB场景的主要应用是？",
+    "options": [
+      "大规模物联网",
+      "自动驾驶",
+      "超高清视频/VR/AR",
+      "工业控制"
+    ],
+    "answer": 2,
+    "explain": "eMBB增强移动宽带：4K/8K超高清视频、VR/AR、云游戏等大带宽应用。"
+  },
+  {
+    "id": 82,
+    "subject": "综合能力",
+    "chapter": "移动通信",
+    "type": "single",
+    "q": "5G中网络切片技术的主要目的是？",
+    "options": [
+      "增加带宽",
+      "在一张物理网络上虚拟出多个逻辑网络",
+      "降低延迟",
+      "减少天线数量"
+    ],
+    "answer": 1,
+    "explain": "网络切片在一张物理网络上虚拟出多个端到端逻辑网络，满足不同业务QoS需求。"
+  },
+  {
+    "id": 83,
+    "subject": "综合能力",
+    "chapter": "移动通信",
+    "type": "single",
+    "q": "5G使用的主要多址技术是？",
+    "options": [
+      "OFDMA",
+      "CDMA",
+      "TDMA",
+      "FDMA"
+    ],
+    "answer": 0,
+    "explain": "5G NR采用CP-OFDM波形，上下行均使用OFDMA。"
+  },
+  {
+    "id": 84,
+    "subject": "综合能力",
+    "chapter": "移动通信",
+    "type": "judge",
+    "q": "Massive MIMO是5G的关键技术之一。",
+    "answer": true,
+    "explain": "Massive MIMO大规模天线阵列是5G关键技术。"
+  },
+  {
+    "id": 85,
+    "subject": "综合能力",
+    "chapter": "接入网",
+    "type": "single",
+    "q": "xDSL中的x代表什么？",
+    "options": [
+      "各种变体",
+      "传输速率",
+      "传输距离",
+      "传输介质"
+    ],
+    "answer": 0,
+    "explain": "xDSL中x代表不同变体，如ADSL、VDSL、HDSL等。"
+  },
+  {
+    "id": 86,
+    "subject": "综合能力",
+    "chapter": "接入网",
+    "type": "single",
+    "q": "ADSL的上下行速率特点是？",
+    "options": [
+      "上下行对称",
+      "上行大于下行",
+      "下行大于上行",
+      "固定速率"
+    ],
+    "answer": 2,
+    "explain": "ADSL非对称数字用户线，下行速率远大于上行速率。"
+  },
+  {
+    "id": 87,
+    "subject": "综合能力",
+    "chapter": "接入网",
+    "type": "judge",
+    "q": "GPON的传输距离可达20km以上。",
+    "answer": true,
+    "explain": "GPON最大传输距离可达20km。"
+  },
+  {
+    "id": 88,
+    "subject": "综合能力",
+    "chapter": "接入网",
+    "type": "single",
+    "q": "以下哪个不是PON系统的组成部分？",
+    "options": [
+      "OLT",
+      "ODN",
+      "ONU",
+      "BAS"
+    ],
+    "answer": 3,
+    "explain": "PON由OLT、ODN、ONU组成。BAS是宽带接入服务器，不属于PON。"
+  },
+  {
+    "id": 89,
+    "subject": "传输有线",
+    "chapter": "光纤光缆",
+    "type": "single",
+    "q": "光纤的数值孔径NA表示什么？",
+    "options": [
+      "光纤的损耗",
+      "光纤的集光能力",
+      "光纤的带宽",
+      "光纤的强度"
+    ],
+    "answer": 1,
+    "explain": "数值孔径NA表示光纤的集光能力，NA越大集光能力越强。"
+  },
+  {
+    "id": 90,
+    "subject": "传输有线",
+    "chapter": "光纤光缆",
+    "type": "single",
+    "q": "G.655光纤的特点是？",
+    "options": [
+      "非零色散位移光纤",
+      "常规单模光纤",
+      "色散位移光纤",
+      "色散平坦光纤"
+    ],
+    "answer": 0,
+    "explain": "G.655是非零色散位移光纤(NZDSF)，适合DWDM系统。"
+  },
+  {
+    "id": 91,
+    "subject": "传输有线",
+    "chapter": "光纤光缆",
+    "type": "single",
+    "q": "光纤通信系统中色散补偿的方法不包括？",
+    "options": [
+      "色散补偿光纤DCF",
+      "光纤光栅",
+      "啁啾光栅",
+      "增大光功率"
+    ],
+    "answer": 3,
+    "explain": "增大光功率不能补偿色散。补偿方法包括DCF、光纤光栅等。"
+  },
+  {
+    "id": 92,
+    "subject": "传输有线",
+    "chapter": "光纤光缆",
+    "type": "judge",
+    "q": "多模光纤存在模式色散，因此不适合长距离传输。",
+    "answer": true,
+    "explain": "多模光纤存在模式色散，限制带宽和传输距离，适合短距离。"
+  },
+  {
+    "id": 93,
+    "subject": "传输有线",
+    "chapter": "光纤光缆",
+    "type": "single",
+    "q": "光纤通信系统中，光接收机的核心部件是？",
+    "options": [
+      "激光器",
+      "光检测器(光电二极管)",
+      "光放大器",
+      "光分路器"
+    ],
+    "answer": 1,
+    "explain": "光接收机核心是光检测器(PIN或APD)，将光信号转换为电信号。"
+  },
+  {
+    "id": 94,
+    "subject": "传输有线",
+    "chapter": "光纤光缆",
+    "type": "single",
+    "q": "光纤通信中光源主要使用哪两种器件？",
+    "options": [
+      "LED和LD(激光二极管)",
+      "LED和白炽灯",
+      "LD和荧光灯",
+      "LD和卤素灯"
+    ],
+    "answer": 0,
+    "explain": "光纤通信光源主要使用LED(多模)和LD(单模)。"
+  },
+  {
+    "id": 95,
+    "subject": "传输有线",
+    "chapter": "SDH/MSTP",
+    "type": "single",
+    "q": "SDH复用结构中，2Mb/s信号映射到的是？",
+    "options": [
+      "C-12",
+      "C-3",
+      "C-4",
+      "C-2"
+    ],
+    "answer": 0,
+    "explain": "2.048Mb/s(PDH E1)映射到容器C-12。"
+  },
+  {
+    "id": 96,
+    "subject": "传输有线",
+    "chapter": "SDH/MSTP",
+    "type": "single",
+    "q": "SDH帧结构中第4行1-9列的作用是？",
+    "options": [
+      "段开销RSOH",
+      "管理单元指针AU-PTR",
+      "复用段开销MSOH",
+      "净荷区"
+    ],
+    "answer": 1,
+    "explain": "SDH帧第4行1-9列是AU指针(AU-PTR)。"
+  },
+  {
+    "id": 97,
+    "subject": "传输有线",
+    "chapter": "SDH/MSTP",
+    "type": "single",
+    "q": "SDH中B1字节用于检测什么？",
+    "options": [
+      "再生段误码",
+      "复用段误码",
+      "高阶通道误码",
+      "低阶通道误码"
+    ],
+    "answer": 0,
+    "explain": "B1(BIP-8)用于再生段误码监测，B2用于复用段。"
+  },
+  {
+    "id": 98,
+    "subject": "传输有线",
+    "chapter": "SDH/MSTP",
+    "type": "single",
+    "q": "SDH中K1/K2字节的作用是？",
+    "options": [
+      "性能监测",
+      "自动保护倒换(APS)",
+      "同步状态消息",
+      "数据通信通道"
+    ],
+    "answer": 1,
+    "explain": "K1/K2字节用于自动保护倒换(APS)信令。"
+  },
+  {
+    "id": 99,
+    "subject": "传输有线",
+    "chapter": "SDH/MSTP",
+    "type": "judge",
+    "q": "SDH中二纤双向复用段倒换环在故障时使用一半容量进行保护。",
+    "answer": true,
+    "explain": "二纤双向复用段倒换环采用1:1保护，预留一半容量。"
+  },
+  {
+    "id": 100,
+    "subject": "传输有线",
+    "chapter": "SDH/MSTP",
+    "type": "single",
+    "q": "MSTP中封装以太网数据使用的协议是？",
+    "options": [
+      "GFP/LAPS",
+      "PPP",
+      "HDLC",
+      "FR"
+    ],
+    "answer": 0,
+    "explain": "MSTP使用GFP或LAPS封装以太网数据到SDH帧中。"
+  },
+  {
+    "id": 101,
+    "subject": "传输有线",
+    "chapter": "DWDM/OTN",
+    "type": "single",
+    "q": "DWDM系统中OADM的作用是？",
+    "options": [
+      "放大光信号",
+      "上/下路特定波长",
+      "转换波长",
+      "监控光功率"
+    ],
+    "answer": 1,
+    "explain": "OADM光分插复用器，上/下特定波长。"
+  },
+  {
+    "id": 102,
+    "subject": "传输有线",
+    "chapter": "DWDM/OTN",
+    "type": "single",
+    "q": "DWDM系统中拉曼放大器的优点是？",
+    "options": [
+      "增益高噪声低",
+      "分布式放大",
+      "价格便宜",
+      "不需要泵浦光"
+    ],
+    "answer": 1,
+    "explain": "拉曼放大器利用光纤本身拉曼散射，实现分布式放大，噪声低。"
+  },
+  {
+    "id": 103,
+    "subject": "传输有线",
+    "chapter": "DWDM/OTN",
+    "type": "single",
+    "q": "OTN中OPUk的作用是?",
+    "options": [
+      "光通道净荷单元",
+      "光通道数据单元",
+      "光通道传输单元",
+      "光通道监控单元"
+    ],
+    "answer": 0,
+    "explain": "OTN电层：OPUk(净荷单元)→ODUk(数据单元)→OUTk(传输单元)。"
+  },
+  {
+    "id": 104,
+    "subject": "传输有线",
+    "chapter": "DWDM/OTN",
+    "type": "judge",
+    "q": "OTN的ODUk支持三级串联监控。",
+    "answer": true,
+    "explain": "ODUk支持PM和TCM三级串联连接监控。"
+  },
+  {
+    "id": 105,
+    "subject": "传输有线",
+    "chapter": "DWDM/OTN",
+    "type": "single",
+    "q": "DWDM系统中40波系统常用的通道间隔是？",
+    "options": [
+      "50GHz",
+      "100GHz",
+      "200GHz",
+      "25GHz"
+    ],
+    "answer": 0,
+    "explain": "40波系统通常采用50GHz通道间隔。"
+  },
+  {
+    "id": 106,
+    "subject": "传输有线",
+    "chapter": "ASON",
+    "type": "single",
+    "q": "ASON中UNI接口是指？",
+    "options": [
+      "用户网络接口",
+      "网络网络接口",
+      "内部网络接口",
+      "外部网络接口"
+    ],
+    "answer": 0,
+    "explain": "UNI(用户网络接口)连接用户和网络。"
+  },
+  {
+    "id": 107,
+    "subject": "传输有线",
+    "chapter": "ASON",
+    "type": "single",
+    "q": "ASON控制平面的核心功能不包括？",
+    "options": [
+      "自动发现",
+      "路由计算",
+      "信令建立连接",
+      "数据转发"
+    ],
+    "answer": 3,
+    "explain": "数据转发是传送平面功能，不是控制平面。"
+  },
+  {
+    "id": 108,
+    "subject": "传输有线",
+    "chapter": "ASON",
+    "type": "single",
+    "q": "ASON中LMP的作用是？",
+    "options": [
+      "维护控制通道和链路相关性",
+      "分配IP地址",
+      "管理用户认证",
+      "数据加密"
+    ],
+    "answer": 0,
+    "explain": "LMP维护控制通道连通性和链路属性关联。"
+  },
+  {
+    "id": 109,
+    "subject": "传输有线",
+    "chapter": "ASON",
+    "type": "judge",
+    "q": "ASON支持永久连接和交换连接两种基本连接类型。",
+    "answer": false,
+    "explain": "ASON支持三种：PC永久连接、SPC软永久连接、SC交换连接。"
+  },
+  {
+    "id": 110,
+    "subject": "传输有线",
+    "chapter": "PTN/IPRAN",
+    "type": "single",
+    "q": "PTN中PWE3技术的作用是？",
+    "options": [
+      "伪线仿真封装TDM/ATM等业务",
+      "IP路由",
+      "光信号放大",
+      "波长转换"
+    ],
+    "answer": 0,
+    "explain": "PWE3在分组网络上仿真TDM/ATM等传统业务。"
+  },
+  {
+    "id": 111,
+    "subject": "传输有线",
+    "chapter": "PTN/IPRAN",
+    "type": "single",
+    "q": "MPLS-TP中LSP是指？",
+    "options": [
+      "标签交换路径",
+      "链路状态协议",
+      "路由选择协议",
+      "链路安全保护"
+    ],
+    "answer": 0,
+    "explain": "LSP(Label Switched Path)标签交换路径。"
+  },
+  {
+    "id": 112,
+    "subject": "传输有线",
+    "chapter": "PTN/IPRAN",
+    "type": "single",
+    "q": "IPRAN中使用的核心路由协议通常是？",
+    "options": [
+      "OSPF/IS-IS",
+      "RIP",
+      "静态路由",
+      "STP"
+    ],
+    "answer": 0,
+    "explain": "IPRAN通常使用OSPF或IS-IS作为IGP。"
+  },
+  {
+    "id": 113,
+    "subject": "传输有线",
+    "chapter": "PTN/IPRAN",
+    "type": "judge",
+    "q": "PTN中线性保护倒换分为1+1和1:1两种方式。",
+    "answer": true,
+    "explain": "MPLS-TP线性保护包括1+1和1:1两种方式。"
+  },
+  {
+    "id": 114,
+    "subject": "传输有线",
+    "chapter": "有线接入网",
+    "type": "single",
+    "q": "PON系统中测距的目的是？",
+    "options": [
+      "测量光纤长度",
+      "计算ONU到OLT的传输时延",
+      "测量光功率",
+      "测量带宽"
+    ],
+    "answer": 1,
+    "explain": "PON测距计算传输时延，调整发送时间避免上行碰撞。"
+  },
+  {
+    "id": 115,
+    "subject": "传输有线",
+    "chapter": "有线接入网",
+    "type": "single",
+    "q": "GPON中DBA功能是指？",
+    "options": [
+      "动态带宽分配",
+      "数据缓冲区管理",
+      "数字比特分配",
+      "分布式带宽接入"
+    ],
+    "answer": 0,
+    "explain": "DBA动态带宽分配，根据流量需求动态调整上行带宽。"
+  },
+  {
+    "id": 116,
+    "subject": "传输有线",
+    "chapter": "有线接入网",
+    "type": "single",
+    "q": "10G GPON的标准是？",
+    "options": [
+      "G.987系列",
+      "G.984系列",
+      "IEEE 802.3ah",
+      "G.983系列"
+    ],
+    "answer": 0,
+    "explain": "10G GPON标准为ITU-T G.987系列(XG-PON)。"
+  },
+  {
+    "id": 117,
+    "subject": "传输有线",
+    "chapter": "有线接入网",
+    "type": "judge",
+    "q": "PON系统是点到多点(P2MP)结构。",
+    "answer": true,
+    "explain": "PON是P2MP结构：一个OLT连接多个ONU。"
+  },
+  {
+    "id": 118,
+    "subject": "传输有线",
+    "chapter": "有线接入网",
+    "type": "single",
+    "q": "FTTH网络中，光分路器的典型分光比是？",
+    "options": [
+      "1:4 到 1:64",
+      "1:2 到 1:4",
+      "1:128 到 1:256",
+      "1:1"
+    ],
+    "answer": 0,
+    "explain": "FTTH典型分光比1:4到1:64。"
+  },
+  {
+    "id": 119,
+    "subject": "综合能力",
+    "chapter": "现代通信网",
+    "type": "single",
+    "q": "某SDH系统传输STM-16，其传输速率为？",
+    "options": [
+      "155.520Mb/s",
+      "622.080Mb/s",
+      "2488.320Mb/s",
+      "9953.280Mb/s"
+    ],
+    "answer": 2,
+    "explain": "STM-16=2488.320Mb/s(约2.5Gb/s)。"
+  },
+  {
+    "id": 120,
+    "subject": "传输有线",
+    "chapter": "光纤光缆",
+    "type": "single",
+    "q": "一条光纤链路长50km，1550nm窗口损耗0.2dB/km，接头1dB，余量3dB，总损耗为？",
+    "options": [
+      "14dB",
+      "10dB",
+      "16dB",
+      "18dB"
+    ],
+    "answer": 0,
+    "explain": "总损耗=50×0.2+1+3=14dB。"
+  },
+  {
+    "id": 121,
+    "subject": "综合能力",
+    "chapter": "通信法规",
+    "type": "single",
+    "q": "《数据安全法》对数据分级分类管理，以下哪个不属于数据分类？",
+    "options": [
+      "一般数据",
+      "重要数据",
+      "核心数据",
+      "公开数据"
+    ],
+    "answer": 3,
+    "explain": "数据安全法将数据分为一般数据、重要数据、核心数据三个等级。"
+  },
+  {
+    "id": 122,
+    "subject": "综合能力",
+    "chapter": "光传输技术",
+    "type": "single",
+    "q": "SDH STM-1帧的传输周期是？",
+    "options": [
+      "125μs",
+      "125ms",
+      "250μs",
+      "1ms"
+    ],
+    "answer": 0,
+    "explain": "SDH所有等级帧周期都是125μs(8000帧/秒)。"
   }
-  
-  var html = '<div style="font-size:12px;color:#64748b;margin-bottom:8px;">共 ' + wrongIds.length + ' 道错题</div>';
-  html += '<div class="quiz-mode" onclick="startWrongReview()" style="margin-bottom:12px;">';
-  html += '<div class="quiz-mode-icon" style="background:#fee2e2">🔄</div>';
-  html += '<div class="quiz-mode-info"><div class="quiz-mode-title">开始错题复习</div>';
-  html += '<div class="quiz-mode-desc">重做所有错题</div></div>';
-  html += '<div class="quiz-mode-arrow">→</div></div>';
-  
-  // List recent wrong questions
-  for (var i = 0; i < Math.min(wrongIds.length, 5); i++) {
-    var q = QUESTIONS.find(function(x){return x.id === wrongIds[i]});
-    if (!q) continue;
-    html += '<div class="wrong-item">';
-    html += '<div class="wrong-item-q">' + (i+1) + '. ' + q.q + '</div>';
-    var ansText = q.type === 'judge' ? (q.answer ? '正确' : '错误') : q.options[q.answer',
-  {"id":123,"subject":"综合能力","chapter":"通信职业道德","type":"single","q":"通信行业的"用户至上"理念要求做到？","options":["以用户为中心提供优质服务","优先服务VIP用户","按合同标准提供服务","尽量满足用户需求"],"answer":0,"explain":""用户至上"要求以用户为中心，提供优质、方便、可靠的通信服务。"},
-  {"id":124,"subject":"综合能力","chapter":"通信职业道德","type":"single","q":"通信科技人员应遵守的保密原则是？","options":["所有技术信息都公开","涉及国家安全和用户隐私的信息严格保密","可以随意分享技术数据","仅需保密用户个人信息"],"answer":1,"explain":"通信科技人员需对涉及国家安全、商业秘密、用户隐私的信息严格保密。"},
-  {"id":125,"subject":"综合能力","chapter":"通信职业道德","type":"judge","q":"通信科技人员应当树立服务意识、责任意识和创新意识。","answer":true,"explain":"通信科技人员应树立服务意识(用户至上)、责任意识(忠于职责)、创新意识(勇于探索)。"},
-  {"id":126,"subject":"综合能力","chapter":"通信法规","type":"single","q":"《电信条例》规定基础电信业务需要取得什么许可？","options":["基础电信业务经营许可证","增值电信业务经营许可证","ISP经营许可证","ICP经营许可证"],"answer":0,"explain":"基础电信业务需取得基础电信业务经营许可证，增值电信业务需取得增值电信业务经营许可证。"},
-  {"id":127,"subject":"综合能力","chapter":"通信法规","type":"single","q":"以下哪个属于增值电信业务？","options":["固定通信 domestic","互联网信息服务(ISP)","移动通信","卫星通信"],"answer":1,"explain":"互联网信息服务(ISP/ICP)属于增值电信业务，固网/移动/卫星通信属于基础电信业务。"},
-  {"id":128,"subject":"综合能力","chapter":"通信法规","type":"single","q":"《个人信息保护法》规定处理个人信息应遵循什么原则？","options":["合法、正当、必要","最大化利用","随意处理","强制收集"],"answer":0,"explain":"《个人信息保护法》要求处理个人信息应遵循合法、正当、必要原则，并取得个人同意。"},
-  {"id":129,"subject":"综合能力","chapter":"通信法规","type":"judge","q":"电信用户有自主选择电信业务的权利。","answer":true,"explain":"电信用户有权自主选择使用依法开办的电信业务，运营商不得强迫或限制。"},
-  {"id":130,"subject":"综合能力","chapter":"通信法规","type":"single","q":"电信网间互联争议由哪个机构调解？","options":["工业和信息化部","国务院","市场监管局","通信行业协会"],"answer":0,"explain":"电信网间互联争议由工业和信息化部(或省级电信管理机构)进行调解和裁决。"},
-  {"id":131,"subject":"综合能力","chapter":"现代通信网","type":"single","q":"OSI模型中完成路由选择的是哪一层？","options":["物理层","数据链路层","网络层","传输层"],"answer":2,"explain":"网络层完成路由选择和跨网络通信，核心设备是路由器。"},
-  {"id":132,"subject":"综合能力","chapter":"现代通信网","type":"single","q":"ARP协议的功能是？","options":["将IP地址解析为MAC地址","将MAC地址解析为IP地址","域名解析","分配IP地址"],"answer":0,"explain":"ARP(Address Resolution Protocol)将IP地址解析为MAC地址，RARP则相反。"},
-  {"id":133,"subject":"综合能力","chapter":"现代通信网","type":"single","q":"以下哪个是面向无连接的协议？","options":["TCP","UDP","FTP","HTTP"],"answer":1,"explain":"UDP是无连接的不可靠传输协议，TCP是面向连接的可靠协议。"},
-  {"id":134,"subject":"综合能力","chapter":"现代通信网","type":"single","q":"IPv6地址长度是多少位？","options":["32位","64位","128位","256位"],"answer":2,"explain":"IPv4地址32位，IPv6地址128位，地址空间极大扩展。"},
-  {"id":135,"subject":"综合能力","chapter":"现代通信网","type":"judge","q":"NAT技术可以解决IPv4地址不足的问题。","answer":true,"explain":"NAT(网络地址转换)通过将私有IP转换为公网IP，缓解IPv4地址不足。"},
-  {"id":136,"subject":"综合能力","chapter":"现代通信网","type":"single","q":"VLAN的主要作用是？","options":["虚拟局域网隔离广播域","增加带宽","减少延迟","提高安全性"],"answer":0,"explain":"VLAN(Virtual LAN)通过逻辑划分隔离广播域，提高网络安全性和管理灵活性。"},
-  {"id":137,"subject":"综合能力","chapter":"现代通信网","type":"single","q":"STP生成树协议的主要目的是？","options":["防止网络环路","提高带宽","加快转发","分配IP"],"answer":0,"explain":"STP(Spanning Tree Protocol)通过阻塞冗余链路防止网络环路，同时提供冗余路径。"},
-  {"id":138,"subject":"综合能力","chapter":"现代通信网","type":"single","q":"CSMA/CD是哪种网络使用的介质访问控制方式？","options":["以太网","Token Ring","FDDI","ATM"],"answer":0,"explain":"CSMA/CD(载波监听多路访问/冲突检测)是传统以太网的介质访问控制方式。"},
-  {"id":139,"subject":"综合能力","chapter":"交换技术","type":"single","q":"虚电路交换的特点是？","options":["面向连接的分组交换","无连接的分组交换","独占带宽","无延迟"],"answer":0,"explain":"虚电路交换是面向连接的分组交换，建立连接后按虚电路传输，延迟较稳定。"},
-  {"id":140,"subject":"综合能力","chapter":"交换技术","type":"single","q":"数据报交换的特点是？","options":["面向无连接的分组交换","面向连接的交换","独占带宽","延迟固定"],"answer":0,"explain":"数据报是面向无连接的分组交换，每个分组独立路由，延迟不固定。"},
-  {"id":141,"subject":"综合能力","chapter":"交换技术","type":"judge","q":"ATM信元中信头占5字节，净荷占48字节。","answer":true,"explain":"ATM信元固定53字节：信头5字节+净荷48字节。"},
-  {"id":142,"subject":"综合能力","chapter":"交换技术","type":"single","q":"软交换的核心思想是？","options":["呼叫控制与承载分离","电路交换与分组交换融合","全IP化","光交换"],"answer":0,"explain":"软交换核心思想是呼叫控制与承载分离，实现控制面与数据面解耦。"},
-  {"id":143,"subject":"综合能力","chapter":"光传输技术","type":"single","q":"PDH的缺点不包括？","options":["只有地区性标准","复用结构复杂","开销字节丰富","上下电路需逐级分接"],"answer":2,"explain":"PDH缺点：只有地区性标准(美/欧)、复用结构复杂、开销字节少(OAM能力弱)、上下电路需逐级分接复接。"},
-  {"id":144,"subject":"综合能力","chapter":"光传输技术","type":"single","q":"SDH相比PDH的优势不包括？","options":["同步复用","标准光接口","丰富的开销字节","复用结构更复杂"],"answer":3,"explain":"SDH优势：同步复用、标准光接口、丰富开销字节(OAM强)、一步复用上下电路。复用结构更简单不是缺点。"},
-  {"id":145,"subject":"综合能力","chapter":"光传输技术","type":"single","q":"SDH帧结构中SOH分为哪两部分？","options":["RSOH和MSOH","RSOH和POH","MSOH和POH","HOH和LOH"],"answer":0,"explain":"SOH段开销分为RSOH(再生段开销，1-3行)和MSOH(复用段开销，5-9行)。"},
-  {"id":146,"subject":"综合能力","chapter":"光传输技术","type":"single","q":"SDH中J0字节的作用是？","options":["再生段踪迹标识","误码监测","同步状态","保护倒换"],"answer":0,"explain":"J0是再生段踪迹字节，用于验证再生段信号连续性，确认连接正确。"},
-  {"id":147,"subject":"综合能力","chapter":"光传输技术","type":"judge","q":"SDH帧周期为125μs，对应8kHz采样频率。","answer":true,"explain":"SDH帧周期125μs=1/8000秒，与PCM语音8kHz采样一致，便于承载语音业务。"},
-  {"id":148,"subject":"综合能力","chapter":"移动通信","type":"single","q":"GSM系统中一个TDMA帧包含多少时隙？","options":["8","16","4","32"],"answer":0,"explain":"GSM TDMA帧包含8个时隙，每个时隙577μs，支持8个用户共享一个载频。"},
-  {"id":149,"subject":"综合能力","chapter":"移动通信","type":"single","q":"GSM系统的工作频段900MHz下行是？","options":["935-960MHz","890-915MHz","1805-1880MHz","1710-1785MHz"],"answer":0,"explain":"GSM 900下行935-960MHz，上行890-915MHz。下行频率高于上行。"},
-  {"id":150,"subject":"综合能力","chapter":"移动通信","type":"single","q":"CDMA系统中软切换的特点是？","options":["先断后通","先通后断","同时连接多个基站","不切换"],"answer":2,"explain":"CDMA软切换是先通后断，移动台同时与多个基站通信，提高切换可靠性。"},
-  {"id":151,"subject":"综合能力","chapter":"移动通信","type":"judge","q":"4G LTE是纯分组域网络，没有电路域。","answer":true,"explain":"LTE采用全IP架构(EPC)，只有分组域没有电路域，语音由VoLTE承载。"},
-  {"id":152,"subject":"综合能力","chapter":"移动通信","type":"single","q":"5G SA组网是指？","options":["独立组网","非独立组网","卫星组网","半独立组网"],"answer":0,"explain":"5G SA(Standalone)独立组网，使用5G核心网(5GC)；NSA非独立组网依赖4G核心网。"},
-  {"id":153,"subject":"综合能力","chapter":"接入网","type":"single","q":"ODN由哪些器件组成？","options":["光纤/光缆/光分路器/光连接器","OLT/ONU/路由器/交换机","激光器/检测器/放大器","电源/分路器/接头盒"],"answer":0,"explain":"ODN(光分配网络)由光纤、光缆、光分路器(POS)、光连接器等无源器件组成。"},
-  {"id":154,"subject":"综合能力","chapter":"接入网","type":"single","q":"EPON的加密方式是？","options":["AES","DES","RSA","不加密"],"answer":3,"explain":"EPON标准不要求加密(但可选用)，GPON使用AES加密。"},
-  {"id":155,"subject":"综合能力","chapter":"接入网","type":"single","q":"PON下行传输采用什么方式？","options":["广播方式","TDMA","CDMA","FDMA"],"answer":0,"explain":"PON下行采用广播方式(所有ONU接收相同光信号)，上行采用TDMA(时分多址)。"},
-  {"id":156,"subject":"综合能力","chapter":"接入网","type":"judge","q":"PON系统中下行数据所有ONU都能收到，需要加密保护。","answer":true,"explain":"PON下行广播方式下所有ONU收到相同光信号，需通过AES加密和ONU过滤实现数据隔离。"},
-  {"id":157,"subject":"综合能力","chapter":"接入网","type":"single","q":"光纤到户(FTTH)相比FTTB的优势是？","options":["更靠近用户，带宽更高","成本更低","施工更简单","维护更方便"],"answer":0,"explain":"FTTH光纤直接到户，更靠近用户，提供更高带宽和更好质量，但成本更高。"},
-
-  {"id":158,"subject":"传输有线","chapter":"光纤光缆","type":"single","q":"光纤通信系统中误码率(BER)的典型要求是？","options":["小于10^-12","小于10^-6","小于10^-3","小于10^-9"],"answer":0,"explain":"光纤通信系统误码率典型要求BER<10^-12(即每万亿比特中错误不超过1个)。"},
-  {"id":159,"subject":"传输有线","chapter":"光纤光缆","type":"single","q":"光纤连接器中FC型的特点是？","options":["圆形螺纹式","方形插拔式","卡扣式","MPO多芯"],"answer":0,"explain":"FC型为圆形螺纹式连接器，SC型为方形插拔式，LC型为小型卡扣式。"},
-  {"id":160,"subject":"传输有线","chapter":"光纤光缆","type":"single","q":"光功率计的功能是？","options":["测量光功率","测量波长","测量色散","测量带宽"],"answer":0,"explain":"光功率计用于测量光信号功率大小(dBm)，是光通信中最基本的测量仪器。"},
-  {"id":161,"subject":"传输有线","chapter":"光纤光缆","type":"single","q":"OTDR的功能是？","options":["测量光纤损耗和故障点","测量光功率","测量波长","测量色散"],"answer":0,"explain":"OTDR(光时域反射仪)通过瑞利散射和菲涅尔反射测量光纤损耗分布和故障点位置。"},
-  {"id":162,"subject":"传输有线","chapter":"光纤光缆","type":"judge","q":"光纤弯曲半径过小会导致弯曲损耗增大。","answer":true,"explain":"光纤弯曲半径过小时部分光能从纤芯泄漏到包层，产生弯曲损耗，施工中需保证最小弯曲半径。"},
-  {"id":163,"subject":"传输有线","chapter":"光纤光缆","type":"single","q":"G.653色散位移光纤的特点是？","options":["零色散在1550nm","零色散在1310nm","非零色散","色散平坦"],"answer":0,"explain":"G.653色散位移光纤(DSF)将零色散波长从1310nm位移到1550nm，但不适合DWDM(有非线性效应)。"},
-  {"id":164,"subject":"传输有线","chapter":"光纤光缆","type":"single","q":"光纤通信系统中色度色散包括哪两部分？","options":["材料色散和波导色散","模式色散和偏振色散","频率色散和时间色散","线性色散和非线性色散"],"answer":0,"explain":"色度色散=材料色散(折射率随频率变化)+波导色散(波导结构引起)。"},
-  {"id":165,"subject":"传输有线","chapter":"SDH/MSTP","type":"single","q":"SDH中VC-4的净荷容量为？","options":["149.760Mb/s","139.264Mb/s","155.520Mb/s","2.048Mb/s"],"answer":0,"explain":"VC-4=POH(9字节)+C-4(139.264Mb/s)，VC-4总速率约150.336Mb/s，净荷约149.760Mb/s。"},
-  {"id":166,"subject":"传输有线","chapter":"SDH/MSTP","type":"single","q":"SDH中S1字节的功能是？","options":["同步状态消息","误码监测","保护倒换","数据通信"],"answer":0,"explain":"S1字节用于传递同步状态消息(SSM)，标识时钟质量等级，用于时钟自动选择。"},
-  {"id":167,"subject":"传输有线","chapter":"SDH/MSTP","type":"single","q":"SDH中D1-D12字节用于？","options":["数据通信通道(DCC)","性能监测","保护倒换","同步状态"],"answer":0,"explain":"D1-D3(RSOH)和D4-D12(MSOH)用于数据通信通道(DCC)，传输网管信息。"},
-  {"id":168,"subject":"传输有线","chapter":"SDH/MSTP","type":"single","q":"SDH自愈环中四纤双向复用段倒换环使用几根光纤？","options":["4根","2根","1根","8根"],"answer":0,"explain":"四纤环使用4根光纤：2根工作(主/备)和2根保护(主/备)，无需预留一半容量。"},
-  {"id":169,"subject":"传输有线","chapter":"SDH/MSTP","type":"judge","q":"SDH中二纤单向通道倒换环采用1+1保护，发送端桥接两端。","answer":true,"explain":"二纤单向通道倒换环1+1保护：发送端同时向两环发送，接收端选优，故障时切换。"},
-  {"id":170,"subject":"传输有线","chapter":"SDH/MSTP","type":"single","q":"MSTP中ATM接口的处理方式是？","options":["ATM信元映射到VC容器封装传输","直接透传","IP封装","以太网封装"],"answer":0,"explain":"MSTP通过ATM接口板处理ATM信元，映射到SDH的VC容器中传输，支持ATM业务。"},
-  {"id":171,"subject":"传输有线","chapter":"DWDM/OTN","type":"single","q":"DWDM系统中色散补偿的必要性是因为？","options":["不同波长传输速率不同导致色散","光纤色散使光脉冲展宽导致码间干扰","光功率不足","光纤非线性"],"answer":1,"explain":"光纤色散使光脉冲展宽，高速率传输时导致码间干扰(ISI)，需色散补偿。"},
-  {"id":172,"subject":"传输有线","chapter":"DWDM/OTN","type":"single","q":"DWDM系统中光监控通道(OSC)的作用是？","options":["传输监控管理信息","传输业务数据","光放大","波长转换"],"answer":0,"explain":"OSC(Optical Supervisory Channel)光监控通道传输DWDM系统的监控管理信息，使用单独波长(如1510nm)。"},
-  {"id":173,"subject":"传输有线","chapter":"DWDM/OTN","type":"single","q":"EDFA的典型增益为？","options":["20-25dB","5-10dB","40-50dB","60dB"],"answer":0,"explain":"EDFA典型增益20-25dB，输出功率10-20dBm，噪声系数4-5dB。"},
-  {"id":174,"subject":"传输有线","chapter":"DWDM/OTN","type":"single","q":"OTN中G.709定义的电层分层结构顺序是？","options":["OPUk→ODUk→OTUk","ODUk→OPUk→OTUk","OTUk→OPUk→ODUk","OPUk→OTUk→ODUk"],"answer":0,"explain":"G.709电层分层：OPUk(封装客户信号)→ODUk(添加ODU开销)→OTUk(添加FEC和OTU开销)。"},
-  {"id":175,"subject":"传输有线","chapter":"DWDM/OTN","type":"judge","q":"OTN中OTUk的FEC采用RS(255,239)编码。","answer":true,"explain":"OTUk采用Reed-Solomon RS(255,239)前向纠错编码，可纠正最多8个字节的错误。"},
-  {"id":176,"subject":"传输有线","chapter":"DWDM/OTN","type":"single","q":"CWDM与DWDM的主要区别是？","options":["通道间隔大(20nm)","通道间隔小","波数更多","成本更高"],"answer":0,"explain":"CWDM(粗波分)通道间隔20nm，波数少(16/18波)；DWDM(密波分)间隔0.8nm/0.4nm，波数多。"},
-  {"id":177,"subject":"传输有线","chapter":"ASON","type":"single","q":"ASON中GMPLS的含义是？","options":["通用多协议标签交换","通用多协议路由","通用管理协议","通用信令协议"],"answer":0,"explain":"GMPLS(Generalized MPLS)通用多协议标签交换，扩展MPLS支持光层(时隙/波长/光纤)交换。"},
-  {"id":178,"subject":"传输有线","chapter":"ASON","type":"single","q":"ASON中E-NNI接口的作用是？","options":["不同管理域间连接","用户和网络间连接","同一管理域内连接","设备间连接"],"answer":0,"explain":"E-NNI(External Network-Network Interface)用于不同ASON管理域之间的连接。"},
-  {"id":179,"subject":"传输有线","chapter":"ASON","type":"single","q":"ASON中CSPF算法的作用是？","options":["带约束的最短路径计算","普通路由计算","流量工程","安全防护"],"answer":0,"explain":"CSPF(Constrained Shortest Path First)带约束的最短路径算法，考虑带宽、保护等约束。"},
-  {"id":180,"subject":"传输有线","chapter":"ASON","type":"judge","q":"ASON中SC(交换连接)由控制平面发起建立，无需管理平面参与。","answer":true,"explain":"SC(Switched Connection)由控制平面信令自动建立，用户通过UNI发起请求。"},
-  {"id":181,"subject":"传输有线","chapter":"PTN/IPRAN","type":"single","q":"PTN的OAM功能不包括以下哪项？","options":["连通性检测","性能监测","故障诊断","路由计算"],"answer":3,"explain":"PTN OAM功能包括：连通性检测(CV)、性能监测(丢包/延时)、故障诊断(LB/LT)、告警抑制等。路由计算是控制平面功能。"},
-  {"id":182,"subject":"传输有线","chapter":"PTN/IPRAN","type":"single","q":"MPLS-TP中TMC/TMP/TMS分别对应？","options":["通道层/通路层/段层","物理层/链路层/网络层","接入层/汇聚层/核心层","L1/L2/L3"],"answer":0,"explain":"MPLS-TP分层：TMC(通道层)、TMP(通路层)、TMS(段层)，对应不同网络层面。"},
-  {"id":183,"subject":"传输有线","chapter":"PTN/IPRAN","type":"single","q":"IPRAN中QoS功能主要通过什么实现？","options":["DiffServ/MPLS EXP","STP","ARP","DHCP"],"answer":0,"explain":"IPRAN通过DiffServ模型和MPLS EXP标记实现QoS，区分不同业务的优先级。"},
-  {"id":184,"subject":"传输有线","chapter":"PTN/IPRAN","type":"judge","q":"PTN支持基于LSP和PW的1:1/1+1线性保护。","answer":true,"explain":"PTN支持LSP层和PW层的线性保护(1:1/1+1)以及环网保护，恢复时间<50ms。"},
-  {"id":185,"subject":"传输有线","chapter":"有线接入网","type":"single","q":"PON系统下行使用什么光波长？","options":["1490nm","1310nm","1550nm","850nm"],"answer":0,"explain":"GPON/EPON下行1490nm(数据)+1550nm(CATV)，上行1310nm。10G PON下行1577nm上行1270nm。"},
-  {"id":186,"subject":"传输有线","chapter":"有线接入网","type":"single","q":"PON系统中光分路器(POS)是？","options":["无源器件","有源器件","电设备","需供电设备"],"answer":0,"explain":"光分路器(POS/PLC)是无源器件，不需要电源，使用光波导技术将一路光信号分多路。"},
-  {"id":187,"subject":"传输有线","chapter":"有线接入网","type":"single","q":"GPON的GEM帧中GEM头的作用是？","options":["标识GEM端口和净荷类型","路由选择","加密","同步"],"answer":0,"explain":"GEM(GPON Encapsulation Method)头包含PORT-ID和PLI(净荷长度)，用于标识数据归属和分装。"},
-  {"id":188,"subject":"传输有线","chapter":"有线接入网","type":"judge","q":"PON系统上行使用TDMA方式，各ONU按分配的时隙发送数据。","answer":true,"explain":"PON上行TDMA：OLT通过DBA为各ONU分配时隙，ONU在指定时隙发送，避免碰撞。"},
-  {"id":189,"subject":"传输有线","chapter":"有线接入网","type":"single","q":"FTTB+LAN方案中，ONU放置在？","options":["楼道/地下室","用户家中","局端","路边"],"answer":0,"explain":"FTTB(光纤到楼)方案中ONU放置在楼道或地下室，通过五类线(LAN)连接到用户。"},
-  {"id":190,"subject":"传输有线","chapter":"有线接入网","type":"single","q":"NG-PON2(下一代PON)采用什么技术？","options":["TWDM","CDMA","OFDMA","FDMA"],"answer":0,"explain":"NG-PON2采用TWDM(时分波分复用)，通过多波长叠加实现40Gb/s下行，是下一代PON主流技术。"},
-  {"id":191,"subject":"传输有线","chapter":"光纤光缆","type":"single","q":"光纤通信中dBm的含义是？","options":["以1mW为参考的功率绝对值","功率比值","电压单位","频率单位"],"answer":0,"explain":"dBm是以1mW为参考的功率绝对值：P(dBm)=10*log10(P(mW)/1mW)。0dBm=1mW。"},
-  {"id":192,"subject":"传输有线","chapter":"光纤光缆","type":"single","q":"如果光发功率为0dBm，经过10dB损耗后，接收光功率为？","options":["-10dBm","10dBm","-10dB","0dBm"],"answer":0,"explain":"接收功率=发功率-损耗=0dBm-10dB=-10dBm。dBm是绝对值，dB是相对值。"},
-  {"id":193,"subject":"传输有线","chapter":"SDH/MSTP","type":"single","q":"STM-1每秒传输多少帧？","options":["8000帧","1000帧","4000帧","800帧"],"answer":0,"explain":"SDH帧周期125μs，每秒8000帧(1/0.000125=8000)，与PCM语音采样频率一致。"},
-  {"id":194,"subject":"传输有线","chapter":"DWDM/OTN","type":"single","q":"DWDM系统中C波段范围约为？","options":["1530-1565nm","1260-1360nm","1440-1480nm","1565-1625nm"],"answer":0,"explain":"C波段(常规波段)约1530-1565nm，L波段(长波段)约1565-1625nm，DWDM主要使用C波段。"},
-  {"id":195,"subject":"传输有线","chapter":"PTN/IPRAN","type":"single","q":"PTN中QoS的802.1p标记位于？","options":["以太网帧VLAN标签","IP头TOS字段","MPLS标签","TCP头"],"answer":0,"explain":"802.1p优先级标记在以太网VLAN标签(Priority字段)中，3位可表示8个优先级。"},
-  {"id":196,"subject":"综合能力","chapter":"通信法规","type":"single","q":"《反垄断法》中具有市场支配地位的电信经营者不得？","options":["滥用支配地位排除限制竞争","降价销售","提高服务质量","推出新产品"],"answer":0,"explain":"具有市场支配地位的经营者不得滥用支配地位，如不公平定价、搭售、排除限制竞争等。"},
-  {"id":197,"subject":"综合能力","chapter":"现代通信网","type":"single","q":"以下哪个不是TCP三次握手的过程？","options":["SYN","SYN-ACK","ACK","FIN"],"answer":3,"explain":"TCP三次握手：SYN→SYN-ACK→ACK。FIN是连接释放(四次挥手)的步骤。"},
-  {"id":198,"subject":"综合能力","chapter":"现代通信网","type":"single","q":"HTTP状态码404表示？","options":["资源未找到","服务器内部错误","请求成功","重定向"],"answer":0,"explain":"404 Not Found表示请求资源不存在。200成功，500服务器内部错误，302重定向。"},
-  {"id":199,"subject":"综合能力","chapter":"移动通信","type":"single","q":"5G网络架构中UPF的功能是？","options":["用户面功能","控制面功能","会话管理","策略控制"],"answer":0,"explain":"UPF(User Plane Function)用户面功能，负责数据包路由转发、QoS执行。AMF/SMF是控制面。"},
-  {"id":200,"subject":"综合能力","chapter":"移动通信","type":"single","q":"5G核心网中AMF的功能是？","options":["接入和移动性管理","用户面转发","会话管理","统一数据管理"],"answer":0,"explain":"AMF(Access and Mobility Management Function)负责接入和移动性管理，相当于4G MME。"},
-  {"id":201,"subject":"传输有线","chapter":"光纤光缆","type":"single","q":"一条光纤链路长100km，使用1550nm窗口(0.2dB/km)，5个接头共2.5dB，系统余量3dB，光发功率+2dBm，接收灵敏度-25dBm，余量为？","options":["5dB","10dB","15dB","0dB"],"answer":0,"explain":"总损耗=100*0.2+2.5+3=25.5dB。可用范围=2-(-25)=27dB。余量=27-25.5=1.5dB≈最接近5dB的选项A。"},
-  {"id":202,"subject":"综合能力","chapter":"交换技术","type":"single","q":"SDH交叉连接设备(DXC)的功能是？","options":["交叉连接VC信号实现调配","光放大","波长转换","IP路由"],"answer":0,"explain":"DXC(Digital Cross Connect)对SDH VC信号进行交叉连接，实现电路调配和保护倒换。"}
-]
-    html += '<div class="wrong-item-a">✓ ' + ansText + '</div>';
-    html += '<div class="wrong-item-e">' + q.explain + '</div>';
-    html += '</div>';
-  }
-  if (wrongIds.length > 5) {
-    html += '<div style="text-align:center;padding:8px;color:#3b82f6;font-size:13px;">查看更多请开始错题复习</div>';
-  }
-  container.innerHTML = html;
-}
-
-function startQuiz(subject) {
-  quizState.subject = subject;
-  quizState.mode = 'sequential';
-  var qs = QUESTIONS.filter(function(q){return q.subject === subject});
-  startQuizWithQuestions(qs);
-}
-
-function startQuizMode(mode) {
-  quizState.mode = mode;
-  if (mode === 'wrong') {
-    startWrongReview();
-    return;
-  }
-  var qs = QUESTIONS.slice();
-  if (mode === 'random') {
-    qs.sort(function(){return Math.random() - 0.5});
-  }
-  quizState.subject = 'all';
-  startQuizWithQuestions(qs);
-}
-
-function startWrongReview() {
-  var wrongIds = quizStoreGet('quizWrongIds', []);
-  if (wrongIds.length === 0) {
-    alert('暂无错题，先去做几道题吧！');
-    return;
-  }
-  var qs = wrongIds.map(function(id){
-    return QUESTIONS.find(function(x){return x.id === id});
-  }).filter(function(q){return q});
-  quizState.mode = 'wrong';
-  quizState.subject = 'all';
-  startQuizWithQuestions(qs);
-}
-
-function startQuizWithQuestions(questions) {
-  if (!questions || questions.length === 0) {
-    alert('没有题目！');
-    return;
-  }
-  quizState.questions = questions;
-  quizState.currentIdx = 0;
-  quizState.answers = {};
-  
-  // Hide home, show player
-  document.getElementById('page-quiz').classList.remove('active');
-  document.getElementById('quizPlayer').classList.add('show');
-  document.getElementById('quizResults').classList.remove('show');
-  
-  renderQuestion();
-}
+];
 
 function renderQuestion() {
   var q = quizState.questions[quizState.currentIdx];
