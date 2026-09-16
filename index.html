@@ -6975,42 +6975,56 @@ window.initQuiz = initQuiz;
 (function(){
   var touchStartX = 0;
   var touchStartY = 0;
-  var touchEndX = 0;
-  var touchEndY = 0;
+  var touchStartTime = 0;
   var minSwipeDistance = 50; // minimum swipe distance in px
+  var maxSwipeTime = 500; // max swipe duration in ms
   
-  function handleSwipe() {
+  function handleSwipe(endX, endY, endTime) {
     var player = document.getElementById('quizPlayer');
     if (!player || !player.classList.contains('show')) return;
     
-    var diffX = touchEndX - touchStartX;
-    var diffY = touchEndY - touchStartY;
+    var diffX = endX - touchStartX;
+    var diffY = endY - touchStartY;
+    var diffTime = endTime - touchStartTime;
     
-    // Only trigger if horizontal swipe is significantly larger than vertical
-    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > minSwipeDistance) {
+    // Only trigger if:
+    // 1. Horizontal swipe is significantly larger than vertical
+    // 2. Distance exceeds threshold
+    // 3. Duration is within reasonable range (not a slow drag)
+    if (Math.abs(diffX) > Math.abs(diffY) * 1.5 && 
+        Math.abs(diffX) > minSwipeDistance && 
+        diffTime < maxSwipeTime) {
       if (diffX > 0) {
         // Swipe right -> previous question
-        prevQuestion();
+        if (typeof window.prevQuestion === 'function') {
+          window.prevQuestion();
+        }
       } else {
         // Swipe left -> next question
-        nextQuestion();
+        if (typeof window.nextQuestion === 'function') {
+          window.nextQuestion();
+        }
       }
     }
   }
   
   function initSwipe() {
-    var player = document.getElementById('quizPlayer');
-    if (!player) return;
-    
-    player.addEventListener('touchstart', function(e){
+    document.addEventListener('touchstart', function(e){
+      var player = document.getElementById('quizPlayer');
+      if (!player || !player.classList.contains('show')) return;
       touchStartX = e.changedTouches[0].screenX;
       touchStartY = e.changedTouches[0].screenY;
+      touchStartTime = Date.now();
     }, { passive: true });
     
-    player.addEventListener('touchend', function(e){
-      touchEndX = e.changedTouches[0].screenX;
-      touchEndY = e.changedTouches[0].screenY;
-      handleSwipe();
+    document.addEventListener('touchend', function(e){
+      var player = document.getElementById('quizPlayer');
+      if (!player || !player.classList.contains('show')) return;
+      handleSwipe(
+        e.changedTouches[0].screenX,
+        e.changedTouches[0].screenY,
+        Date.now()
+      );
     }, { passive: true });
   }
   
