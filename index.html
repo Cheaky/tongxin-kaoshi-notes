@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#1e3a5f">
-<title>通信中级考试 · 冲刺笔记 V7</title>
+<title>通信中级考试 · 冲刺笔记 V8</title>
 <style>
 /* ===== Reset & Base ===== */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -1357,6 +1357,274 @@ body.font-xl h2 { font-size: 28px; }
   top: 0;
 }
 
+
+/* ===== V8: Quiz System ===== */
+.quiz-home {
+  padding: 16px;
+}
+.quiz-hero {
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
+  border-radius: 20px;
+  padding: 24px 20px;
+  color: white;
+  margin-bottom: 16px;
+  text-align: center;
+}
+.quiz-hero h2 { font-size: 22px; margin-bottom: 6px; }
+.quiz-hero p { font-size: 13px; opacity: 0.85; }
+.quiz-stats {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+.quiz-stat {
+  flex: 1;
+  background: rgba(255,255,255,0.15);
+  border-radius: 12px;
+  padding: 10px 6px;
+  text-align: center;
+}
+.quiz-stat-num { font-size: 20px; font-weight: 700; }
+.quiz-stat-label { font-size: 10px; opacity: 0.8; margin-top: 2px; }
+
+.quiz-section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 16px 0 10px;
+}
+.quiz-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.quiz-card {
+  background: white;
+  border-radius: 14px;
+  padding: 16px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.15s;
+  border: 2px solid transparent;
+}
+.quiz-card:active { transform: scale(0.96); }
+.quiz-card.s1 { border-color: #dbeafe; }
+.quiz-card.s2 { border-color: #dcfce7; }
+.quiz-card-icon { font-size: 28px; margin-bottom: 8px; }
+.quiz-card-title { font-size: 14px; font-weight: 600; color: #1e293b; }
+.quiz-card-info { font-size: 11px; color: #64748b; margin-top: 4px; }
+
+.quiz-modes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.quiz-mode {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  border-radius: 14px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.quiz-mode:active { transform: scale(0.98); }
+.quiz-mode-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.quiz-mode-info { flex: 1; }
+.quiz-mode-title { font-size: 15px; font-weight: 600; color: #1e293b; }
+.quiz-mode-desc { font-size: 12px; color: #64748b; margin-top: 2px; }
+.quiz-mode-arrow { color: #cbd5e1; font-size: 18px; }
+
+/* Quiz Player */
+.quiz-player {
+  padding: 12px 16px 80px;
+  display: none;
+}
+.quiz-player.show { display: block; }
+.quiz-progress-bar {
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 2px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.quiz-progress-fill {
+  height: 100%;
+  background: #3b82f6;
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+.quiz-progress-text {
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+.quiz-question-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px 16px;
+  margin-bottom: 16px;
+}
+.quiz-q-tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.quiz-q-tag.single { background: #dbeafe; color: #1e40af; }
+.quiz-q-tag.judge { background: #fef3c7; color: #92400e; }
+.quiz-q-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.quiz-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: white;
+}
+.quiz-option:active { transform: scale(0.98); }
+.quiz-option.selected { border-color: #3b82f6; background: #eff6ff; }
+.quiz-option.correct { border-color: #22c55e; background: #f0fdf4; }
+.quiz-option.wrong { border-color: #ef4444; background: #fef2f2; }
+.quiz-option-letter {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+  background: #f1f5f9;
+  color: #64748b;
+  flex-shrink: 0;
+}
+.quiz-option.correct .quiz-option-letter { background: #22c55e; color: white; }
+.quiz-option.wrong .quiz-option-letter { background: #ef4444; color: white; }
+.quiz-option-text { font-size: 14px; color: #1e293b; flex: 1; }
+
+.quiz-explain {
+  display: none;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-top: 12px;
+  border-left: 3px solid #3b82f6;
+}
+.quiz-explain.show { display: block; }
+.quiz-explain-title { font-size: 13px; font-weight: 700; color: #1e40af; margin-bottom: 6px; }
+.quiz-explain-text { font-size: 13px; color: #475569; line-height: 1.6; }
+
+.quiz-nav {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+.quiz-nav-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.quiz-nav-btn:active { transform: scale(0.98); }
+.quiz-nav-btn.prev { background: #f1f5f9; color: #475569; }
+.quiz-nav-btn.next { background: #3b82f6; color: white; }
+.quiz-nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Quiz Results */
+.quiz-results {
+  display: none;
+  padding: 20px 16px;
+  text-align: center;
+}
+.quiz-results.show { display: block; }
+.quiz-result-score {
+  font-size: 48px;
+  font-weight: 800;
+  color: #3b82f6;
+  margin: 10px 0;
+}
+.quiz-result-label { font-size: 14px; color: #64748b; }
+.quiz-result-stats {
+  display: flex;
+  gap: 8px;
+  margin: 20px 0;
+}
+.quiz-result-stat {
+  flex: 1;
+  background: white;
+  border-radius: 12px;
+  padding: 12px 8px;
+}
+.quiz-result-stat-num { font-size: 22px; font-weight: 700; }
+.quiz-result-stat-num.ok { color: #22c55e; }
+.quiz-result-stat-num.bad { color: #ef4444; }
+.quiz-result-stat-label { font-size: 11px; color: #64748b; }
+.quiz-result-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+.quiz-result-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.quiz-result-btn.primary { background: #3b82f6; color: white; }
+.quiz-result-btn.secondary { background: #f1f5f9; color: #475569; }
+
+/* Wrong notebook */
+.wrong-list {
+  padding: 12px 16px 80px;
+  display: none;
+}
+.wrong-list.show { display: block; }
+.wrong-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #94a3b8;
+}
+.wrong-empty-icon { font-size: 48px; margin-bottom: 12px; }
+.wrong-item {
+  background: white;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 10px;
+}
+.wrong-item-q { font-size: 14px; font-weight: 600; color: #1e293b; margin-bottom: 8px; }
+.wrong-item-a { font-size: 13px; color: #22c55e; }
+.wrong-item-e { font-size: 12px; color: #64748b; margin-top: 6px; }
+
 </style>
 </head>
 <body>
@@ -1387,7 +1655,7 @@ body.font-xl h2 { font-size: 28px; }
 <div id="page-home" class="content active">
   <div class="hero-card">
     <h2>通信工程师中级考试</h2>
-    <div class="hero-sub">冲刺复习笔记 V7 · 搜索/字体大升级</div>
+    <div class="hero-sub">冲刺复习笔记 V8 · 刷题系统</div>
     <div class="hero-meta">
       <span>📹 7个精讲视频</span>
       <span>⏱️ 11.8小时</span>
@@ -2222,6 +2490,123 @@ body.font-xl h2 { font-size: 28px; }
 
 </div>
 
+
+<!-- ========== QUIZ HOME PAGE ========== -->
+<div id="page-quiz" class="content">
+  <div class="quiz-home">
+    <div class="quiz-hero">
+      <h2>📝 刷题练习</h2>
+      <p>近5年真题 · 模拟考试 · 错题本</p>
+      <div class="quiz-stats">
+        <div class="quiz-stat">
+          <div class="quiz-stat-num" id="quizTotal">0</div>
+          <div class="quiz-stat-label">总题数</div>
+        </div>
+        <div class="quiz-stat">
+          <div class="quiz-stat-num" id="quizDone">0</div>
+          <div class="quiz-stat-label">已做</div>
+        </div>
+        <div class="quiz-stat">
+          <div class="quiz-stat-num" id="quizCorrect">0%</div>
+          <div class="quiz-stat-label">正确率</div>
+        </div>
+        <div class="quiz-stat">
+          <div class="quiz-stat-num" id="quizWrong">0</div>
+          <div class="quiz-stat-label">错题</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-section-title">选择科目</div>
+    <div class="quiz-cards">
+      <div class="quiz-card s1" onclick="startQuiz('综合能力')">
+        <div class="quiz-card-icon">📘</div>
+        <div class="quiz-card-title">综合能力</div>
+        <div class="quiz-card-info" id="quizCountS1">0题</div>
+      </div>
+      <div class="quiz-card s2" onclick="startQuiz('传输有线')">
+        <div class="quiz-card-icon">📗</div>
+        <div class="quiz-card-title">传输有线</div>
+        <div class="quiz-card-info" id="quizCountS2">0题</div>
+      </div>
+    </div>
+
+    <div class="quiz-section-title">练习模式</div>
+    <div class="quiz-modes">
+      <div class="quiz-mode" onclick="startQuizMode('sequential')">
+        <div class="quiz-mode-icon" style="background:#dbeafe">📋</div>
+        <div class="quiz-mode-info">
+          <div class="quiz-mode-title">顺序练习</div>
+          <div class="quiz-mode-desc">按顺序做题，逐步覆盖全部考点</div>
+        </div>
+        <div class="quiz-mode-arrow">→</div>
+      </div>
+      <div class="quiz-mode" onclick="startQuizMode('random')">
+        <div class="quiz-mode-icon" style="background:#fef3c7">🎲</div>
+        <div class="quiz-mode-info">
+          <div class="quiz-mode-title">随机练习</div>
+          <div class="quiz-mode-desc">随机出题，检验综合掌握程度</div>
+        </div>
+        <div class="quiz-mode-arrow">→</div>
+      </div>
+      <div class="quiz-mode" onclick="startQuizMode('wrong')">
+        <div class="quiz-mode-icon" style="background:#fee2e2">❌</div>
+        <div class="quiz-mode-info">
+          <div class="quiz-mode-title">错题复习</div>
+          <div class="quiz-mode-desc">只做做错的题，针对性提升</div>
+        </div>
+        <div class="quiz-mode-arrow">→</div>
+      </div>
+    </div>
+
+    <div class="quiz-section-title">错题本</div>
+    <div id="wrongNotebook"></div>
+  </div>
+</div>
+
+<!-- ========== QUIZ PLAYER ========== -->
+<div id="quizPlayer" class="quiz-player">
+  <div class="quiz-progress-text">
+    <span id="quizProgText">第 1 题 / 共 10 题</span>
+    <span id="quizScoreText">得分: 0</span>
+  </div>
+  <div class="quiz-progress-bar">
+    <div class="quiz-progress-fill" id="quizProgFill" style="width:10%"></div>
+  </div>
+  <div id="quizQuestionArea"></div>
+  <div class="quiz-nav">
+    <button class="quiz-nav-btn prev" id="quizPrevBtn" onclick="prevQuestion()">上一题</button>
+    <button class="quiz-nav-btn next" id="quizNextBtn" onclick="nextQuestion()">下一题</button>
+  </div>
+</div>
+
+<!-- ========== QUIZ RESULTS ========== -->
+<div id="quizResults" class="quiz-results">
+  <div style="font-size:48px;margin-bottom:8px;" id="quizResultEmoji">🎉</div>
+  <div style="font-size:18px;font-weight:700;color:#1e293b;">练习完成!</div>
+  <div class="quiz-result-score" id="quizResultScore">0</div>
+  <div class="quiz-result-label" id="quizResultLabel">共0题</div>
+  <div class="quiz-result-stats">
+    <div class="quiz-result-stat">
+      <div class="quiz-result-stat-num ok" id="quizResultCorrect">0</div>
+      <div class="quiz-result-stat-label">答对</div>
+    </div>
+    <div class="quiz-result-stat">
+      <div class="quiz-result-stat-num bad" id="quizResultWrong">0</div>
+      <div class="quiz-result-stat-label">答错</div>
+    </div>
+    <div class="quiz-result-stat">
+      <div class="quiz-result-stat-num" id="quizResultAccuracy">0%</div>
+      <div class="quiz-result-stat-label">正确率</div>
+    </div>
+  </div>
+  <div class="quiz-result-actions">
+    <button class="quiz-result-btn secondary" onclick="backToQuizHome()">返回</button>
+    <button class="quiz-result-btn primary" onclick="retryQuiz()">再做一次</button>
+  </div>
+</div>
+
+
 <!-- ===== Bottom Tab Bar ===== -->
 <div class="tab-bar">
   <button class="tab-item active" onclick="switchTab('home')">
@@ -2236,9 +2621,9 @@ body.font-xl h2 { font-size: 28px; }
     <span class="tab-icon">📗</span>
     <span>传输有线</span>
   </button>
-  <button class="tab-item" onclick="switchTab('search')">
-    <span class="tab-icon">🔍</span>
-    <span>搜索</span>
+  <button class="tab-item" onclick="switchTab('quiz')">
+    <span class="tab-icon">📝</span>
+    <span>刷题</span>
   </button>
 </div>
 
@@ -2334,8 +2719,8 @@ body.font-xl h2 { font-size: 28px; }
     state.currentTab = tab;
     storeSet('currentTab', tab);
 
-    var pages = { 'home': 'page-home', 'subject1': 'page-subject1', 'subject2': 'page-subject2' };
-    var tabNames = ['home', 'subject1', 'subject2', 'search'];
+    var pages = { 'home': 'page-home', 'subject1': 'page-subject1', 'subject2': 'page-subject2', 'quiz': 'page-quiz' };
+    var tabNames = ['home', 'subject1', 'subject2', 'quiz'];
 
     var contents = document.querySelectorAll('.content');
     for (var i = 0; i < contents.length; i++) {
@@ -2346,19 +2731,13 @@ body.font-xl h2 { font-size: 28px; }
       tabs[i].classList.remove('active');
     }
 
-    if (tab === 'search') {
-      // Search tab -> go home + focus search
-      document.getElementById('page-home').classList.add('active');
-      tabs[0].classList.add('active'); // home active
-      setTimeout(function() {
-        var input = document.getElementById('searchInput');
-        if (input) {
-          input.focus();
-          window.scrollTo({top: 0, behavior: 'smooth'});
-          showSearchDropdown();
-        }
-      }, 100);
-      var tabLabels = ['首页', '综合能力', '传输有线', '搜索'];
+    if (tab === 'quiz') {
+      var pageId = pages['quiz'];
+      var page = document.getElementById(pageId);
+      if (page) page.classList.add('active');
+      tabs[3] && tabs[3].classList.add('active');
+      window.scrollTo({top: 0, behavior: 'smooth'});
+      initQuiz();
     } else {
       var pageId = pages[tab] || 'page-home';
       var page = document.getElementById(pageId);
@@ -2374,7 +2753,7 @@ body.font-xl h2 { font-size: 28px; }
 
     window.scrollTo({top: 0, behavior: 'smooth'});
     // Don't hide dropdown/clear highlights when switching to search tab
-    if (tab !== 'search') {
+    if (tab !== 'quiz') {
       hideSearchDropdown();
       clearHighlights();
     }
@@ -2980,7 +3359,7 @@ body.font-xl h2 { font-size: 28px; }
         for (var i = 0; i < tabs.length; i++) {
           tabs[i].classList.remove('active');
         }
-        var tabNames = ['home', 'subject1', 'subject2', 'search'];
+        var tabNames = ['home', 'subject1', 'subject2', 'quiz'];
         var idx = tabNames.indexOf(tab);
         if (idx >= 0 && tabs[idx]) tabs[idx].classList.add('active');
         state.currentTab = tab;
@@ -3065,6 +3444,7 @@ body.font-xl h2 { font-size: 28px; }
     
     // Initial scroll
     updateScrollUI();
+    initQuiz();
   }
 
   // Expose
@@ -3082,6 +3462,344 @@ body.font-xl h2 { font-size: 28px; }
   window.nextMatch = nextMatch;
   window.prevMatch = prevMatch;
   window.hideSearchDropdown = hideSearchDropdown;
+
+// ===== V8: Quiz System =====
+var QUESTIONS = [{"id": 1, "subject": "综合能力", "chapter": "通信职业道德", "type": "single", "q": "通信科技人员职业道德的核心是？", "options": ["造福人民、振兴祖国", "热爱专业、忠于职责", "勇于探索、敢于创新", "实事求是、追求真理"], "answer": 0, "explain": "造福人民、振兴祖国是通信科技人员职业道德的核心，也是出发点和归宿。"}, {"id": 2, "subject": "综合能力", "chapter": "通信职业道德", "type": "single", "q": "通信科技人员最突出的特点是？", "options": ["勇于探索、敢于创新", "不畏艰险、献身科学", "热爱专业、忠于职责", "同心同德、团结协作"], "answer": 0, "explain": "勇于探索、敢于创新是通信科技人员最突出的特点。"}, {"id": 3, "subject": "综合能力", "chapter": "通信职业道德", "type": "single", "q": "通信科技人员的基本道德要求是？", "options": ["热爱专业、忠于职责", "造福人民、振兴祖国", "勤奋求知、严谨治学", "谦虚谨慎、尊重他人"], "answer": 0, "explain": "热爱专业、忠于职责是通信科技人员的基本道德要求。"}, {"id": 4, "subject": "综合能力", "chapter": "通信职业道德", "type": "judge", "q": "通信职业道德的特点包括形式多样性、适用性和较强稳定性。", "answer": true, "explain": "通信职业道德三大特点：形式多样性适用性、较强稳定性连续性、很强专业性具体性。"}, {"id": 5, "subject": "综合能力", "chapter": "通信职业道德", "type": "single", "q": "通信科技的\"六化\"不包括以下哪项？", "options": ["数字化", "综合化", "标准化", "模拟化"], "answer": 3, "explain": "通信科技\"六化\"：数字化、综合化、智能化、宽带化、个人化、标准化。不包括模拟化。"}, {"id": 6, "subject": "综合能力", "chapter": "通信法规", "type": "single", "q": "《电信条例》规定电信业务分为？", "options": ["基础电信业务和增值电信业务", "固定电信业务和移动电信业务", "国内电信业务和国际电信业务", "语音业务和数据业务"], "answer": 0, "explain": "《电信条例》将电信业务分为基础电信业务和增值电信业务两大类。"}, {"id": 7, "subject": "综合能力", "chapter": "通信法规", "type": "single", "q": "电信用户申告服务障碍的，电信企业应在多少小时内修复？", "options": ["24小时", "48小时", "72小时", "12小时"], "answer": 0, "explain": "电信用户申告服务障碍，电信企业应自接到申告之日起24小时内修复或调通。"}, {"id": 8, "subject": "综合能力", "chapter": "通信法规", "type": "judge", "q": "电信业务经营者有权为用户擅自开通收费项目。", "answer": false, "explain": "电信业务经营者不得擅自为用户开通收费项目，必须经用户确认。"}, {"id": 9, "subject": "综合能力", "chapter": "通信法规", "type": "single", "q": "电信网码号资源属于？", "options": ["国家所有", "企业所有", "运营商所有", "集体所有"], "answer": 0, "explain": "电信网码号资源属于国家所有，由国家统一规划、分配和管理。"}, {"id": 10, "subject": "综合能力", "chapter": "现代通信网", "type": "single", "q": "通信网的基本结构不包括？", "options": ["星型网", "环型网", "树型网", "平行型网"], "answer": 3, "explain": "通信网基本结构：星型、环型、树型、网型、总线型。不包括平行型。"}, {"id": 11, "subject": "综合能力", "chapter": "现代通信网", "type": "single", "q": "OSI参考模型共有几层？", "options": ["5层", "6层", "7层", "8层"], "answer": 2, "explain": "OSI参考模型共7层：物理层、数据链路层、网络层、传输层、会话层、表示层、应用层。"}, {"id": 12, "subject": "综合能力", "chapter": "现代通信网", "type": "single", "q": "TCP/IP协议模型分为几层？", "options": ["3层", "4层", "5层", "7层"], "answer": 1, "explain": "TCP/IP模型分4层：网络接口层、网络层、传输层、应用层。"}, {"id": 13, "subject": "综合能力", "chapter": "现代通信网", "type": "judge", "q": "TCP协议是面向连接的可靠传输协议。", "answer": true, "explain": "TCP是面向连接的、可靠的传输层协议；UDP是无连接的、不可靠的传输协议。"}, {"id": 14, "subject": "综合能力", "chapter": "现代通信网", "type": "single", "q": "以下哪个不是网络拓扑结构？", "options": ["总线型", "星型", "蜂窝型", "环型"], "answer": 2, "explain": "基本网络拓扑结构包括总线型、星型、环型、树型、网型。蜂窝型不属于基本拓扑结构。"}, {"id": 15, "subject": "综合能力", "chapter": "交换技术", "type": "single", "q": "电路交换的三个阶段不包括？", "options": ["建立连接", "数据传输", "释放连接", "差错控制"], "answer": 3, "explain": "电路交换三阶段：建立连接、数据传输、释放连接。不需要差错控制。"}, {"id": 16, "subject": "综合能力", "chapter": "交换技术", "type": "single", "q": "分组交换的特点是？", "options": ["独占带宽", "资源共享", "延迟固定", "无延迟"], "answer": 1, "explain": "分组交换采用存储转发方式，实现资源共享，延迟不固定。"}, {"id": 17, "subject": "综合能力", "chapter": "交换技术", "type": "single", "q": "ATM交换的信元长度固定为多少字节？", "options": ["48字节", "53字节", "64字节", "128字节"], "answer": 1, "explain": "ATM信元固定为53字节，其中信头5字节，净荷48字节。"}, {"id": 18, "subject": "综合能力", "chapter": "交换技术", "type": "judge", "q": "MPLS是一种多协议标签交换技术。", "answer": true, "explain": "MPLS(Multi-Protocol Label Switching)是多协议标签交换，介于二层和三层之间。"}, {"id": 19, "subject": "综合能力", "chapter": "光传输技术", "type": "single", "q": "SDH的基本传输速率为？", "options": ["STM-1为155.520Mb/s", "STM-1为622Mb/s", "STM-1为2.5Gb/s", "STM-1为10Gb/s"], "answer": 0, "explain": "STM-1是SDH的基本传输速率，速率为155.520Mb/s。STM-4=622Mb/s, STM-16=2.5Gb/s, STM-64=10Gb/s。"}, {"id": 20, "subject": "综合能力", "chapter": "光传输技术", "type": "single", "q": "SDH的帧结构是多少字节？", "options": ["270×9", "270×10", "256×9", "512×9"], "answer": 0, "explain": "SDH帧结构为270列×9行，帧周期125μs。"}, {"id": 21, "subject": "综合能力", "chapter": "光传输技术", "type": "single", "q": "光纤通信的工作窗口中，1310nm窗口的损耗大约为？", "options": ["0.35dB/km", "0.2dB/km", "0.5dB/km", "1.0dB/km"], "answer": 0, "explain": "1310nm窗口损耗约0.35dB/km，1550nm窗口损耗约0.2dB/km。"}, {"id": 22, "subject": "综合能力", "chapter": "光传输技术", "type": "judge", "q": "DWDM是密集波分复用技术，可以在一根光纤上传输多个波长。", "answer": true, "explain": "DWDM(Dense Wavelength Division Multiplexing)密集波分复用，在一根光纤上传输多个不同波长的光信号。"}, {"id": 23, "subject": "综合能力", "chapter": "光传输技术", "type": "single", "q": "OTN的中文名称是？", "options": ["光传送网", "光传输网络", "光通道网络", "光波分网络"], "answer": 0, "explain": "OTN(Optical Transport Network)光传送网，是下一代骨干光传送网络技术。"}, {"id": 24, "subject": "综合能力", "chapter": "移动通信", "type": "single", "q": "5G的主要特点不包括？", "options": ["增强移动宽带", "超高可靠低延迟", "海量机器通信", "固定带宽接入"], "answer": 3, "explain": "5G三大场景：eMBB增强移动宽带、URLLC超高可靠低延迟、mMTC海量机器通信。"}, {"id": 25, "subject": "综合能力", "chapter": "移动通信", "type": "single", "q": "4G LTE使用的多址技术是？", "options": ["OFDMA", "TDMA", "CDMA", "FDMA"], "answer": 0, "explain": "4G LTE采用OFDMA(正交频分多址)技术。"}, {"id": 26, "subject": "综合能力", "chapter": "移动通信", "type": "single", "q": "GSM系统使用的多址方式是？", "options": ["FDMA/TDMA", "CDMA", "OFDMA", "SDMA"], "answer": 0, "explain": "GSM采用FDMA/TDMA(频分多址/时分多址)组合方式。"}, {"id": 27, "subject": "综合能力", "chapter": "移动通信", "type": "judge", "q": "5G的Sub-6GHz频段是指6GHz以下的频率。", "answer": true, "explain": "5G使用Sub-6GHz(6GHz以下)和毫米波(24GHz以上)两个频段范围。"}, {"id": 28, "subject": "综合能力", "chapter": "接入网", "type": "single", "q": "PON的无源是指什么？", "options": ["不需要电源", "不需要光分路器", "不需要光纤", "不需要OLT"], "answer": 0, "explain": "PON(Passive Optical Network)无源光网络，\"无源\"指光分配网络(ODN)中不需要有源设备，使用无源光分路器。"}, {"id": 29, "subject": "综合能力", "chapter": "接入网", "type": "single", "q": "EPON的线路速率是？", "options": ["上下行均为1.25Gb/s", "上行1.25Gb/s下行2.5Gb/s", "上下行均为2.5Gb/s", "上行1Gb/s下行10Gb/s"], "answer": 0, "explain": "EPON上下行均为1.25Gb/s，GPON下行2.5Gb/s上行1.25Gb/s。"}, {"id": 30, "subject": "综合能力", "chapter": "接入网", "type": "single", "q": "GPON相比EPON的优势是？", "options": ["带宽分配灵活、QoS有保障", "价格更便宜", "安装更简单", "技术更简单"], "answer": 0, "explain": "GPON相比EPON：带宽更大、分配灵活、QoS有保障、保护机制完善、安全性高，但技术复杂成本较高。"}, {"id": 31, "subject": "传输有线", "chapter": "光纤光缆", "type": "single", "q": "光纤损耗计算公式中，1550nm窗口的损耗系数约为？", "options": ["0.2dB/km", "0.35dB/km", "0.5dB/km", "1.0dB/km"], "answer": 0, "explain": "1550nm窗口损耗系数约0.2dB/km，1310nm窗口约0.35dB/km。考试常考计算题。"}, {"id": 32, "subject": "传输有线", "chapter": "光纤光缆", "type": "single", "q": "单模光纤的芯径一般为？", "options": ["8-10μm", "50μm", "62.5μm", "125μm"], "answer": 0, "explain": "单模光纤芯径8-10μm，多模光纤芯径50μm或62.5μm。"}, {"id": 33, "subject": "传输有线", "chapter": "光纤光缆", "type": "single", "q": "光纤色散主要包括？", "options": ["模式色散、色度色散、偏振模色散", "频率色散、时间色散", "相位色散、幅度色散", "线性色散、非线性色散"], "answer": 0, "explain": "光纤色散包括模式色散（多模光纤）、色度色散（材料+波导）、偏振模色散。"}, {"id": 34, "subject": "传输有线", "chapter": "光纤光缆", "type": "judge", "q": "G.652光纤是常规单模光纤，又称为非色散位移光纤。", "answer": true, "explain": "G.652是常规单模光纤(Non-Dispersion-Shifted Fiber)，零色散波长在1310nm附近。"}, {"id": 35, "subject": "传输有线", "chapter": "光纤光缆", "type": "single", "q": "光缆线路维护中，光纤接头损耗一般要求小于？", "options": ["0.1dB", "0.5dB", "1dB", "2dB"], "answer": 0, "explain": "光纤接头损耗一般要求小于0.1dB，单模光纤热熔接头损耗更小。"}, {"id": 36, "subject": "传输有线", "chapter": "SDH/MSTP", "type": "single", "q": "SDH复用映射过程中，容器C-4的速率为？", "options": ["139.264Mb/s", "155.520Mb/s", "622.080Mb/s", "2.048Mb/s"], "answer": 0, "explain": "C-4速率为139.264Mb/s，映射到AU-4后加上开销为155.520Mb/s(STM-1)。"}, {"id": 37, "subject": "传输有线", "chapter": "SDH/MSTP", "type": "single", "q": "SDH中段开销RSOH在STM-N帧中的位置是？", "options": ["前9行×N列", "第1-3行×9列", "第4-5行×9列", "第6-9行×9列"], "answer": 1, "explain": "SDH帧结构中，RSOH位于第1-3行，MSOH位于第5-9行，第4行为AU指针。"}, {"id": 38, "subject": "传输有线", "chapter": "SDH/MSTP", "type": "single", "q": "MSTP在SDH基础上增加了什么功能？", "options": ["以太网和ATM等多业务接入接口", "光放大功能", "色散补偿功能", "光交叉连接功能"], "answer": 0, "explain": "MSTP(Multi-Service Transport Platform)在SDH基础上增加了以太网、ATM等多业务接入处理功能。"}, {"id": 39, "subject": "传输有线", "chapter": "SDH/MSTP", "type": "judge", "q": "SDH采用同步复用方式，各等级速率精确为155.520Mb/s的整数倍。", "answer": true, "explain": "SDH同步复用，STM-1=155.520Mb/s，STM-4=622.080Mb/s，STM-16=2488.320Mb/s，STM-64=9953.280Mb/s。"}, {"id": 40, "subject": "传输有线", "chapter": "SDH/MSTP", "type": "single", "q": "SDH自愈环保护中，二纤单向通道倒换环使用什么原理？", "options": ["1+1保护", "1:1保护", "1:N保护", "恢复式保护"], "answer": 0, "explain": "二纤单向通道倒换环采用1+1保护，发送端桥接，接收端倒换。"}, {"id": 41, "subject": "传输有线", "chapter": "DWDM/OTN", "type": "single", "q": "DWDM系统中的关键设备OTU的功能是？", "options": ["光波长转换", "光放大", "光分插复用", "光监控"], "answer": 0, "explain": "OTU(Optical Transponder Unit)光波长转换/转发单元，将客户侧非标准波长转换为DWDM标准波长。"}, {"id": 42, "subject": "传输有线", "chapter": "DWDM/OTN", "type": "single", "q": "EDFA的工作窗口是？", "options": ["1550nm", "1310nm", "850nm", "1625nm"], "answer": 0, "explain": "EDFA(Erbium-Doped Fiber Amplifier)掺铒光纤放大器，工作在1550nm波段，增益高、噪声低。"}, {"id": 43, "subject": "传输有线", "chapter": "DWDM/OTN", "type": "single", "q": "OTN的层次结构中，OCh是指？", "options": ["光通道层", "光复用段层", "光传输段层", "电通道层"], "answer": 0, "explain": "OTN分层：OCh光通道层、OMS光复用段层、OTS光传输段层。"}, {"id": 44, "subject": "传输有线", "chapter": "DWDM/OTN", "type": "judge", "q": "OTN可以看作是\"数字封包的DWDM\"。", "answer": true, "explain": "OTN在DWDM基础上增加了数字包封开销(FEC)，提供更强大的OAM和前向纠错能力。"}, {"id": 45, "subject": "传输有线", "chapter": "DWDM/OTN", "type": "single", "q": "DWDM系统中32波系统，通道间隔一般为？", "options": ["100GHz", "50GHz", "200GHz", "25GHz"], "answer": 0, "explain": "DWDM 32波系统通道间隔一般为100GHz，16波为200GHz，40/80波可为50GHz。"}, {"id": 46, "subject": "传输有线", "chapter": "ASON", "type": "single", "q": "ASON是指？", "options": ["自动交换光网络", "智能交换网络", "自动同步网络", "光交换网络"], "answer": 0, "explain": "ASON(Automatically Switched Optical Network)自动交换光网络，在SDH/OTN基础上增加控制平面。"}, {"id": 47, "subject": "传输有线", "chapter": "ASON", "type": "single", "q": "ASON的三个平面不包括？", "options": ["传输平面", "控制平面", "管理平面", "用户平面"], "answer": 3, "explain": "ASON三平面：传送平面(数据面)、控制平面(信令路由)、管理平面(网管)。"}, {"id": 48, "subject": "传输有线", "chapter": "ASON", "type": "single", "q": "ASON支持的保护恢复类型中，硬性保护恢复是指？", "options": ["预先配置路由，无信令参与", "需要控制平面信令参与", "动态计算路由", "可被高优先级业务抢占"], "answer": 0, "explain": "硬性保护恢复由管理平面配置，不需要控制平面信令参与；软性保护恢复需要控制平面参与。"}, {"id": 49, "subject": "传输有线", "chapter": "ASON", "type": "judge", "q": "ASON是在传统光网络基础上增加了独立的控制平面。", "answer": true, "explain": "ASON=传统传送网+独立控制平面，实现智能选路、自动发现、自动保护恢复等功能。"}, {"id": 50, "subject": "传输有线", "chapter": "PTN/IPRAN", "type": "single", "q": "PTN是指？", "options": ["分组传送网", "光传送网", "同步传送网", "弹性传送网"], "answer": 0, "explain": "PTN(Packet Transport Network)分组传送网，面向分组的传送技术，支持OAM和QoS。"}, {"id": 51, "subject": "传输有线", "chapter": "PTN/IPRAN", "type": "single", "q": "PTN技术的核心特点是？", "options": ["面向连接的分组传送", "面向无连接的传送", "电路交换传送", "信元交换传送"], "answer": 0, "explain": "PTN是面向连接的分组传送技术，融合了SDH的OAM/QoS和以太网的灵活性。"}, {"id": 52, "subject": "传输有线", "chapter": "PTN/IPRAN", "type": "single", "q": "IPRAN相比PTN的特点是？", "options": ["三层功能完善，灵活性好", "二层功能更强", "更简单", "成本更低"], "answer": 0, "explain": "IPRAN基于IP/MPLS，三层功能完善，灵活性更好但运维复杂；PTN侧重二层，运维更简单。"}, {"id": 53, "subject": "传输有线", "chapter": "PTN/IPRAN", "type": "judge", "q": "PTN适合作为城域网接入汇聚层，IPRAN适合作为城域核心层。", "answer": true, "explain": "PTN侧重二层，适合城域接入汇聚；IPRAN三层功能强，适合城域核心和骨干。"}, {"id": 54, "subject": "传输有线", "chapter": "有线接入网", "type": "single", "q": "FTTH是指？", "options": ["光纤到户", "光纤到楼", "光纤到路边", "光纤到办公室"], "answer": 0, "explain": "FTTH(Fiber To The Home)光纤到户，FTTB到楼，FTTC到路边，FTTO到办公室。"}, {"id": 55, "subject": "传输有线", "chapter": "有线接入网", "type": "single", "q": "GPON的传输速率和分光比是？", "options": ["下行2.5Gb/s上行1.25Gb/s，分光比1:64或1:128", "上下行均1.25Gb/s，分光比1:32", "下行10Gb/s上行2.5Gb/s，分光比1:256", "上下行均2.5Gb/s，分光比1:128"], "answer": 0, "explain": "GPON下行2.5Gb/s上行1.25Gb/s，分光比可达1:64或1:128。EPON分光比1:32或1:64。"}, {"id": 56, "subject": "传输有线", "chapter": "有线接入网", "type": "single", "q": "PON系统中的OLT是指？", "options": ["光线路终端", "光网络终端", "光分配网络", "光分路器"], "answer": 0, "explain": "OLT(Optical Line Terminal)光线路终端(局端)，ONT/ONU是用户端，ODN是光分配网络。"}, {"id": 57, "subject": "传输有线", "chapter": "有线接入网", "type": "judge", "q": "PON中采用测距技术是为了避免上行数据碰撞。", "answer": true, "explain": "PON上行采用TDMA，各ONU到OLT距离不同，通过测距控制发送时间避免碰撞。"}, {"id": 58, "subject": "传输有线", "chapter": "有线接入网", "type": "single", "q": "EPON采用的线路编码是？", "options": ["8B/10B", "NRZ", "曼彻斯特编码", "4B/5B"], "answer": 0, "explain": "EPON采用8B/10B线路编码，GPON采用扰频NRZ编码。"}, {"id": 59, "subject": "传输有线", "chapter": "光纤光缆", "type": "single", "q": "一条光纤链路长80km，使用1550nm窗口，接头损耗共2dB，系统余量3dB，则总损耗约为？", "options": ["21dB", "18dB", "16dB", "24dB"], "answer": 0, "explain": "总损耗=光纤损耗+接头损耗+余量=80×0.2+2+3=16+2+3=21dB。"}, {"id": 60, "subject": "传输有线", "chapter": "SDH/MSTP", "type": "single", "q": "STM-64的传输速率约为？", "options": ["10Gb/s", "2.5Gb/s", "622Mb/s", "155Mb/s"], "answer": 0, "explain": "STM-1=155.520Mb/s，STM-4=622Mb/s，STM-16=2.5Gb/s，STM-64≈10Gb/s。"}, {"id": 61, "subject": "综合能力", "chapter": "光传输技术", "type": "single", "q": "SDH STM-1帧的传输周期是？", "options": ["125μs", "125ms", "250μs", "1ms"], "answer": 0, "explain": "SDH所有等级的帧传输周期都是125μs(8000帧/秒)。"}, {"id": 62, "subject": "综合能力", "chapter": "现代通信网", "type": "single", "q": "光纤通信中，1310nm和1550nm两个低损耗窗口之间的损耗差约为？", "options": ["0.15dB/km", "0.5dB/km", "0.3dB/km", "0.1dB/km"], "answer": 0, "explain": "1310nm损耗约0.35dB/km，1550nm损耗约0.2dB/km，差值约0.15dB/km。"}];
+var quizState = {
+  mode: 'sequential',
+  subject: 'all',
+  questions: [],
+  currentIdx: 0,
+  answers: {},
+  wrongIds: [],
+  answered: false
+};
+
+function quizStoreGet(key, def) {
+  try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : def; }
+  catch(e) { return def; }
+}
+function quizStoreSet(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
+}
+
+function initQuiz() {
+  // Count questions per subject
+  var s1Count = QUESTIONS.filter(function(q){return q.subject==='综合能力'}).length;
+  var s2Count = QUESTIONS.filter(function(q){return q.subject==='传输有线'}).length;
+  document.getElementById('quizTotal').textContent = QUESTIONS.length;
+  document.getElementById('quizCountS1').textContent = s1Count + '题';
+  document.getElementById('quizCountS2').textContent = s2Count + '题';
+  
+  // Load stats
+  var stats = quizStoreGet('quizStats', {done:0, correct:0, total:0});
+  var doneIds = quizStoreGet('quizDoneIds', []);
+  var wrongIds = quizStoreGet('quizWrongIds', []);
+  
+  document.getElementById('quizDone').textContent = doneIds.length;
+  var acc = stats.total > 0 ? Math.round(stats.correct / stats.total * 100) : 0;
+  document.getElementById('quizCorrect').textContent = acc + '%';
+  document.getElementById('quizWrong').textContent = wrongIds.length;
+  
+  // Render wrong notebook
+  renderWrongNotebook();
+}
+
+function renderWrongNotebook() {
+  var wrongIds = quizStoreGet('quizWrongIds', []);
+  var container = document.getElementById('wrongNotebook');
+  if (!container) return;
+  
+  if (wrongIds.length === 0) {
+    container.innerHTML = '<div class="wrong-empty"><div class="wrong-empty-icon">✅</div><div>暂无错题</div><div style="font-size:12px;margin-top:4px;">做错题后会自动收录</div></div>';
+    return;
+  }
+  
+  var html = '<div style="font-size:12px;color:#64748b;margin-bottom:8px;">共 ' + wrongIds.length + ' 道错题</div>';
+  html += '<div class="quiz-mode" onclick="startWrongReview()" style="margin-bottom:12px;">';
+  html += '<div class="quiz-mode-icon" style="background:#fee2e2">🔄</div>';
+  html += '<div class="quiz-mode-info"><div class="quiz-mode-title">开始错题复习</div>';
+  html += '<div class="quiz-mode-desc">重做所有错题</div></div>';
+  html += '<div class="quiz-mode-arrow">→</div></div>';
+  
+  // List recent wrong questions
+  for (var i = 0; i < Math.min(wrongIds.length, 5); i++) {
+    var q = QUESTIONS.find(function(x){return x.id === wrongIds[i]});
+    if (!q) continue;
+    html += '<div class="wrong-item">';
+    html += '<div class="wrong-item-q">' + (i+1) + '. ' + q.q + '</div>';
+    var ansText = q.type === 'judge' ? (q.answer ? '正确' : '错误') : q.options[q.answer];
+    html += '<div class="wrong-item-a">✓ ' + ansText + '</div>';
+    html += '<div class="wrong-item-e">' + q.explain + '</div>';
+    html += '</div>';
+  }
+  if (wrongIds.length > 5) {
+    html += '<div style="text-align:center;padding:8px;color:#3b82f6;font-size:13px;">查看更多请开始错题复习</div>';
+  }
+  container.innerHTML = html;
+}
+
+function startQuiz(subject) {
+  quizState.subject = subject;
+  quizState.mode = 'sequential';
+  var qs = QUESTIONS.filter(function(q){return q.subject === subject});
+  startQuizWithQuestions(qs);
+}
+
+function startQuizMode(mode) {
+  quizState.mode = mode;
+  if (mode === 'wrong') {
+    startWrongReview();
+    return;
+  }
+  var qs = QUESTIONS.slice();
+  if (mode === 'random') {
+    qs.sort(function(){return Math.random() - 0.5});
+  }
+  quizState.subject = 'all';
+  startQuizWithQuestions(qs);
+}
+
+function startWrongReview() {
+  var wrongIds = quizStoreGet('quizWrongIds', []);
+  if (wrongIds.length === 0) {
+    alert('暂无错题，先去做几道题吧！');
+    return;
+  }
+  var qs = wrongIds.map(function(id){
+    return QUESTIONS.find(function(x){return x.id === id});
+  }).filter(function(q){return q});
+  quizState.mode = 'wrong';
+  quizState.subject = 'all';
+  startQuizWithQuestions(qs);
+}
+
+function startQuizWithQuestions(questions) {
+  if (!questions || questions.length === 0) {
+    alert('没有题目！');
+    return;
+  }
+  quizState.questions = questions;
+  quizState.currentIdx = 0;
+  quizState.answers = {};
+  
+  // Hide home, show player
+  document.getElementById('page-quiz').classList.remove('active');
+  document.getElementById('quizPlayer').classList.add('show');
+  document.getElementById('quizResults').classList.remove('show');
+  
+  renderQuestion();
+}
+
+function renderQuestion() {
+  var q = quizState.questions[quizState.currentIdx];
+  if (!q) return;
+  
+  quizState.answered = false;
+  
+  // Update progress
+  var total = quizState.questions.length;
+  var cur = quizState.currentIdx + 1;
+  document.getElementById('quizProgText').textContent = '第 ' + cur + ' 题 / 共 ' + total + ' 题';
+  
+  var correctCount = 0;
+  for (var k in quizState.answers) {
+    if (quizState.answers[k]) correctCount++;
+  }
+  document.getElementById('quizScoreText').textContent = '答对: ' + correctCount;
+  document.getElementById('quizProgFill').style.width = (cur / total * 100) + '%';
+  
+  // Build question HTML
+  var tagClass = q.type === 'judge' ? 'judge' : 'single';
+  var tagText = q.type === 'judge' ? '判断题' : '单选题';
+  var chapterTag = '<span style="font-size:10px;color:#94a3b8;margin-left:6px;">' + q.chapter + '</span>';
+  
+  var html = '<div class="quiz-question-card">';
+  html += '<span class="quiz-q-tag ' + tagClass + '">' + tagText + '</span>' + chapterTag;
+  html += '<div class="quiz-q-text">' + q.q + '</div>';
+  
+  html += '<div class="quiz-options" id="quizOptions">';
+  if (q.type === 'judge') {
+    html += '<div class="quiz-option" onclick="selectAnswer(true)" data-val="true">';
+    html += '<div class="quiz-option-letter">T</div>';
+    html += '<div class="quiz-option-text">正确</div></div>';
+    html += '<div class="quiz-option" onclick="selectAnswer(false)" data-val="false">';
+    html += '<div class="quiz-option-letter">F</div>';
+    html += '<div class="quiz-option-text">错误</div></div>';
+  } else {
+    var letters = ['A','B','C','D','E'];
+    for (var i = 0; i < q.options.length; i++) {
+      html += '<div class="quiz-option" onclick="selectAnswer(' + i + ')" data-val="' + i + '">';
+      html += '<div class="quiz-option-letter">' + letters[i] + '</div>';
+      html += '<div class="quiz-option-text">' + q.options[i] + '</div></div>';
+    }
+  }
+  html += '</div>';
+  
+  // Explanation (hidden until answered)
+  html += '<div class="quiz-explain" id="quizExplain">';
+  html += '<div class="quiz-explain-title">💡 答案解析</div>';
+  var ansText = q.type === 'judge' ? (q.answer ? '正确' : '错误') : (letters[q.answer] + '. ' + q.options[q.answer]);
+  html += '<div class="quiz-explain-text"><strong>正确答案：' + ansText + '</strong><br>' + q.explain + '</div>';
+  html += '</div>';
+  
+  html += '</div>';
+  
+  document.getElementById('quizQuestionArea').innerHTML = html;
+  
+  // Update nav buttons
+  document.getElementById('quizPrevBtn').disabled = quizState.currentIdx === 0;
+  var nextBtn = document.getElementById('quizNextBtn');
+  if (quizState.currentIdx === quizState.questions.length - 1) {
+    nextBtn.textContent = '完成';
+  } else {
+    nextBtn.textContent = '下一题';
+  }
+}
+
+function selectAnswer(val) {
+  if (quizState.answered) return;
+  quizState.answered = true;
+  
+  var q = quizState.questions[quizState.currentIdx];
+  var isCorrect = (val === q.answer);
+  
+  // Record answer
+  quizState.answers[q.id] = isCorrect;
+  
+  // Update stats
+  var stats = quizStoreGet('quizStats', {done:0, correct:0, total:0});
+  stats.total++;
+  if (isCorrect) stats.correct++;
+  quizStoreSet('quizStats', stats);
+  
+  // Update done IDs
+  var doneIds = quizStoreGet('quizDoneIds', []);
+  if (doneIds.indexOf(q.id) < 0) {
+    doneIds.push(q.id);
+    quizStoreSet('quizDoneIds', doneIds);
+  }
+  
+  // Update wrong IDs
+  var wrongIds = quizStoreGet('quizWrongIds', []);
+  if (!isCorrect) {
+    if (wrongIds.indexOf(q.id) < 0) wrongIds.push(q.id);
+  } else {
+    var idx = wrongIds.indexOf(q.id);
+    if (idx >= 0) wrongIds.splice(idx, 1);
+  }
+  quizStoreSet('quizWrongIds', wrongIds);
+  
+  // Show result
+  var options = document.querySelectorAll('.quiz-option');
+  for (var i = 0; i < options.length; i++) {
+    var optionVal = options[i].getAttribute('data-val');
+    var optionNum = optionVal === 'true' ? true : (optionVal === 'false' ? false : parseInt(optionVal));
+    
+    if (optionNum === q.answer) {
+      options[i].classList.add('correct');
+    } else if (optionNum === val) {
+      options[i].classList.add('wrong');
+    }
+    options[i].style.pointerEvents = 'none';
+  }
+  
+  // Show explanation
+  document.getElementById('quizExplain').classList.add('show');
+  
+  // Vibrate
+  if (navigator.vibrate) {
+    try { navigator.vibrate(isCorrect ? 10 : 30); } catch(e) {}
+  }
+}
+
+function nextQuestion() {
+  if (!quizState.answered) {
+    alert('请先选择答案');
+    return;
+  }
+  
+  if (quizState.currentIdx < quizState.questions.length - 1) {
+    quizState.currentIdx++;
+    renderQuestion();
+  } else {
+    showResults();
+  }
+}
+
+function prevQuestion() {
+  if (quizState.currentIdx > 0) {
+    quizState.currentIdx--;
+    // Restore previous answer state
+    var q = quizState.questions[quizState.currentIdx];
+    if (quizState.answers[q.id] !== undefined) {
+      quizState.answered = true;
+      renderQuestion();
+      // Re-apply answer state
+      var isCorrect = quizState.answers[q.id];
+      var options = document.querySelectorAll('.quiz-option');
+      for (var i = 0; i < options.length; i++) {
+        var optionVal = options[i].getAttribute('data-val');
+        var optionNum = optionVal === 'true' ? true : (optionVal === 'false' ? false : parseInt(optionVal));
+        if (optionNum === q.answer) {
+          options[i].classList.add('correct');
+        }
+        options[i].style.pointerEvents = 'none';
+      }
+      document.getElementById('quizExplain').classList.add('show');
+    } else {
+      renderQuestion();
+    }
+  }
+}
+
+function showResults() {
+  var total = quizState.questions.length;
+  var correct = 0;
+  for (var k in quizState.answers) {
+    if (quizState.answers[k]) correct++;
+  }
+  var wrong = total - correct;
+  var score = Math.round(correct / total * 100);
+  
+  document.getElementById('quizPlayer').classList.remove('show');
+  document.getElementById('quizResults').classList.add('show');
+  
+  document.getElementById('quizResultScore').textContent = score + '分';
+  document.getElementById('quizResultCorrect').textContent = correct;
+  document.getElementById('quizResultWrong').textContent = wrong;
+  document.getElementById('quizResultAccuracy').textContent = Math.round(correct/total*100) + '%';
+  document.getElementById('quizResultLabel').textContent = '共' + total + '题 · 答对' + correct + '题';
+  
+  var emoji = score >= 90 ? '🏆' : score >= 60 ? '🎉' : '💪';
+  document.getElementById('quizResultEmoji').textContent = emoji;
+}
+
+function backToQuizHome() {
+  document.getElementById('quizResults').classList.remove('show');
+  document.getElementById('page-quiz').classList.add('active');
+  // Update bottom nav
+  var tabs = document.querySelectorAll('.tab-item');
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+  if (tabs[3]) tabs[3].classList.add('active');
+  initQuiz();
+}
+
+function retryQuiz() {
+  document.getElementById('quizResults').classList.remove('show');
+  startQuizWithQuestions(quizState.questions);
+}
+
+window.startQuiz = startQuiz;
+window.startQuizMode = startQuizMode;
+window.startWrongReview = startWrongReview;
+window.selectAnswer = selectAnswer;
+window.nextQuestion = nextQuestion;
+window.prevQuestion = prevQuestion;
+window.backToQuizHome = backToQuizHome;
+window.retryQuiz = retryQuiz;
+window.initQuiz = initQuiz;
+
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
