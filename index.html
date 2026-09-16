@@ -2910,7 +2910,7 @@ body.font-xl h2 { font-size: 28px; }
           <span style="font-size:14px;color:#334155;">题目数量</span>
           <div style="display:flex;align-items:center;gap:6px;">
             <button onclick="adjustMockCount(-10)" style="width:32px;height:32px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;color:#475569;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;">-</button>
-            <input type="number" id="mockCountInput" value="100" min="10" max="200" style="width:60px;text-align:center;font-size:15px;font-weight:600;border:1px solid #e5e7eb;border-radius:8px;padding:6px 4px;color:#334155;" onchange="onMockCountChange()">
+            <input type="number" id="mockCountInput" value="100" min="10" max="500" style="width:60px;text-align:center;font-size:15px;font-weight:600;border:1px solid #e5e7eb;border-radius:8px;padding:6px 4px;color:#334155;" onchange="onMockCountChange()">
             <button onclick="adjustMockCount(10)" style="width:32px;height:32px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;color:#475569;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;">+</button>
           </div>
         </div>
@@ -2919,7 +2919,7 @@ body.font-xl h2 { font-size: 28px; }
           <div style="display:flex;align-items:center;gap:6px;">
             <button onclick="adjustMockTime(-5)" style="width:32px;height:32px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;color:#475569;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;">-</button>
             <div style="display:flex;align-items:center;gap:2px;">
-              <input type="number" id="mockTimeInput" value="60" min="10" max="180" style="width:50px;text-align:center;font-size:15px;font-weight:600;border:1px solid #e5e7eb;border-radius:8px;padding:6px 4px;color:#334155;" onchange="onMockTimeChange()">
+              <input type="number" id="mockTimeInput" value="120" min="10" max="240" style="width:50px;text-align:center;font-size:15px;font-weight:600;border:1px solid #e5e7eb;border-radius:8px;padding:6px 4px;color:#334155;" onchange="onMockTimeChange()">
               <span style="font-size:13px;color:#94a3b8;">分钟</span>
             </div>
             <button onclick="adjustMockTime(5)" style="width:32px;height:32px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;color:#475569;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;">+</button>
@@ -2928,8 +2928,19 @@ body.font-xl h2 { font-size: 28px; }
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding:8px 0;border-bottom:1px solid #f1f5f9;">
           <span style="font-size:14px;color:#334155;">及格分数</span>
           <div style="display:flex;align-items:center;gap:6px;">
-            <input type="number" id="mockPassInput" value="60" min="1" max="200" style="width:60px;text-align:center;font-size:15px;font-weight:600;border:1px solid #e5e7eb;border-radius:8px;padding:6px 4px;color:#334155;">
+            <input type="number" id="mockPassInput" value="60" min="1" max="500" style="width:60px;text-align:center;font-size:15px;font-weight:600;border:1px solid #e5e7eb;border-radius:8px;padding:6px 4px;color:#334155;">
             <span style="font-size:13px;color:#94a3b8;">分</span>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding:8px 0;border-bottom:1px solid #f1f5f9;">
+          <span style="font-size:14px;color:#334155;">每题分值</span>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <button onclick="adjustMockScore(-1)" style="width:32px;height:32px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;color:#475569;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;">-</button>
+            <div style="display:flex;align-items:center;gap:2px;">
+              <input type="number" id="mockScoreInput" value="1" min="0.5" max="10" step="0.5" style="width:50px;text-align:center;font-size:15px;font-weight:600;border:1px solid #e5e7eb;border-radius:8px;padding:6px 4px;color:#334155;" onchange="onMockScoreChange()">
+              <span style="font-size:13px;color:#94a3b8;">分/题</span>
+            </div>
+            <button onclick="adjustMockScore(1)" style="width:32px;height:32px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;color:#475569;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;">+</button>
           </div>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;">
@@ -7663,8 +7674,9 @@ var mockExamState = {
   config: {
     subject: 'all',
     count: 100,
-    timeLimit: 60,
+    timeLimit: 120,
     passScore: 60,
+    perScore: 1,
     shuffleOptions: false
   }
 };
@@ -7714,7 +7726,10 @@ function adjustMockCount(delta) {
   if (!input) return;
   var newVal = (parseInt(input.value) || 100) + delta;
   if (newVal < 10) newVal = 10;
-  if (newVal > 200) newVal = 200;
+  if (newVal > 500) {
+    newVal = 500;
+    try { alert('单次模拟考试最多500题'); } catch(e) {}
+  }
 
   var pool = QUESTIONS.slice();
   if (mockConfigState.subject && mockConfigState.subject !== 'all') {
@@ -7731,7 +7746,10 @@ function onMockCountChange() {
   if (!input) return;
   var val = parseInt(input.value) || 100;
   if (val < 10) val = 10;
-  if (val > 200) val = 200;
+  if (val > 500) {
+    val = 500;
+    try { alert('单次模拟考试最多500题'); } catch(e) {}
+  }
 
   var pool = QUESTIONS.slice();
   if (mockConfigState.subject && mockConfigState.subject !== 'all') {
@@ -7746,19 +7764,39 @@ function onMockCountChange() {
 function adjustMockTime(delta) {
   var input = document.getElementById('mockTimeInput');
   if (!input) return;
-  var newVal = (parseInt(input.value) || 60) + delta;
+  var newVal = (parseInt(input.value) || 120) + delta;
   if (newVal < 10) newVal = 10;
-  if (newVal > 180) newVal = 180;
+  if (newVal > 240) newVal = 240;
   input.value = newVal;
 }
 
 function onMockTimeChange() {
   var input = document.getElementById('mockTimeInput');
   if (!input) return;
-  var val = parseInt(input.value) || 60;
+  var val = parseInt(input.value) || 120;
   if (val < 10) val = 10;
-  if (val > 180) val = 180;
+  if (val > 240) val = 240;
   input.value = val;
+}
+
+function adjustMockScore(delta) {
+  var input = document.getElementById('mockScoreInput');
+  if (!input) return;
+  var newVal = (parseFloat(input.value) || 1) + delta;
+  if (newVal < 0.5) newVal = 0.5;
+  if (newVal > 10) newVal = 10;
+  input.value = newVal;
+  updateMockSummary();
+}
+
+function onMockScoreChange() {
+  var input = document.getElementById('mockScoreInput');
+  if (!input) return;
+  var val = parseFloat(input.value) || 1;
+  if (val < 0.5) val = 0.5;
+  if (val > 10) val = 10;
+  input.value = val;
+  updateMockSummary();
 }
 
 function toggleMockOptionShuffle() {
@@ -7778,21 +7816,27 @@ function toggleMockOptionShuffle() {
 
 function updateMockSummary() {
   var countInput = document.getElementById('mockCountInput');
+  var scoreInput = document.getElementById('mockScoreInput');
   var count = countInput ? (parseInt(countInput.value) || 100) : 100;
+  var perScore = scoreInput ? (parseFloat(scoreInput.value) || 1) : 1;
+  var totalScore = (count * perScore);
+  var totalScoreStr = totalScore % 1 === 0 ? totalScore.toString() : totalScore.toFixed(1);
   var totalEl = document.getElementById('mockTotalDisplay');
   var scoreEl = document.getElementById('mockScoreDisplay');
   if (totalEl) totalEl.textContent = count + ' 题';
-  if (scoreEl) scoreEl.textContent = count + ' 分';
+  if (scoreEl) scoreEl.textContent = totalScoreStr + ' 分';
 }
 
 function beginMockExam() {
   var countInput = document.getElementById('mockCountInput');
   var timeInput = document.getElementById('mockTimeInput');
   var passInput = document.getElementById('mockPassInput');
+  var scoreInput = document.getElementById('mockScoreInput');
 
   var count = countInput ? (parseInt(countInput.value) || 100) : 100;
-  var timeLimit = timeInput ? (parseInt(timeInput.value) || 60) : 60;
-  var passScore = passInput ? (parseInt(passInput.value) || 60) : 60;
+  var timeLimit = timeInput ? (parseInt(timeInput.value) || 120) : 120;
+  var passScore = passInput ? (parseFloat(passInput.value) || 60) : 60;
+  var perScore = scoreInput ? (parseFloat(scoreInput.value) || 1) : 1;
   var subject = mockConfigState.subject || 'all';
   var shuffle = mockConfigState.shuffleOptions || false;
 
@@ -7851,6 +7895,7 @@ function beginMockExam() {
     count: examQs.length,
     timeLimit: timeLimit,
     passScore: passScore,
+    perScore: perScore,
     shuffleOptions: shuffle
   };
 
@@ -8108,7 +8153,7 @@ function submitMockExam(isAuto) {
     try { confirmed = confirm('还有 ' + unanswered + ' 题未作答，确定交卷吗？'); } catch(e) { confirmed = true; }
     if (!confirmed) {
       // Resume timer
-      var resumeTotalSec = (mockExamState.config && mockExamState.config.timeLimit || 60) * 60;
+      var resumeTotalSec = (mockExamState.config && mockExamState.config.timeLimit || 120) * 60;
       mockExamState.timerInterval = setInterval(function() {
         var elapsed = Math.floor((Date.now() - mockExamState.startTime) / 1000);
         var remaining = resumeTotalSec - elapsed;
@@ -8150,7 +8195,9 @@ function submitMockExam(isAuto) {
     else wrongList.push(q.id);
   }
   
-  var score = correct;
+  var perScore = (mockExamState.config && mockExamState.config.perScore) || 1;
+  var score = Math.round(correct * perScore * 10) / 10;
+  var totalScore = Math.round(total * perScore * 10) / 10;
   var pct = Math.round(correct / total * 100);
   var passScore = (mockExamState.config && mockExamState.config.passScore) || 60;
   var passed = score >= passScore;
@@ -8193,11 +8240,12 @@ function submitMockExam(isAuto) {
   if (!resultPage || !resultContent) return;
   resultContent.innerHTML = '' +
     '<div style="font-size:48px;margin-bottom:12px;text-align:center;">' + (passed ? '🎉' : '💪') + '</div>' +
-    '<div style="font-size:28px;font-weight:700;color:' + (passed ? '#10b981' : '#ef4444') + ';margin-bottom:4px;text-align:center;">' + score + '分</div>' +
+    '<div style="font-size:28px;font-weight:700;color:' + (passed ? '#10b981' : '#ef4444') + ';margin-bottom:4px;text-align:center;">' + score + '/' + totalScore + '分</div>' +
     '<div style="font-size:14px;color:#94a3b8;margin-bottom:16px;text-align:center;">' + (passed ? '恭喜通过！' : '继续努力，下次一定能过！') + '</div>' +
     '<div style="background:#f8fafc;border-radius:8px;padding:8px 12px;margin-bottom:16px;text-align:center;font-size:12px;color:#64748b;">' +
       '科目：' + (mockExamState.subject === 'all' ? '全部科目' : mockExamState.subject) + '  |  ' +
       '题量：' + total + '  |  ' +
+      '每题：' + perScore + '分  |  ' +
       '及格线：' + passScore + '分' +
     '</div>' +
     '<div style="background:#fff;border-radius:12px;padding:16px;margin-bottom:16px;">' +
@@ -8575,6 +8623,8 @@ window.adjustMockCount = adjustMockCount;
 window.onMockCountChange = onMockCountChange;
 window.adjustMockTime = adjustMockTime;
 window.onMockTimeChange = onMockTimeChange;
+window.adjustMockScore = adjustMockScore;
+window.onMockScoreChange = onMockScoreChange;
 window.toggleMockOptionShuffle = toggleMockOptionShuffle;
 window.beginMockExam = beginMockExam;
 window.updateMockSummary = updateMockSummary;
