@@ -2846,6 +2846,7 @@ body.font-xl h2 { font-size: 28px; }
     }
     haptic();
   }
+  window.initQuiz = initQuiz;
   window.switchTab = switchTab;
   window.startQuizSubject = function(subject) { switchQuizSubject(subject); };
 
@@ -5235,6 +5236,41 @@ var QUESTIONS = [
     "explain": "SDH所有等级帧周期都是125μs(8000帧/秒)。"
   }
 ];
+
+
+function initQuiz() {
+  var qs = QUESTIONS;
+  var s1 = qs.filter(function(q){return q.subject === '综合能力'}).length;
+  var s2 = qs.filter(function(q){return q.subject === '传输有线'}).length;
+  
+  var wrongIds = quizStoreGet('quizWrongIds', []);
+  var doneIds = quizStoreGet('quizDoneIds', []);
+  var stats = quizStoreGet('quizStats', {done:0, correct:0, total:0});
+  var acc = stats.total > 0 ? Math.round(stats.correct / stats.total * 100) : 0;
+  
+  var el = function(id) { return document.getElementById(id); };
+  
+  if (el('qsTotal')) el('qsTotal').textContent = qs.length;
+  if (el('qsDone')) el('qsDone').textContent = doneIds.length;
+  if (el('qsWrong')) el('qsWrong').textContent = wrongIds.length;
+  if (el('qsAcc')) el('qsAcc').textContent = acc + '%';
+  if (el('qgTotal')) el('qgTotal').textContent = qs.length + '题';
+  if (el('qgS1')) el('qgS1').textContent = s1 + '题';
+  if (el('qgS2')) el('qgS2').textContent = s2 + '题';
+  if (el('qgWrong')) el('qgWrong').textContent = wrongIds.length + '题';
+  if (el('qfSeqBadge')) el('qfSeqBadge').textContent = doneIds.length + '/' + qs.length;
+  
+  var counter = document.getElementById('quizPlayerCounter');
+  if (counter) counter.textContent = '';
+  var title = document.getElementById('quizPlayerTitle');
+  if (title) title.textContent = '刷题首页';
+  
+  var player = document.getElementById('quizPlayer');
+  if (player) player.classList.remove('show');
+  var results = document.getElementById('quizResults');
+  if (results) results.classList.remove('show');
+}
+
 
 function renderQuestion() {
   var q = quizState.questions[quizState.currentIdx];
