@@ -2863,8 +2863,8 @@ body.font-xl h2 { font-size: 28px; }
 </div>
 
 <!-- ========== SUBJECT PICKER MODAL ========== -->
-<div id="subjectPickerModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:9999;justify-content:center;align-items:flex-end;-webkit-tap-highlight-color:transparent;">
-  <div style="background:#fff;width:100%;max-width:500px;border-radius:20px 20px 0 0;padding:24px 20px 32px;animation:slideUp 0.3s ease;box-shadow:0 -4px 20px rgba(0,0,0,0.15);">
+<div id="subjectPickerModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:9999;justify-content:center;align-items:flex-end;-webkit-tap-highlight-color:transparent;" onclick="closeSubjectPicker()">
+  <div style="background:#fff;width:100%;max-width:500px;border-radius:20px 20px 0 0;padding:24px 20px 32px;animation:slideUp 0.3s ease;box-shadow:0 -4px 20px rgba(0,0,0,0.15);" onclick="event.stopPropagation()">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
       <div style="font-size:18px;font-weight:700;color:#1e293b;" id="subjectPickerTitle">选择科目</div>
       <button onclick="closeSubjectPicker()" style="background:#f1f5f9;border:none;width:32px;height:32px;border-radius:50%;font-size:16px;color:#64748b;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
@@ -3120,7 +3120,7 @@ body.font-xl h2 { font-size: 28px; }
 </div>
 
 <!-- ========== MOCK EXAM RESULT PAGE (inside .app) ========== -->
-<div id="mockResultPage" style="display:none;position:absolute;top:0;left:0;right:0;background:#f8fafc;padding:20px 16px 80px;z-index:9999;min-height:100vh;">
+<div id="mockResultPage" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:#f8fafc;padding:20px 16px 80px;z-index:100;min-height:100vh;overflow-y:auto;-webkit-overflow-scrolling:touch;">
   <div id="mockResultContent" style="max-width:500px;margin:0 auto;"></div>
 </div>
 </div>
@@ -6932,6 +6932,7 @@ function startQuiz(subject) {
 }
 
 function startWrongReview() {
+  quizState.subject = 'all';
   startQuizMode('wrong');
 }
 
@@ -7342,18 +7343,18 @@ function showResults() {
   }
   var wrong = total - correct;
   var score = Math.round(correct / total * 100);
-  
-  document.getElementById('quizPlayer').classList.remove('show');
-  document.getElementById('quizResults').classList.add('show');
-  
-  document.getElementById('quizResultScore').textContent = score + '分';
-  document.getElementById('quizResultCorrect').textContent = correct;
-  document.getElementById('quizResultWrong').textContent = wrong;
-  document.getElementById('quizResultAccuracy').textContent = Math.round(correct/total*100) + '%';
-  document.getElementById('quizResultLabel').textContent = '共' + total + '题 · 答对' + correct + '题';
-  
+
   var emoji = score >= 90 ? '🏆' : score >= 60 ? '🎉' : '💪';
-  document.getElementById('quizResultEmoji').textContent = emoji;
+  var el = function(id) { return document.getElementById(id); };
+  var qp = el('quizPlayer'); if (qp) qp.classList.remove('show');
+  var qr = el('quizResults'); if (qr) qr.classList.add('show');
+  var e;
+  if (e = el('quizResultScore')) e.textContent = score + '分';
+  if (e = el('quizResultCorrect')) e.textContent = correct;
+  if (e = el('quizResultWrong')) e.textContent = wrong;
+  if (e = el('quizResultAccuracy')) e.textContent = Math.round(correct/total*100) + '%';
+  if (e = el('quizResultLabel')) e.textContent = '共' + total + '题 · 答对' + correct + '题';
+  if (e = el('quizResultEmoji')) e.textContent = emoji;
 }
 
 function backToQuizHome() {
@@ -7371,7 +7372,8 @@ function backToQuizHome() {
 }
 
 function retryQuiz() {
-  document.getElementById('quizResults').classList.remove('show');
+  var r = document.getElementById('quizResults');
+  if (r) r.classList.remove('show');
   startQuizWithQuestions(quizState.questions);
 }
 
@@ -7454,10 +7456,19 @@ window.initQuiz = initQuiz;
 })();
 
 function exitQuiz() {
+  if (mockExamState && mockExamState.timerInterval) {
+    clearInterval(mockExamState.timerInterval);
+    mockExamState.timerInterval = null;
+  }
+  if (mockExamState) mockExamState.active = false;
+
   var p = document.getElementById('quizPlayer');
-  if (p) { p.classList.remove('show'); p.style.display = ''; }
+  if (p) { p.classList.remove('show'); p.style.display = ''; p.style.overflow = ''; p.style.flexDirection = ''; p.style.padding = ''; }
   var r = document.getElementById('quizResults');
   if (r) r.classList.remove('show');
+  var mrp = document.getElementById('mockResultPage');
+  if (mrp) mrp.style.display = 'none';
+  hideAllQuizSubPages();
   var pg = document.getElementById('page-quiz');
   if (pg) pg.classList.add('active');
   var tabs = document.querySelectorAll('.tab-item');
@@ -8000,11 +8011,13 @@ function startMockExam() {
 }
 
 function hideAllQuizSubPages() {
-  var pages = ['quizChapterPage','quizWrongListPage','quizExamPapersPage','quizExamQuestionsPage','quizMockExamPage','quizFavoritesPage','quizStatsPage'];
+  var pages = ['quizChapterPage','quizWrongListPage','quizExamPapersPage','quizExamQuestionsPage','quizMockExamPage','quizFavoritesPage','quizStatsPage','mockResultPage'];
   for (var i = 0; i < pages.length; i++) {
     var p = document.getElementById(pages[i]);
     if (p) { p.style.display = 'none'; p.classList.remove('active'); }
   }
+  var spm = document.getElementById('subjectPickerModal');
+  if (spm) spm.style.display = 'none';
 }
 
 function startMockExamWith(subject) {
@@ -8217,7 +8230,7 @@ function mockJumpTo(idx) {
 }
 
 function submitMockExam(isAuto) {
-  if (mockExamState.timerInterval) clearInterval(mockExamState.timerInterval);
+  if (mockExamState.timerInterval) { clearInterval(mockExamState.timerInterval); mockExamState.timerInterval = null; }
   
   var total = mockExamState.questions.length;
   var answered = Object.keys(mockExamState.answers).length;
@@ -8308,6 +8321,9 @@ function submitMockExam(isAuto) {
   if (player) {
     player.classList.remove('show');
     player.style.display = 'none';
+    player.style.overflow = '';
+    player.style.flexDirection = '';
+    player.style.padding = '';
   }
 
   // Show results in pre-existing mockResultPage
