@@ -1363,6 +1363,9 @@ body.font-xl h2 { font-size: 28px; }
 
 /* ===== V8: Quiz System (考试宝风格) ===== */
 #page-quiz { padding: 0 !important; margin-top: 0 !important; }
+.app.quiz-active .search-bar { display: none !important; }
+.app.quiz-active .progress-bar { display: none !important; }
+.app.quiz-active { padding-top: 0 !important; }
 .quiz-home { padding: 0 0 100px; }
 
 /* Subject Tabs */
@@ -2816,18 +2819,13 @@ body.font-xl h2 { font-size: 28px; }
       var page = document.getElementById(pageId);
       if (page) page.classList.add('active');
       tabs[3] && tabs[3].classList.add('active');
-      var sb = document.querySelector('.search-bar');
-      if (sb) sb.style.display = 'none';
-      var pb = document.querySelector('.progress-bar');
-      if (pb) pb.style.display = 'none';
+      var app = document.querySelector('.app');
+      if (app) app.classList.add('quiz-active');
       window.scrollTo({top: 0, behavior: 'smooth'});
       initQuiz();
     } else {
-      // Restore search bar and progress bar on other pages
-      var sb = document.querySelector('.search-bar');
-      if (sb) sb.style.display = '';
-      var pb = document.querySelector('.progress-bar');
-      if (pb) pb.style.display = '';
+      var app = document.querySelector('.app');
+      if (app) app.classList.remove('quiz-active');
       var pageId = pages[tab] || 'page-home';
       var page = document.getElementById(pageId);
       if (page) page.classList.add('active');
