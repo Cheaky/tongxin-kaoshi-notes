@@ -7678,6 +7678,7 @@ function showMockExamPlayer() {
 }
 
 function renderMockQuestion() {
+  if (!mockExamState || !mockExamState.questions || mockExamState.questions.length === 0) return;
   var q = mockExamState.questions[mockExamState.currentIdx];
   if (!q) return;
   
@@ -7924,6 +7925,15 @@ function reviewMockExam() {
   var resultPage = document.getElementById('mockResultPage');
   var resultContent = document.getElementById('mockResultContent');
   if (!resultPage || !resultContent) return;
+  
+  // Guard: ensure questions array exists
+  if (!mockExamState || !mockExamState.questions || mockExamState.questions.length === 0) {
+    resultContent.innerHTML = '<div style="text-align:center;padding:40px 20px;color:#94a3b8;">暂无错题数据</div>';
+    resultPage.style.display = 'block';
+    resultPage.scrollTop = 0;
+    window.scrollTo(0, 0);
+    return;
+  }
   
   resultPage.style.display = 'block';
   
